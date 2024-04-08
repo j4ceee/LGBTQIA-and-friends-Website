@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7805362c-e83c-451b-a4bb-4a45cc139434" name="LGBTQIA+ &amp; Friends" url="https://lgbt-hs-ansbach.de/">
+        <fileTransfer rootFolder="/public_html/" accessType="SFTP" host="www589.your-server.de" port="22" sshConfigId="0c914473-4939-40ab-b144-1625befafadc" sshConfig="lgbtwh@www589.your-server.de:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
