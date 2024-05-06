@@ -43,22 +43,24 @@
 /*--------------------Default page setup-------------------------*/
 
 :root {
-    --ryu-bg: #2d2d2d;
-    --ryu-dark: #202020;
-    --ryu-blue: #02C5E5FF;
-    --ryu-red: #FF5F55FF;
-    --ryu-purple: #88418b;
-    --ryu-green: #01df4f;
-
-    --bright-grey: #6f6f6f;
-    --light-grey: #a2a2a2;
-
     --win-dark: #393939;
     --win-border: #5e5e5e;
     --win-selected: #282828;
 
-    --lgbt-text: #fdfdfd;
+    --lgbt-text: #eeeeee;
     --lgbt-bg: #333333;
+
+    --lgbt-red: #eb3b42;
+    --lgbt-orange: #ff9101;
+    --lgbt-yellow: #fecb1c;
+    --lgbt-green: #60c774;
+    --lgbt-blue: #02aeda;
+    --lgbt-purple: #5d5ccc;
+
+    --alt-blue: #34c2fc;
+    --alt-pink: #ffb6ca;
+    --alt-pink2: #ed80e2;
+    --alt-purple: #be3cad;
 }
 
 * {
@@ -103,11 +105,38 @@ main {
 
 /*------- default input styles -------*/
 
+.lgbt_input {
+    background-color: transparent;
+    color: var(--lgbt-text);
+    font-size: 1rem;
+    border: .15rem solid var(--win-border);
+    border-radius: .4rem;
+    padding: .2rem .5rem;
+    margin: 0;
+    font-family: "Baloo 2 Default";
+    transition: .2s, height 0ms;
+}
+
+.lgbt_input:focus-within,
+.lgbt_input:focus-visible {
+    border: .15rem solid var(--lgbt-blue);
+    box-shadow: inset 0 0 .1rem var(--lgbt-blue);
+    outline: none;
+    transition: .2s, height 0ms;
+}
+
+.lgbt_input:disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--lgbt-text);
+    border: .15rem solid var(--win-selected);
+    transition: .2s, height 0ms;
+}
+
 .win_dark_input {
     height: 1.8rem;
     font-size: .9rem;
     font-family: sans-serif;
-    color: whitesmoke;
+    color: var(--lgbt-text);
     background-color: var(--win-dark);
     border: none;
     border-radius: .3rem;
@@ -118,7 +147,7 @@ main {
 
 .win_dark_input:focus-within {
     background-color: var(--win-selected);
-    border-bottom: var(--ryu-blue) 2px solid;
+    border-bottom: var(--lgbt-blue) 2px solid;
     outline: none;
     transition: .2s;
 }
@@ -127,7 +156,7 @@ main {
     height: 1.6rem;
     width: 1.6rem;
     display: inline-block;
-    background-color: var(--ryu-dark); /* set to win-dark when hovered or checked */
+    background-color: var(--lgbt-blue); /* set to win-dark when hovered or checked */
     position: absolute;
     border-radius: 0.5rem;
     border: var(--win-dark) 4px solid;
@@ -145,7 +174,7 @@ main {
     top: -47%;
     width: 0.6rem;
     height: 1.3rem;
-    border: solid var(--ryu-green);
+    border: solid var(--lgbt-green);
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -208,7 +237,7 @@ header {
     order: 2;
 }
 .navbar a {
-    color: whitesmoke;
+    color: var(--lgbt-text);
     padding: 0.5rem 1.3rem;
     cursor: pointer;
     font-weight: bold;
@@ -221,13 +250,13 @@ header {
 }
 .navbar a:hover,
 .navbar a:focus-within {
-    color: var(--ryu-red);
-    text-shadow: var(--ryu-red) 0 0 1px;
+    color: var(--alt-pink2);
+    text-shadow: var(--alt-pink2) 0 0 1px;
     transition: 0.2s;
 }
 .navbar a.active {
-    background: var(--ryu-blue);
-    color: var(--ryu-dark);
+    background: var(--alt-blue);
+    color: var(--lgbt-bg);
     /* text-shadow: 0 0 2px;*/
     background-size: 150% 150%;
     animation: gradient 15s ease infinite;
@@ -235,7 +264,7 @@ header {
 }
 
 .navbar a.active:hover {
-    color: var(--ryu-dark);
+    color: var(--lgbt-bg);
     text-shadow: none;
     transition: 0.2s;
 }
@@ -252,12 +281,6 @@ header {
     }
 }
 
-@media screen and (max-width: 600px) {
-    .nav-bar a:not(.active) {
-        display: none;
-    }
-}
-
 .auth_button {
     background-color: transparent;
     border: none;
@@ -270,18 +293,18 @@ header {
 
 .auth_button > .auth_icon,
 .auth_button > .auth_icon {
-    background-color: var(--light-grey);
+    background-color: var(--lgbt-text);
     transition: 0.2s;
 }
 
 .auth_button:hover > .auth_icon,
 .auth_button:focus-within > .auth_icon {
-    background-color: var(--ryu-red);
+    background-color: var(--alt-blue);
     transition: 0.2s;
 }
 
 .auth_button:active > .auth_icon {
-    background-color: var(--ryu-blue);
+    background-color: var(--alt-blue);
     transition: 0.2s;
 }
 
@@ -297,8 +320,8 @@ header {
 }
 
 .auth_form {
-    background-color: var(--ryu-dark);
-    box-shadow: 0 0 .2rem 0 var(--ryu-dark);
+    background-color: var(--win-selected);
+    box-shadow: 0 0 .2rem 0 var(--lgbt-bg);
     position: fixed;
     right: .8rem;
     top: 5.5rem;
@@ -327,8 +350,8 @@ header {
     font-size: 1.3rem;
     width: 100%;
     padding: .3rem .5rem;
-    color: whitesmoke;
-    border-bottom: var(--ryu-purple) .3rem solid;
+    color: var(--lgbt-text);
+    border-bottom: var(--alt-blue) .3rem solid;
     margin: 0 0 1.2rem 0;
     border-radius: .6rem;
 }
@@ -337,7 +360,7 @@ header {
 .win_input_auth ~ .auth_input_icon_bg {
     height: 2.0rem;
     width: 2.0rem;
-    background-color: var(--ryu-red);
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -349,15 +372,15 @@ header {
 }
 
 .win_input_auth:focus-within ~ .auth_input_icon_bg {
-    background-color: var(--ryu-blue);
-    border-bottom: var(--ryu-blue) 2px solid;
+    background-color: var(--lgbt-blue);
+    border-bottom: var(--lgbt-blue) 2px solid;
     transition: 0.2s;
 }
 
 .auth_input_icon {
     width: 1.4rem;
     height: 1.4rem;
-    background-color: var(--ryu-dark);
+    background-color: var(--lgbt-text);
     transition: 0.2s;
 }
 
@@ -377,7 +400,7 @@ header {
 
 .auth_submit_btn {
     background-color: transparent;
-    border: var(--ryu-blue) solid 3px;
+    border: 2px solid transparent;
     border-radius: .5rem;
     display: flex;
     padding: .3rem .7rem;
@@ -391,22 +414,20 @@ header {
 }
 
 .auth_signout_btn {
-    border: var(--ryu-red) solid 3px;
 }
 
 .auth_submit_btn:hover,
 .auth_submit_btn:focus-within {
-    background-color: var(--ryu-blue);
+    border: 2px solid var(--lgbt-blue);
     transition: 0.2s;
 }
 
 .auth_signout_btn:hover,
 .auth_signout_btn:focus-within {
-    background-color: var(--ryu-red);
 }
 
 .auth_submit_btn > p {
-    color: var(--ryu-blue);
+    color: var(--lgbt-blue);
     font-weight: bold;
     padding: 0 0.2rem 0 0;
     margin: 0;
@@ -415,28 +436,16 @@ header {
 }
 
 .auth_signout_btn > p {
-    color: var(--ryu-red);
-}
-
-.auth_submit_btn:hover > p,
-.auth_submit_btn:focus-within > p {
-    color: var(--win-selected);
-    transition: 0.2s;
+    color: var(--lgbt-red);
 }
 
 .auth_submit_btn > .auth_submit_icon {
-    background-color: var(--ryu-blue);
+    background-color: var(--lgbt-blue);
     transition: 0.2s;
 }
 
 .auth_signout_btn > .auth_submit_icon {
-    background-color: var(--ryu-red);
-}
-
-.auth_submit_btn:hover > .auth_submit_icon,
-.auth_submit_btn:focus-within > .auth_submit_icon {
-    background-color: var(--win-selected);
-    transition: 0.2s;
+    background-color: var(--lgbt-red);
 }
 
 .auth_greeting {
@@ -458,7 +467,7 @@ header {
     padding: 0;
     font-size: 1.1rem;
     font-weight: bold;
-    color: var(--ryu-blue);
+    color: var(--lgbt-blue);
     align-self: flex-end;
 
     display: flex;
@@ -469,7 +478,7 @@ header {
 
 .auth_user > .auth_welcome {
     padding: 0;
-    color: whitesmoke;
+    color: var(--lgbt-text);
 }
 
 .auth_pin {
@@ -490,7 +499,7 @@ footer {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background: var(--ryu-dark);
+    background: var(--win-selected);
     z-index: 9999; /* above everything but header (z-index 99999) */
 }
 
@@ -501,8 +510,8 @@ footer {
 }
 
 .nav-bottom a:hover {
-    color: var(--ryu-purple);
-    text-shadow: var(--ryu-purple) 0 0 1px;
+    color: var(--lgbt-purple);
+    text-shadow: var(--lgbt-purple) 0 0 1px;
     transition: 0.2s;
 }
 
@@ -552,25 +561,25 @@ footer {
 
 @keyframes colorchange {
     0% {
-        background-color: #e83b41;
+        background-color: var(--lgbt-red);
     }
     16.666% {
-        background-color: #fd8f00;
+        background-color: var(--lgbt-orange);
     }
     33.333% {
-        background-color: #fcc81c;
+        background-color: var(--lgbt-yellow);
     }
     50% {
-        background-color: #5fc573;
+        background-color: var(--lgbt-green);
     }
     66.666% {
-        background-color: #02aed8;
+        background-color: var(--lgbt-blue);
     }
     83.333% {
-        background-color: #5b5bca;
+        background-color: var(--lgbt-purple);
     }
     100% {
-        background-color: #e83b41;
+        background-color: var(--lgbt-red);
     }
 }
 
@@ -639,3 +648,84 @@ footer {
     width: 24rem;
 }
 
+/*--------------------Manage Event Pages-------------------------*/
+
+.manage_event_form {
+    padding-top: 5rem;
+    width: 100vw;
+    max-width: 45rem;
+    height: max-content;
+}
+
+.manage_event_form fieldset {
+    padding: 1rem;
+    margin: 0;
+}
+
+.event_general {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.event_time {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.event_detail {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.event_dur {
+    width: 2rem;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.event_detail_location {
+    width: 100%;
+}
+
+.event_location {
+    width: 100%;
+}
+
+.event_locales {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event_info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 22rem;
+}
+
+.event_info > textarea {
+    height: 100%;
+    resize: vertical;
+    max-height: 15rem;
+    min-height: 5rem;
+}
+
+.form_req_marking
+{
+    color: var(--lgbt-red);
+    font-family: "Baloo 2 Boldest";
+    line-height: .1rem;
+}

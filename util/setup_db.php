@@ -67,6 +67,11 @@ if ($PDO !== null) {
             $PDO->exec($sql);
         }
 
+        $sql = file_get_contents(dirname(__DIR__) . '/db/fill_basics_db.sql'); // read the SQL file - returns false if file does not exist
+        if ($sql !== false) {
+            $PDO->exec($sql);
+        }
+
         // restore content of "accounts" table
         if (isset($accounts)) {
             $stmt = $PDO->prepare("INSERT INTO accounts (username, password, email) VALUES (:username, :password, :email)");

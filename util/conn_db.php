@@ -64,7 +64,7 @@ class DBConnection {
     function checkDBSchema(): bool|array
     // returns true if all tables exist, otherwise returns an array of missing tables
     {
-        $reqTables = array("developers", "games", "game_platform_link", "game_platform_player_link", "platforms", "playermodes", "accounts");
+        $reqTables = array("event_types", "events", "accounts");
 
         if ($this->connection === null) {
             return false;

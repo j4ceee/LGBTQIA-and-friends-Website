@@ -34,7 +34,7 @@ function openAuthWindow() {
 
     // make background colour of auth_icon blue
     authIcon.style.transition = 'background-color 0.2s';
-    authIcon.style.backgroundColor = 'var(--ryu-blue)';
+    authIcon.style.backgroundColor = 'var(--alt-blue)';
 
     // make auth overlay visible to darken other elements
     authOverlay.style.display = 'block'
