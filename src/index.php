@@ -16,7 +16,7 @@ template_header($dbConnection,'Home');
     <div class="welcome_slide_content">
         <h1 class="heading_start"><span class="heading_top">LGBTQIA+ & Friends</span>
             <span class="heading_btm">Hochschule Ansbach</span></h1>
-        <img src="./icons/lgbt_bunny.svg" alt="Logo">
+        <img src="./img/lgbt_bunny.svg" alt="Logo">
 </div>
 
 

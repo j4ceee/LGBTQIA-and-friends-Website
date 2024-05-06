@@ -70,7 +70,7 @@ function getErrorMsg(bool $alertError = true): string
         // get the previous page URL
         $url = $_SERVER['HTTP_REFERER'];
     } else { // if there is no previous page
-        $url = "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2) . "/index.php";
+        $url = "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2);
     }
 
     $strippedURL = strtok($url, '?'); // remove query string from URL

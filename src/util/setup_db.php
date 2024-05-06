@@ -17,7 +17,7 @@ if ($PDO !== null) {
         if ($tablesComplete === true) {
             // database exists and is complete -> stop the script and do nothing -> redirect to index.php
             // echo "Database is complete<br>";
-            header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2) . "/index.php");
+            header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2));
             exit();
         }
         if (is_array($tablesComplete) && !in_array("accounts", $tablesComplete)) {
@@ -86,6 +86,6 @@ if ($PDO !== null) {
 }
 
 // redirect back to index.php
-header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2) . "/index.php");
+header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2));
 exit();
 

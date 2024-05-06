@@ -594,6 +594,7 @@ footer {
     mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 30" preserveAspectRatio="none"%3E%3Cpath fill="grey" d="M0 30 V12 Q30 17 55 12 T100 11 V30z"/%3E%3C/svg%3E'), linear-gradient(#000 0 0);
     mask-composite: exclude;
     mask-size: 100% 100%;
+    z-index: -1;
 }
 
 
@@ -607,6 +608,7 @@ footer {
     background-color: var(--lgbt-bg);
     mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 30" preserveAspectRatio="none"%3E%3Cpath fill="grey" d="M0 30 V12 Q30 17 55 12 T100 11 V30z"/%3E%3C/svg%3E');
     mask-size: 100% 100%;
+    z-index: -1;
 }
 
 .welcome_slide_content {
