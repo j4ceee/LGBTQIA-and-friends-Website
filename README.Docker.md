@@ -1,9 +1,26 @@
+### Docker Setup ###
+
+Create a `password.txt` file inside the `db` directory with the password for the database.
+It should only be one line with no spaces or newlines.
+
+
 ### Building and running your application
 
 When you're ready, start your application by running:
 `docker compose up --build`.
 
+Or, if changes of the code should be reflected in the running container:
+`docker compose watch`.
+
 Your application will be available at http://localhost:9000.
+
+### Stopping your application ###
+
+To stop your application, run:
+`docker compose down`.
+
+Or, if you want to stop and remove all volumes, run:
+`docker compose down -v`.
 
 ### Deploying your application to the cloud
 
