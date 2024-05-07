@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__) . '/util/validate.php'); // include database connection file
+require_once(__DIR__ . '/validate.php'); // include database connection file
 
 function template_footer(array $scripts = null): void
 {

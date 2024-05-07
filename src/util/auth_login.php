@@ -1,16 +1,17 @@
 <?php
-require_once(dirname(__DIR__) . '/util/conn_db.php'); // include database connection file
-require_once(dirname(__DIR__) . '/util/validate.php'); // validate functions
+require_once(__DIR__ . '/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/validate.php'); // validate functions
+require_once(__DIR__ . '/utils.php'); // include utility functions
+require_once(__DIR__ . '/conf.php'); // include configuration file
 
 $dbConnection = new DBConnection();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2));
-    exit();
+    redirect(); // redirect to home page
 }
 
-require_once(dirname(__DIR__) . '/util/auth_session_start.php'); // session start functions
+require_once(__DIR__ . '/auth_session_start.php'); // session start functions
 
 $username = (string)$_POST['auth_username']; // store username
 $email = (string)$_POST['auth_email']; // store email
@@ -51,8 +52,7 @@ if ($stmt->rowCount() > 0) {
     redirectToPreviousPage("333");
 }
 
-header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2)); // redirect to home page
-exit();
+redirect(); // redirect to home page
 
 /*
  * the following php.ini settings are recommended for session security:

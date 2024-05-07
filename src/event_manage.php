@@ -2,13 +2,14 @@
 require_once(__DIR__ . '/util/gen_header.php');
 require_once(__DIR__ . '/util/gen_footer.php');
 require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/util/utils.php'); // include utility functions
+require_once(__DIR__ . '/util/conf.php'); // include configuration file
 
 $dbConnection = new DBConnection();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']));
-    exit();
+    redirect();
 }
 
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in

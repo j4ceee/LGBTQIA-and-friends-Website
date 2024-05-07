@@ -1,6 +1,7 @@
 <?php
-
-require_once(dirname(__DIR__) . '/util/auth_session_start.php'); // session start functions
+require_once(__DIR__ . '/auth_session_start.php'); // session start functions
+require_once(__DIR__ . '/utils.php'); // include utility functions
+require_once(__DIR__ . '/conf.php'); // include configuration file
 
 $_SESSION = array(); // clear session data
 
@@ -15,5 +16,4 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
-header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2)); // redirect to home page
-exit();
+redirect(); // redirect to home page

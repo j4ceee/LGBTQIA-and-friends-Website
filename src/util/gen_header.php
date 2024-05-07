@@ -6,7 +6,7 @@ function template_header($dbConnection, $title = "Home"): void
 
     $PDO = $dbConnection->getConnection();
 
-    require(dirname(__DIR__) . '/util/auth_login_check.php'); // check if user is logged in
+    require(__DIR__ . '/auth_login_check.php'); // check if user is logged in
     /* @var bool $loggedIn */
 
     $index = '';
@@ -19,9 +19,6 @@ function template_header($dbConnection, $title = "Home"): void
             break;
         case 'Calendar':
             $calendar = 'class="active"';
-            break;
-        case 'About':
-            $about = 'class="active"';
             break;
         default:
             break;
@@ -44,7 +41,6 @@ function template_header($dbConnection, $title = "Home"): void
                 <nav class="navbar">
                     <a href="./index.php" $index>Home</a>
                     <a href="#" $calendar>Kalender</a>
-                    <a href="#" $about>Über uns</a>
     EOT;
 
     if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {

@@ -1,5 +1,4 @@
 <?php
-
 session_set_cookie_params([
     'lifetime' => 0, // cookie expires at end of session
     'path' => '/', // cookie available within entire domain

@@ -1,10 +1,11 @@
 <?php
-// TODO: only run this script once & comment out everything for release
+require_once(__DIR__ . '/utils.php'); // include utility functions
+require_once(__DIR__ . '/conf.php'); // include configuration file
 
+echo "Hello, World!";
 
 // redirect to home page
-header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2));
-exit();
+redirect();
 
 
 /*
@@ -12,8 +13,9 @@ exit();
  * It should only be run once to add the initial users.
  * After that, it should be commented out.
  */
+// TODO: only run this script once & comment out everything for release
 /*
-require_once(dirname(__DIR__) . '/util/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/conn_db.php'); // include database connection file
 
 $dbConnection = new DBConnection();
 $PDO = $dbConnection->useDB();
