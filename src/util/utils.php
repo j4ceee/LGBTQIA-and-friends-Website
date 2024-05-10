@@ -7,37 +7,46 @@ use JetBrains\PhpStorm\NoReturn;
  */
 
 
-#[NoReturn] function redirect($path = ''): void
+#[NoReturn] function redirect($path = '/', string $msg = ''): void
 {
     //redirect to the given path, '' = home
-    echo BASE_URL . $path;
     header("Location: " . BASE_URL . $path);
     exit();
 }
 
-#[NoReturn] function redirectToPreviousPage($msg): void
+#[NoReturn] function redirectError($path = '/', string $msg = ''): void
 {
-    if(isset($_SERVER['HTTP_REFERER'])) {
-        // get the previous page URL
-        $url = $_SERVER['HTTP_REFERER'];
-    } else { // if there is no previous page
-        $url = BASE_URL; // redirect to the home page
+    if ($msg !== '') {
+        $path .= '?status=' . $msg;
     }
 
-    $strippedURL = strtok($url, '?'); // remove query string from URL
+    redirect($path);
+}
 
-    $urlParams = parse_url($url, PHP_URL_QUERY); // get the query string from the URL
+#[NoReturn] function redirectToPreviousPage($msg): void
+{
+    $path = '/'; // default path
+    $urlParams = ''; // default URL parameters
+
+    if(isset($_SERVER['HTTP_REFERER'])) {
+        // get the previous page URL
+        $url_tmp = $_SERVER['HTTP_REFERER'];
+        $url = parse_url($url_tmp);
+
+        // check if the previous page is on the same domain
+        // if not on the same domain, use home page
+        if ($url['host'] === SERVERNAME) {
+            $path = $url['path']; // get the path from the URL
+            $urlParams = $url['query']; // get the query string from the URL
+
+        }
+    }
+
     parse_str($urlParams, $urlParams); // convert the query string to an associative array
 
     $urlParams['status'] = $msg; // add the error message to the URL parameters / overwrite it if it already exists
 
-    $url = $strippedURL . '?' . http_build_query($urlParams); // rebuild the URL with the new parameters
-
-    // redirect to the previous page
-    header('Location: ' . $url);
-
-    //echo "Redirecting to: $url";
-    exit();
+    redirect($path . '?' . http_build_query($urlParams)); // redirect to the previous page with the error message
 }
 
 /**
@@ -60,6 +69,9 @@ $errorDict = [
     // input format errors
     "500" => "Error! Invalid input format for field: ",
     "501" => "Error! Input too long for field: ",
+
+    // database errors
+    "600" => "Error! Database not set up correctly.",
 ];
 
 function getErrorMsg(bool $alertError = true): string
@@ -71,7 +83,6 @@ function getErrorMsg(bool $alertError = true): string
 
         // sanitize status (remove all characters except numbers & unicode letters)
         $status = preg_replace('/[^a-zA-Z0-9éÉ :-]/', '', $status); // TODO: better sanitization
-        // echo "<p>Status: $status</p>";
 
         // first 3 characters of status are the error code
         $code = substr($status, 0, 3);
