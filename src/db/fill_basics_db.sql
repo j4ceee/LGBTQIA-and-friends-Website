@@ -27,6 +27,18 @@ VALUES
     (15, 'Picknick', 'Picnic', 'Genießt die Sonne und die frische Luft bei einem gemütlichen Picknick im Park.', 'Enjoy the sun and fresh air with a cozy picnic in the park.'),
     (16, 'Workshop', 'Workshop', 'Lerne neue Fähigkeiten und Techniken in einem Workshop.', 'Learn new skills and techniques in a workshop.');
 
+INSERT INTO `event_locations` (`id`, `name`)
+VALUES
+    (1, 'Hochschule Ansbach'),
+    (2, 'Raum der Begegnung, Geb. 51, HS Ansbach'),
+    (3, '54.2.1, HS Ansbach'),
+    (4, '70.1.5, HS Ansbach'),
+    (5, '70.1.4, HS Ansbach'),
+    (6, '70.1.4 / 70.1.5, HS Ansbach'),
+    (7, '92.1.27, HS Ansbach'),
+    (8, '54.0.2, HS Ansbach'),
+    (9, '92.0.13, HS Ansbach');
+
 /*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
