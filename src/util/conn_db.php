@@ -2,22 +2,26 @@
 
 class DBConnection {
     private ?PDO $connection;
-    private string $dbname = "lgbtfriendsdb"; // Consider loading from environment variables
-    private string $servername = "localhost"; // server name to connect to
-    private string $username = "root"; // username to connect to server
-    private string $password = ""; // password to connect to server
+    private string $dbname;
+    private string $servername;
+    private string $username;
+    private string $password;
 
     public function __construct() {
+        $this->dbname = getenv('DB_NAME');
+        $this->servername = getenv('DB_HOST');
+        $this->username = getenv('DB_USER');
+        $this->password = trim(file_get_contents(getenv('PASSWORD_FILE_PATH')));
         $this->connect();
     }
 
     private function connect(): void
     {
-        try {
-            $servername = $this->servername;
-            $username = $this->username;
-            $password = $this->password;
+        $servername = $this->servername;
+        $username = $this->username;
+        $password = $this->password;
 
+        try {
             $this->connection = new PDO("mysql:host=$servername", $username, $password);
         } catch(PDOException) {
             $this->connection = null;
@@ -64,7 +68,7 @@ class DBConnection {
     function checkDBSchema(): bool|array
     // returns true if all tables exist, otherwise returns an array of missing tables
     {
-        $reqTables = array("developers", "games", "game_platform_link", "game_platform_player_link", "platforms", "playermodes", "accounts");
+        $reqTables = array("event_types", "events", "accounts");
 
         if ($this->connection === null) {
             return false;

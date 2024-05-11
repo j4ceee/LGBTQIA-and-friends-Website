@@ -1,5 +1,7 @@
 <?php
-require_once(dirname(__DIR__) . '/util/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/utils.php'); // include utility functions
+require_once(__DIR__ . '/conf.php'); // include configuration file
 
 $dbConnection = new DBConnection();
 $PDO = $dbConnection->getConnection();
@@ -17,8 +19,7 @@ if ($PDO !== null) {
         if ($tablesComplete === true) {
             // database exists and is complete -> stop the script and do nothing -> redirect to index.php
             // echo "Database is complete<br>";
-            header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2) . "/index.php");
-            exit();
+            redirect(); // redirect to home page
         }
         if (is_array($tablesComplete) && !in_array("accounts", $tablesComplete)) {
             $tableExists = true;
@@ -67,6 +68,11 @@ if ($PDO !== null) {
             $PDO->exec($sql);
         }
 
+        $sql = file_get_contents(dirname(__DIR__) . '/db/fill_basics_db.sql'); // read the SQL file - returns false if file does not exist
+        if ($sql !== false) {
+            $PDO->exec($sql);
+        }
+
         // restore content of "accounts" table
         if (isset($accounts)) {
             $stmt = $PDO->prepare("INSERT INTO accounts (username, password, email) VALUES (:username, :password, :email)");
@@ -80,7 +86,5 @@ if ($PDO !== null) {
     }
 }
 
-// redirect back to index.php
-header("Location: https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'], 2) . "/index.php");
-exit();
+redirect(); // redirect to home page
 

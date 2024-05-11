@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__ . '/validate.php'); // include database connection file
+
 function template_footer(array $scripts = null): void
 {
     // ------------------- LOGIN CHECK -------------------
@@ -33,5 +35,5 @@ EOT;
 </body>
 </html>
 EOT;
-    //getErrorMsg();
+    getErrorMsg();
 }
