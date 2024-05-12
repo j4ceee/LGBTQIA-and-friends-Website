@@ -60,7 +60,17 @@ template_header($dbConnection, $lang, 'Manage Event');
 
             <div class="event_detail event_detail_location">
                 <label for="event_location">Ort<abbr class="form_req_marking">*</abbr></label>
-                <input type="text" class="lgbt_input event_location" id="event_location" name="event_location" placeholder="Ort" required>
+                <input type="text" class="lgbt_input event_location" id="event_location" name="event_location" placeholder="Ort" required list="event_location_list">
+                <datalist id="event_location_list">
+                    <?php
+                    $stmt = $PDO->prepare('SELECT name FROM event_locations ORDER BY name ASC');
+                    $stmt->execute();
+                    $event_locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    for ($i = 0; $i < count($event_locations); $i++) {
+                        echo '<option value="' . $event_locations[$i]['name'] . '">';
+                    }
+                    ?>
+                </datalist>
             </div>
 
             <div>
@@ -79,9 +89,9 @@ template_header($dbConnection, $lang, 'Manage Event');
                     <?php
                     $stmt = $PDO->prepare('SELECT name_de FROM event_types ORDER BY id ASC');
                     $stmt->execute();
-                    $event_types = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    for ($i = 0; $i < count($event_types); $i++) {
-                        echo '<option data-value="'. $i .'" value="' . $event_types[$i]['name_de'] . '">';
+                    $event_type_de = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    for ($i = 0; $i < count($event_type_de); $i++) {
+                        echo '<option data-value="'. $i .'" value="' . $event_type_de[$i]['name_de'] . '">';
                     }
                     ?>
                 </datalist>
@@ -99,9 +109,9 @@ template_header($dbConnection, $lang, 'Manage Event');
                     <?php
                     $stmt = $PDO->prepare('SELECT name_en FROM event_types ORDER BY id ASC');
                     $stmt->execute();
-                    $event_types = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    for ($i = 0; $i < count($event_types); $i++) {
-                        echo '<option data-value="'. $i .'" value="' . $event_types[$i]['name_en'] . '">';
+                    $event_type_en = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    for ($i = 0; $i < count($event_type_en); $i++) {
+                        echo '<option data-value="'. $i .'" value="' . $event_type_en[$i]['name_en'] . '">';
                     }
                     ?>
                 </datalist>

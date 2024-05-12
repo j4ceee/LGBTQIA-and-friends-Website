@@ -30,8 +30,8 @@ services:
     environment:
       - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/db-password
       - MARIADB_DATABASE=lgbtfriendsdb
-    expose:
-      - 3306
+    ports:
+      - 9001:3306
     healthcheck:
       test:  ["CMD", "/usr/local/bin/healthcheck.sh", "--su-mysql", "--connect",  "--innodb_initialized"]
       interval: 10s

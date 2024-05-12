@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="3bd1aa90-b2d8-4023-8caa-28b0a177a5ca">
+    <data-source source="LOCAL" name="Docker LGBTQIA+ &amp; friends" uuid="fb5ee069-ecbd-4bea-accd-1b0a8f3bfb46">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://localhost:3306</jdbc-url>
+      <jdbc-url>jdbc:mariadb://localhost:9001/lgbtfriendsdb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

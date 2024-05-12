@@ -70,6 +70,9 @@ $errorDict = [
     "500" => "Error! Invalid input format for field: ",
     "501" => "Error! Input too long for field: ",
 
+    "502" => "Error! End date must be after start date.",
+    "503" => "Error! One of the event names already exists in the database.",
+
     // database errors
     "600" => "Error! Database not set up correctly.",
 ];
@@ -81,8 +84,8 @@ function getErrorMsg(bool $alertError = true): string
     if (isset($_GET['status'])) {
         $status = (string)$_GET['status'];
 
-        // sanitize status (remove all characters except numbers & unicode letters)
-        $status = preg_replace('/[^a-zA-Z0-9éÉ :-]/', '', $status); // TODO: better sanitization
+        // sanitize status (remove all characters except numbers, letters, :, _, -)
+        $status = preg_replace('/[^a-zA-Z0-9éÉ:_-]/', '', $status); // TODO: better sanitization
 
         // first 3 characters of status are the error code
         $code = substr($status, 0, 3);
@@ -92,6 +95,9 @@ function getErrorMsg(bool $alertError = true): string
 
         // separate camelCase words with spaces
         $info = preg_replace('/(?<! )[A-Z]/', ' $0', $info);
+
+        // make first letter after underscore uppercase
+        $info = str_replace('_', ' ', $info);
 
         // capitalize first letter
         $info = ucfirst($info);

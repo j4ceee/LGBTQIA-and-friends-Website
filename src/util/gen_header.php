@@ -130,17 +130,17 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
 
         echo <<<EOT
         <form class="auth_form" id="auth_window" action="./util/auth_logout.php" method="post" autocomplete="off">
-        <div class="auth_greeting">
-            <p class="auth_welcome">$l_user_greet</p>
-            <div class="auth_user">
-                <p class="auth_user">$username</p>
-                <p class="auth_welcome">!</p>
+            <div class="auth_greeting">
+                <p class="auth_welcome">$l_user_greet</p>
+                <div class="auth_user">
+                    <p class="auth_user">$username</p>
+                    <p class="auth_welcome">!</p>
+                </div>
             </div>
-        </div>
-        <button class="auth_submit_btn auth_signout_btn" type="submit">
-            <p>$l_logout</p>
-            <div class="auth_input_icon auth_submit_icon" style = "mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain" ></div >
-        </button>
+            <button class="auth_submit_btn auth_signout_btn" type="submit">
+                <p>$l_logout</p>
+                <div class="auth_input_icon auth_submit_icon" style = "mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain" ></div >
+            </button>
         EOT;
     }
     echo <<<EOT
