@@ -6,13 +6,6 @@ require_once(__DIR__ . '/validate.php');
 require_once(__DIR__ . '/crud_add.php');
 require_once(__DIR__ . '/gen_ics.php');
 
-$dbConnection = new DBConnection();
-$PDO = $dbConnection->useDB();
-
-if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
-}
-
 // ------------------- LOGIN CHECK -------------------
 
 require_once(__DIR__ . '/auth_session_start.php'); // start session
@@ -29,6 +22,18 @@ if (!$loggedIn) {
 */
 
 // ----------------- LOGIN CHECK END -------------------
+
+// ------------------- DATABASE CONNECTION -------------------
+
+$dbConnection = new DBConnection();
+$PDO = $dbConnection->useDB();
+
+if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
+    redirectError("/", "600");
+}
+
+// ----------------- DATABASE CONNECTION END -------------------
+
 
 if (ENV === "dev") {
     ini_set('display_errors', '1');

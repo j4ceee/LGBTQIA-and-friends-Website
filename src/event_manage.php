@@ -1,20 +1,14 @@
 <?php
 require_once(__DIR__ . '/util/gen_header.php');
 require_once(__DIR__ . '/util/gen_footer.php');
-require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 require_once(__DIR__ . '/util/utils.php'); // include utility functions
 require_once(__DIR__ . '/util/conf.php'); // include configuration file
 
-$dbConnection = new DBConnection();
-$PDO = $dbConnection->useDB();
+// ------------------- LOGIN CHECK -------------------
 
-if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirect();
-}
+require_once(__DIR__ . '/auth_session_start.php'); // start session
 
-require_once(__DIR__ . '/util/auth_session_start.php'); // start session
-
-require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
+require_once(__DIR__ . '/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
 /*
@@ -23,9 +17,26 @@ if (!$loggedIn) {
 }
 */
 
-//---------------- Edit mode --------------------
+// ----------------- LOGIN CHECK END -------------------
+
+// ------------------- DATABASE CONNECTION -------------------
+
+require_once(__DIR__ . '/conn_db.php'); // include database connection file
+
+$dbConnection = new DBConnection();
+$PDO = $dbConnection->useDB();
+
+if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
+    redirectError("/", "600");
+}
+
+// ----------------- DATABASE CONNECTION END -------------------
+
+// ---------------------- EDIT MODE ----------------------------
+
 //TODO: implement edit mode
-//-------------- Edit mode end --------------------
+
+// ------------------- EDIT MODE END ---------------------------
 
 if (!isset($_SESSION['lang'])) {
     $user_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);

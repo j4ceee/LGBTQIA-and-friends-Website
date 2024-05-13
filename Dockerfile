@@ -16,5 +16,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --from=deps app/vendor/ /var/www/html/vendor
 COPY ./src /var/www/html
 
+# Change the ownership of the /var/www/html/cal directory to www-data
+RUN chown -R www-data:www-data /var/www/html/cal
+
 # Switch to a non-privileged user (defined in the base image) that the app will run under.
 USER www-data

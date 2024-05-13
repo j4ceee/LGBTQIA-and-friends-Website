@@ -12,7 +12,7 @@ class ICSGenerator
 
         $filepath = dirname(__DIR__) . '/cal/';
 
-        // generate ICS file including events from the past 12 months & next 6 months
+        // generate ICS file including events from the past 12 months & next 8 months
         foreach ($this->languages as $lang) {
             $ics = $this->genICSheader($lang);
             $events = $this->getEvents($lang);
@@ -118,6 +118,9 @@ class ICSGenerator
 
         if ($year !== "") {
             $sql .= " WHERE YEAR(e.date_start) = :year";
+        } else {
+            // get events from the past 12 months and the next 8 months
+            $sql .= " WHERE e.date_start >= DATE_SUB(NOW(), INTERVAL 12 MONTH) AND e.date_start <= DATE_ADD(NOW(), INTERVAL 8 MONTH)";
         }
 
         $stmt = $PDO->prepare($sql);
