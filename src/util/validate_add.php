@@ -4,13 +4,7 @@ require_once(__DIR__ . '/utils.php'); // include utility functions
 require_once(__DIR__ . '/conf.php'); // include configuration file
 require_once(__DIR__ . '/validate.php');
 require_once(__DIR__ . '/crud_add.php');
-
-$dbConnection = new DBConnection();
-$PDO = $dbConnection->useDB();
-
-if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
-}
+require_once(__DIR__ . '/gen_ics.php');
 
 // ------------------- LOGIN CHECK -------------------
 
@@ -28,6 +22,18 @@ if (!$loggedIn) {
 */
 
 // ----------------- LOGIN CHECK END -------------------
+
+// ------------------- DATABASE CONNECTION -------------------
+
+$dbConnection = new DBConnection();
+$PDO = $dbConnection->useDB();
+
+if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
+    redirectError("/", "600");
+}
+
+// ----------------- DATABASE CONNECTION END -------------------
+
 
 if (ENV === "dev") {
     ini_set('display_errors', '1');
@@ -156,4 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $PDO->commit();
     //$PDO->rollBack();
+
+    $ICSGen = new ICSGenerator();
+    $ICSGen->generateICS();
 }

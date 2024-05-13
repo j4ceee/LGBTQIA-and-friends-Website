@@ -62,12 +62,12 @@ CREATE TABLE IF NOT EXISTS `events`
     `date_end`          datetime NOT NULL,               -- end date of the event
     -- `date_stamp`     datetime NOT NULL,               -- date of creation of the calendar -> set to current date in php
     `uid`               varchar(65) NOT NULL,            -- unique identifier of the event
-    `date_created`      datetime NOT NULL,               -- date of creation of the event
-    `date_modified`     datetime NOT NULL,               -- date of last modification of the event
+    `date_created`      datetime NOT NULL,               -- date of creation of the event, should NEVER be changed after creation
+    `date_modified`     datetime NOT NULL,               -- date of last modification of the event, should be updated on every change
     `desc_de_override`  varchar(255) NULL,               -- description of the event in german (override) -> if NULL use default, if '-' use no description, else use the override
     `desc_en_override`  varchar(255) NULL,               -- description of the event in english (override) -> if NULL use default, if '-' use no description, else use the override
     `sequence`          int(11) NOT NULL DEFAULT 0,      -- sequence number of the event / "version" of the event
-    -- `transp`            varchar(10) NOT NULL,         -- transparency of the event (OPAQUE, TRANSPARENT) -> set to OPAQUE in php
+    -- `transp`         varchar(10) NOT NULL,            -- transparency of the event (OPAQUE, TRANSPARENT) -> set to OPAQUE in php
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`event_type_id`) REFERENCES `event_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,

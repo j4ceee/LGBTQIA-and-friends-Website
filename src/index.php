@@ -41,6 +41,7 @@ template_header($dbConnection, $lang, 'home');
             <div class="section_header_underline"></div>
         </div>
         <a href="./event_manage.php">Add Event</a>
+        <a href="./util/refresh_ics.php">Refresh ICS files</a>
     </section>
 
     <section class="about">

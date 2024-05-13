@@ -1,20 +1,14 @@
 <?php
 require_once(__DIR__ . '/util/gen_header.php');
 require_once(__DIR__ . '/util/gen_footer.php');
-require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 require_once(__DIR__ . '/util/utils.php'); // include utility functions
 require_once(__DIR__ . '/util/conf.php'); // include configuration file
 
-$dbConnection = new DBConnection();
-$PDO = $dbConnection->useDB();
+// ------------------- LOGIN CHECK -------------------
 
-if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirect();
-}
+require_once(__DIR__ . '/auth_session_start.php'); // start session
 
-require_once(__DIR__ . '/util/auth_session_start.php'); // start session
-
-require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
+require_once(__DIR__ . '/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
 /*
@@ -23,9 +17,26 @@ if (!$loggedIn) {
 }
 */
 
-//---------------- Edit mode --------------------
+// ----------------- LOGIN CHECK END -------------------
+
+// ------------------- DATABASE CONNECTION -------------------
+
+require_once(__DIR__ . '/conn_db.php'); // include database connection file
+
+$dbConnection = new DBConnection();
+$PDO = $dbConnection->useDB();
+
+if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
+    redirectError("/", "600");
+}
+
+// ----------------- DATABASE CONNECTION END -------------------
+
+// ---------------------- EDIT MODE ----------------------------
+
 //TODO: implement edit mode
-//-------------- Edit mode end --------------------
+
+// ------------------- EDIT MODE END ---------------------------
 
 if (!isset($_SESSION['lang'])) {
     $user_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -40,7 +51,7 @@ require_once(__DIR__ . '/lang/' . $lang . '.php');
 template_header($dbConnection, $lang, 'Manage Event');
 ?>
 
-    <form class="manage_event_form" action="./util/validate_add.php" method="post">
+    <form class="manage_event_form" action="./util/validate_add.php" method="post" autocomplete="off">
         <fieldset class="event_general">
             <legend>Event Allgemein</legend>
 
@@ -63,7 +74,7 @@ template_header($dbConnection, $lang, 'Manage Event');
                 <input type="text" class="lgbt_input event_location" id="event_location" name="event_location" placeholder="Ort" required list="event_location_list">
                 <datalist id="event_location_list">
                     <?php
-                    $stmt = $PDO->prepare('SELECT name FROM event_locations ORDER BY name ASC');
+                    $stmt = $PDO->prepare('SELECT name FROM event_locations ORDER BY name');
                     $stmt->execute();
                     $event_locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     for ($i = 0; $i < count($event_locations); $i++) {
@@ -87,7 +98,7 @@ template_header($dbConnection, $lang, 'Manage Event');
                 <input type="text" class="lgbt_input event_name_de" id="event_name_de" name="event_name_de" placeholder="Titel" required list="event_name_de_list" oninput="setOtherTitle('de')">
                 <datalist id="event_name_de_list">
                     <?php
-                    $stmt = $PDO->prepare('SELECT name_de FROM event_types ORDER BY id ASC');
+                    $stmt = $PDO->prepare('SELECT name_de FROM event_types ORDER BY id');
                     $stmt->execute();
                     $event_type_de = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     for ($i = 0; $i < count($event_type_de); $i++) {
@@ -107,7 +118,7 @@ template_header($dbConnection, $lang, 'Manage Event');
                 <input type="text" class="lgbt_input event_name_en" id="event_name_en" name="event_name_en" placeholder="Title" required list="event_name_en_list" oninput="setOtherTitle('en')">
                 <datalist id="event_name_en_list">
                     <?php
-                    $stmt = $PDO->prepare('SELECT name_en FROM event_types ORDER BY id ASC');
+                    $stmt = $PDO->prepare('SELECT name_en FROM event_types ORDER BY id');
                     $stmt->execute();
                     $event_type_en = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     for ($i = 0; $i < count($event_type_en); $i++) {
