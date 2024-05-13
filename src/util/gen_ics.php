@@ -4,10 +4,13 @@ class ICSGenerator
 {
     private array $languages = ["de", "en"];
     private array $years = [];
-    function generateICS(): void
+
+    public function generateICS(): void
     {
         // get all years between 2024 and the current year
         $this->years = range(2024, date("Y"));
+
+        $filepath = dirname(__DIR__) . '/cal/';
 
         // generate ICS file including events from the past 12 months & next 6 months
         foreach ($this->languages as $lang) {
@@ -17,14 +20,9 @@ class ICSGenerator
             $ics .= $this->genICSfooter();
 
             // save ICS file
+
             $filename = "lgbt-hs-ansbach-events-$lang.ics";
-            //file_put_contents($filename, $ics);
-            echo "-----------------------------------\n";
-            echo $filename . "\n";
-            echo "<pre>";
-            echo $ics;
-            echo "</pre>";
-            echo "-----------------------------------\n";
+            file_put_contents($filepath . $filename, $ics);
         }
 
         // generate ICS files for each language and entire year
@@ -37,19 +35,13 @@ class ICSGenerator
 
                 // save ICS file
                 $filename = "lgbt-hs-ansbach-events-$year-$lang.ics";
-                // file_put_contents($filename, $ics);
-                echo "-----------------------------------\n";
-                echo $filename . "\n";
-                echo "<pre>";
-                echo $ics;
-                echo "</pre>";
-                echo "-----------------------------------\n";
+                file_put_contents($filepath . $filename, $ics);
             }
         }
 
     }
 
-    function genICSheader(string $lang, string $year = "")
+    private function genICSheader(string $lang, string $year = ""): string
     {
         if ($lang === "de") {
             $calname = "LGBT+ & friends Terminplan";
@@ -78,25 +70,25 @@ class ICSGenerator
         //uppercase the language
         $lang = strtoupper($lang);
 
-        $header = "BEGIN:VCALENDAR\n";
-        $header .= "PRODID:-//LGBT-HS-Ansbach//LGBT-HS-Ansbach//$lang\n";
-        $header .= "VERSION:2.0\n";
-        $header .= "CALSCALE:GREGORIAN\n";
-        $header .= "METHOD:PUBLISH\n";
+        $header = "BEGIN:VCALENDAR\r\n";
+        $header .= "PRODID:-//LGBT-HS-Ansbach//LGBT-HS-Ansbach//$lang\r\n";
+        $header .= "VERSION:2.0\r\n";
+        $header .= "CALSCALE:GREGORIAN\r\n";
+        $header .= "METHOD:PUBLISH\r\n";
         $header .= $this->formatLineLength("X-WR-CALNAME:$calname");
-        $header .= "X-WR-TIMEZONE:Europe/Berlin\n";
+        $header .= "X-WR-TIMEZONE:Europe/Berlin\r\n";
         $header .= $this->formatLineLength("X-WR-CALDESC:$caldesc");
 
         return $header;
     }
 
-    function genICSfooter(): string
+    private function genICSfooter(): string
     {
         $footer = "END:VCALENDAR";
         return $footer;
     }
 
-    function getEvents(string $lang, string $year = ""): array
+    private function getEvents(string $lang, string $year = ""): array
     {
         global $PDO;
 
@@ -142,38 +134,49 @@ class ICSGenerator
         return $events;
     }
 
-    function genICSbody(array $events): string
+    private function genICSbody(array $events): string
     {
         $ics_body = "";
         foreach ($events as $event) {
-            $ics_event = "BEGIN:VEVENT\n";
-            $ics_event .= "DTSTART:" . $this->formatDateTime($event['date_start']) . "\n";
-            $ics_event .= "DTEND:" . $this->formatDateTime($event['date_end']) . "\n";
+            $ics_event = "BEGIN:VEVENT\r\n";
+            $ics_event .= "DTSTART:" . $this->formatDateTime($event['date_start']) . "\r\n";
+            $ics_event .= "DTEND:" . $this->formatDateTime($event['date_end']) . "\r\n";
             //DTSTAMP is the current time when this file is generated
-            $ics_event .= "DTSTAMP:" . $this->formatDateTime(date("Y-m-d H:i:s")) . "\n";
-            $ics_event .= "UID:" . $event['uid'] . "\n";
-            $ics_event .= "CREATED:" . $this->formatDateTime($event['date_created']) . "\n";
-            $ics_event .= "LAST-MODIFIED:" . $this->formatDateTime($event['date_modified']) . "\n";
+            $ics_event .= "DTSTAMP:" . $this->formatDateTime(date("Y-m-d H:i:s")) . "\r\n";
+            $ics_event .= "UID:" . $event['uid'] . "\r\n";
+            $ics_event .= "CREATED:" . $this->formatDateTime($event['date_created']) . "\r\n";
+            $ics_event .= "LAST-MODIFIED:" . $this->formatDateTime($event['date_modified']) . "\r\n";
 
             // for description:
+            // if description has CRLF linebreaks, replace them with literal "\n"
+            $event_desc_ovr = $event['event_desc'];
+            if ($event['event_desc'] !== NULL && $event['event_desc'] !== "" && $event['event_desc'] !== "-") {
+                $event_desc_ovr = str_replace(["\r\n", "\n"], "\\n", $event['event_desc']);
+            }
+
+            $event_desc_def = $event['event_type_desc'];
+            if ($event['event_type_desc'] !== NULL && $event['event_type_desc'] !== "") {
+                $event_desc_def = str_replace(["\r\n", "\n"], "\\n", $event['event_type_desc']);
+            }
+
             /* if $event['event_desc'] is "-" -> use no description at all
              * if desc is NULL -> use default description ($event['event_type_desc'] here)
              * if $event['event_desc'] is set -> use this description
              */
             if ($event['event_desc'] === "-") {
                 // do nothing, no description
-            } else if ($event['event_desc'] === NULL) {
-                $ics_event .= $this->formatLineLength("DESCRIPTION:" . $event['event_type_desc']);
+            } else if ($event['event_desc'] === NULL || $event['event_desc'] === "") {
+                $ics_event .= $this->formatLineLength("DESCRIPTION:" . $event_desc_def);
             } else {
-                $ics_event .= $this->formatLineLength("DESCRIPTION:" . $event['event_desc'] . "\n");
+                $ics_event .= $this->formatLineLength("DESCRIPTION:" . $event_desc_ovr);
             }
 
             $ics_event .= $this->formatLineLength("LOCATION:" . $event['event_location']);
-            $ics_event .= "SEQUENCE:" . $event['sequence'] . "\n";
-            $ics_event .= "STATUS:CONFIRMED\n";
+            $ics_event .= "SEQUENCE:" . $event['sequence'] . "\r\n";
+            $ics_event .= "STATUS:CONFIRMED\r\n";
             $ics_event .= $this->formatLineLength("SUMMARY:" . $event['event_type']);
-            $ics_event .= "TRANSP:OPAQUE\n";
-            $ics_event .= "END:VEVENT\n";
+            $ics_event .= "TRANSP:OPAQUE\r\n";
+            $ics_event .= "END:VEVENT\r\n";
 
             $ics_body .= $ics_event;
         }
@@ -181,19 +184,19 @@ class ICSGenerator
         return $ics_body;
     }
 
-    function formatLineLength(string $textblock): string
+    private function formatLineLength(string $textblock): string
     {
         // split the textblock into lines with a maximum length of 75 characters, excluding linebreak CRLF
         // the newly created line should start with a space
-        $textblock = wordwrap($textblock, 75, "\n ", true);
+        $textblock = wordwrap($textblock, 75, "\r\n ", true);
 
         //add linrbreak at the end
-        $textblock .= "\n";
+        $textblock .= "\r\n";
 
         return $textblock;
     }
 
-    function formatDateTime(string $datetime): string
+    private function formatDateTime(string $datetime): string
     {
         // datetime format from the database: "YYYY-MM-DD HH:MM:SS" / "Y-m-d H:i:s" in PHP
         // ICS format: "YYYYMMDDTHHMMSSZ", "T" = date/time separator, "Z" = UTC time

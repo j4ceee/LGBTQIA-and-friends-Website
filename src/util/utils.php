@@ -6,7 +6,6 @@ use JetBrains\PhpStorm\NoReturn;
  * REDIRECT FUNCTIONS
  */
 
-
 #[NoReturn] function redirect($path = '/', string $msg = ''): void
 {
     //redirect to the given path, '' = home

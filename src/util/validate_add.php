@@ -40,9 +40,6 @@ if (ENV === "dev") {
     echo "</pre>";
 }
 
-$ICSGen = new ICSGenerator();
-$ICSGen->generateICS();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     validate_event_details($_POST);
 
@@ -158,6 +155,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Event sequence: $event_seq<br>";
     }
 
-    //$PDO->commit();
-    $PDO->rollBack();
+    $PDO->commit();
+    //$PDO->rollBack();
+
+    $ICSGen = new ICSGenerator();
+    $ICSGen->generateICS();
 }
