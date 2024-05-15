@@ -8,4 +8,4 @@ if (!isset($_SESSION['lang'])) {
 
 $lang = $_SESSION['lang'];
 
-require_once(__DIR__ . '/lang/' . $lang . '.php');
+require_once(dirname(__DIR__) . '/lang/' . $lang . '.php');
