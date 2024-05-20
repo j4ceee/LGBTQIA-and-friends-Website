@@ -215,6 +215,22 @@ header {
     z-index: -1;
 }
 
+/* add before element to create a shadow effect around after element */
+.cont_logo_nav:before {
+    content: "";
+    position: absolute;
+    top: -18.4rem;
+    left: -15rem;
+    width: 49rem;
+    height: 24rem;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 14" preserveAspectRatio="none"%3E%3Cpath d="M0,12L0,0L70.438,0L70.438,9.394C64.062,9.74 61.996,10.822 55,12C40.77,14.396 21.5,13.771 0,12Z" style="fill-rule:nonzero;"/%3E%3C/svg%3E');
+    z-index: -2;
+    filter: blur(1rem);
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+}
+
 .logo-header {
     height: 3rem;
     align-self: center;
@@ -910,8 +926,8 @@ p {
 /*--------------------Calendar Page-------------------------*/
 
 .calendar_container {
-    margin: 0;
-    max-width: 60rem;
+    margin: 3rem 0 0 0;
+    max-width: 66rem;
     width: 100%;
 }
 
@@ -923,79 +939,127 @@ p {
     gap: 2rem;
 }
 
-.calendar_item {
+.calendar_item_cont {
     list-style-type: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.calendar_item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    transition: .2s;
+    position: relative;
+
+    /* revert button style */
+    margin: 0;
+    background: none;
+    border: none;
+    color: var(--lgbt-text);
+    text-align: left;
+}
+.calendar_button {
+    cursor: pointer;
+}
+
+.calendar_item:hover,
+.calendar_item:focus-within {
+    background-color: var(--win-selected);
+    transition: .2s;
+}
+
+.calendar_item::after {
+    /* dividing line */
+    content: "";
+    position: absolute;
+    height: 1px;
+    background-color: var(--win-border);
+    bottom: -1rem;
+    left: 10%;
+    right: 10%;
 }
 
 .calendar_item_date {
     min-width: fit-content;
-    width: 13%;
-    flex-basis: 13%;
+    width: 16%;
+    flex-basis: 16%;
 }
-
 .calendar_item_date > p {
     margin: 0;
     padding-bottom: .1rem;
 }
 .calendar_item_day {
-    font-size: 1.4rem;
-    line-height: 1.4rem;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
     font-family: "Baloo 2 SemiBold";
     color: var(--alt-blue);
 }
 .calendar_item_month {
-    font-size: 1.2rem;
-    line-height: 1.2rem;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
     font-family: "Baloo 2 SemiBold";
     color: var(--alt-blue);
 }
 .calendar_item_year {
     font-family: "Baloo 2 Medium";
     font-size: .9rem;
-    line-height: 1rem;
+    line-height: 1.2rem;
 }
 
 .calendar_item_info
 {
-    width: 62%;
-    flex-basis: 62%;
+    width: 52%;
+    flex-basis: 52%;
 }
-
 .calendar_item_name {
-    font-size: 1.4rem;
-    line-height: 1.4rem;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
     font-family: "Baloo 2 SemiBold";
     color: var(--alt-blue);
     margin: 0;
     padding-bottom: .8rem;
 }
+
 .calendar_item_desc {
     font-size: 1rem;
     line-height: 1.3rem;
     font-family: "Baloo 2 Medium";
     padding-bottom: .3rem;
     margin: 0;
+    text-align: justify;
+}
+.calendar_item_desc_ctrl {
+    padding: .4rem 0 .4rem 0;
+    cursor: pointer;
+}
+/* credit: https://stackoverflow.com/a/73447722 */
+.calendar_item_desc .calendar_item_desc_ctrl {
+    transition: margin 150ms ease-out;
+}
+.calendar_item_desc[open] .calendar_item_desc_ctrl {
+    margin-bottom: 10px;
 }
 
 .calendar_item_location {
     width: 25%;
     flex-basis: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
-
 .calendar_item_loc_time {
     text-align: right;
-    font-size: 1.4rem;
-    line-height: 1.4rem;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
     font-family: "Baloo 2 SemiBold";
     margin: 0;
     padding-bottom: .1rem;
 }
-
 .calendar_item_loc_name {
     text-align: right;
     font-size: 1.2rem;
@@ -1009,5 +1073,49 @@ p {
 @media screen and (max-width: 768px) {
     .calendar_item {
         flex-direction: column;
+    }
+
+    .calendar_item_date {
+        width: 100%;
+        flex-basis: 100%;
+    }
+    .calendar_item_date > p {
+        padding-right: .3rem;
+    }
+    .calendar_item_day {
+        display: inline-block;
+        font-size: 1.4rem;
+        line-height: 1.4rem;
+    }
+    .calendar_item_month {
+        display: inline-block;
+    }
+
+    .calendar_item_info {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+    }
+    .calendar_item_name {
+        font-size: 1.4rem;
+        line-height: 1.4rem;
+    }
+
+    .calendar_item_location {
+        order: 2;
+        width: 100%;
+        flex-basis: 100%;
+        align-items: flex-start;
+    }
+
+    .calendar_item_loc_name {
+        text-align: left;
+        font-size: 1.0rem;
+        line-height: 1.0rem;
+    }
+    .calendar_item_loc_time {
+        text-align: left;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
     }
 }

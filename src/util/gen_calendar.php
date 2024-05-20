@@ -15,10 +15,8 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
             // get all events
             $events = get_all_events();
 
-            if ($events === false) {
-                echo "<li class='calendar_item'>";
+            if ($events === false || count($events) === 0) {
                 echo "<p class='calendar_item_name'>" . lang_strings['no_events'] . "</p>";
-                echo "</li>";
             } else {
                 foreach ($events as $event) {
                     /**
@@ -26,6 +24,9 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
                      */
                     // get event name depending on language
                     $event_name = htmlspecialchars($event['name_'.$lang]);
+
+                    // get event id
+                    $event_id = htmlspecialchars($event['id']);
 
                     /**
                      * Location Formatting
@@ -52,6 +53,8 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
                     // format date start as day, month int -1, year
                     try {
                         $date_start = new DateTime(htmlspecialchars($event['date_start']));
+                        // convert to local timezone (Berlin)
+                        $date_start->setTimezone(new DateTimeZone('Europe/Berlin'));
                     } catch (Exception $e) {
                         if ($admin) {
                             echo "<li class='calendar_item'>";
@@ -62,7 +65,12 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
                         continue; // skip event if date is invalid
                     }
 
-                    $date_start_day = $date_start->format('d');
+                    // get day depending on language (e.g. 1. for de, 1st for en)
+                    if ($lang === 'de') {
+                        $date_start_day = $date_start->format('j.');
+                    } else {
+                        $date_start_day = $date_start->format('jS');
+                    }
 
                     $date_start_month = $date_start->format('m') - 1;
                     // get month name from lang_strings
@@ -80,36 +88,56 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
                     /**
                      * Output
                      */
-                    echo "<li class='calendar_item'>";
-                        echo "<div class='calendar_item_date'>";
-                            echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
-                            echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
-                            echo "<p class='calendar_item_year'>" . $date_start_year . "</p>";
-                        echo "</div>";
+                    echo "<li class='calendar_item_cont'>";
+                    if ($event_desc !== "") {
+                        echo "<div class='calendar_item calendar_button' id='calendar_button_".$event_id."' data-event-id='".$event_id."' aria-expanded='false'>";
+                    } else {
+                        echo "<div class='calendar_item'>";
+                    }
+                            echo "<time class='calendar_item_date' datetime='".$date_start->format('Y-m-d')."'>";
+                                if ($lang === 'de') {
+                                    echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
+                                    echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
+                                } else {
+                                    echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
+                                    echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
+                                }
+                                echo "<p class='calendar_item_year'>" . $date_start_year . "</p>";
+                            echo "</time>";
 
-                        echo "<div class='calendar_item_info'>";
-                            echo "<p class='calendar_item_name'>" . $event_name . "</p>";
-                            // desc container should always be there, even if empty, for styling purposes
-                            echo "<p class='calendar_item_desc'>" . nl2br($event_desc) . "</p>";
-                        echo "</div>";
+                            echo "<div class='calendar_item_info'>";
+                                echo "<p class='calendar_item_name'>" . $event_name . "</p>";
+                                // desc container should always be there, for styling purposes, if empty -> empty p
+                                if ($event_desc === "") {
+                                    echo "<p class='calendar_item_desc'></p>";
+                                } else {
+                                    echo "<details id='event_det_".$event_id."' class='calendar_item_desc'><summary class='calendar_item_desc_ctrl' data-event-id='".$event_id."'>Details</summary>" . nl2br($event_desc) . "</details>";
+                                }
 
-                        echo "<div class='calendar_item_location'>";
-                            echo "<p class='calendar_item_loc_time'>" . $date_start_time . "</p>";
-                            echo "<p class='calendar_item_loc_name'>" . $event_location . "</p>";
+                            echo "</div>";
+
+                            echo "<div class='calendar_item_location'>";
+                                echo "<time class='calendar_item_loc_time' datetime='".$date_start->format('H:i')."'>" . $date_start_time . "</time>";
+                                echo "<p class='calendar_item_loc_name' lang='de'>" . $event_location . "</p>";
+                            echo "</div>";
                         echo "</div>";
                     echo "</li>";
                 }
             }
-
-
-
     echo "</section>";
 }
 
 function get_all_events(): false|array
 {
     global $PDO;
+    global $dbConnection;
+
+    if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
+        return false;
+    }
+
     $sql = "SELECT
+                e.id,
                 e.date_start,
                 e.date_end,
                 e.desc_de_override,

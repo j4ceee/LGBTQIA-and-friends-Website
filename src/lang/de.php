@@ -2,6 +2,8 @@
 const lang_strings = [
     'home' => 'Home',
     'cal' => 'Kalender',
+    'event_edit' => 'Veranstaltung bearbeiten',
+    'event_add' => 'Veranstaltung hinzufügen',
     'about' => 'Über uns',
     'title' => 'LGBTQIA+ & friends',
     'uni' => 'Hochschule Ansbach',
