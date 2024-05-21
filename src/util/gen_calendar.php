@@ -10,14 +10,19 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
         echo "</div>";
 
         echo "<div class='calendar_container'>";
-            echo "<ul class='calendar_list'>";
-
             // get all events
             $events = get_all_events();
 
             if ($events === false || count($events) === 0) {
+                echo "<ul class='calendar_list calendar_error'>";
                 echo "<p class='calendar_item_name'>" . lang_strings['no_events'] . "</p>";
             } else {
+                if (count($events) > 2) {
+                    echo "<ul class='calendar_list calendar_large'>";
+                } else {
+                    echo "<ul class='calendar_list calendar_small'>";
+                }
+
                 foreach ($events as $event) {
                     /**
                      * Event Name Formatting
@@ -124,6 +129,56 @@ function gen_calendar($lang, int $headerLevel = 2, bool $admin = false)
                     echo "</li>";
                 }
             }
+    echo "</ul>";
+
+    // get all ics files with the following names: lgbt-hs-ansbach-events-LANG.ics / lgbt-hs-ansbach-events-YEAR-LANG.ics
+    $ics_filepath = dirname(__DIR__) . '/cal/';
+    $ics_main_file = glob($ics_filepath . 'lgbt-hs-ansbach-events-'.$lang.'.ics');
+    // get all year files
+    $ics_year_files = glob($ics_filepath . 'lgbt-hs-ansbach-events-[0-9][0-9][0-9][0-9]-'.$lang.'.ics');
+    rsort($ics_year_files);
+
+
+    if (count($ics_main_file) > 0 && count($ics_year_files) > 0) {
+        // options to copy calendar link to clipboard
+        echo "<details>";
+            echo "<summary class='ical_options_toggle'>". lang_strings['show_ical_controls'] ."</summary>";
+            echo "<div class='calendar_link_copy_cont'>";
+                echo "<div class='default_calendar_copy'>";
+                    echo "<p class='calendar_item_name ical_options_header'>" . lang_strings['default_cal_header'] . "</p>";
+
+                    echo "<div class='calendar_copy_buttons'>";
+                        echo "<a id='default_calendar_link' class='ical_copy_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
+                        echo "<button class='ical_copy_button' id='default_calendar_copy_button'>";
+                            //echo "<img class='default_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
+                            echo lang_strings['copy_link'];
+                        echo "</button>";
+                    echo "</div>";
+                echo "</div>";
+                echo "<div class='year_calendar_copy'>";
+                    echo "<p class='calendar_item_name ical_options_header'>" . lang_strings['year_cal_header'] . "</p>";
+
+                    echo "<label for='year_calendar_select' class='year_calendar_select_label'>". lang_strings['year_cal_select_label'] ."</label>";
+                    // generate dropdown for year files
+                    $latest_year = substr($ics_year_files[0], -11, 4);
+                    echo "<select id='year_calendar_select' class='year_calendar_select'>";
+                        foreach ($ics_year_files as $file) {
+                            $year = substr($file, -11, 4);
+                            echo "<option data-file='lgbt-hs-ansbach-events-".$year."-".$lang.".ics' value='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$year."-".$lang.".ics'>". $year ."</option>";
+                        }
+                    echo "</select>";
+
+                    echo "<div class='calendar_copy_buttons'>";
+                        echo "<a id='year_calendar_link' class='ical_copy_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$latest_year."-".$lang.".ics' download='lgbt-hs-ansbach-events-".$latest_year."-".$lang.".ics'>".lang_strings['download']."</a>";
+                        echo "<button class='ical_copy_button' id='year_calendar_copy_button'>";
+                            //echo "<img class='year_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
+                            echo lang_strings['copy_link'];
+                        echo "</button>";
+                    echo "</div>";
+                echo "</div>";
+            echo "</div>";
+        echo "</details>";
+    }
     echo "</section>";
 }
 

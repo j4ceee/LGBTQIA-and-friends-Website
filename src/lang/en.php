@@ -31,6 +31,12 @@ const lang_strings = [
         'November',
         'December'
     ],
+    'default_cal_header' => 'Self-Updating',
+    'year_cal_header' => 'Specific year',
+    'year_cal_select_label' => 'Select year',
+    'show_ical_controls' => 'Show calendar import options',
+    'copy_link' => 'Copy link',
+    'download' => 'Download',
 ];
 
 

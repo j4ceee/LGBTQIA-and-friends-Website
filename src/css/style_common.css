@@ -927,16 +927,32 @@ p {
 
 .calendar_container {
     margin: 3rem 0 0 0;
-    max-width: 66rem;
+    max-width: 68rem;
     width: 100%;
 }
 
 .calendar_list {
-    padding: 0;
+    padding: 1rem 1rem 2rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+.calendar_error {
+    padding: 1.8rem 1rem 1rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calendar_small {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+.calendar_large {
+    height: 70vh;
+    overflow-y: auto;
 }
 
 .calendar_item_cont {
@@ -1068,6 +1084,66 @@ p {
     padding-bottom: .1rem;
     margin: 0;
 
+}
+
+.ical_options_toggle {
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-family: "Baloo 2 Medium";
+    padding: .5rem;
+    color: var(--alt-blue);
+}
+
+.calendar_link_copy_cont {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 1.5rem 0 0 0;
+    flex-wrap: wrap;
+}
+
+.calendar_link_copy_cont > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.ical_options_header {
+    color: var(--lgbt-text);
+    text-align: center;
+}
+.calendar_copy_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.ical_copy_button {
+    background-color: transparent;
+    border: var(--lgbt-blue) 3px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--lgbt-blue);
+    border-radius: .7rem;
+    text-decoration: none;
+    font-family: "Baloo 2 SemiBold";
+    font-size: 1.1rem;
+    padding: .2rem .5rem;
+    transition: 0.2s;
+}
+
+.ical_copy_button:hover {
+    background-color: var(--lgbt-blue);
+    color: var(--lgbt-bg);
+    transition: 0.2s;
 }
 
 @media screen and (max-width: 768px) {
