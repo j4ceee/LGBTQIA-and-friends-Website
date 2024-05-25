@@ -22,7 +22,7 @@ use JetBrains\PhpStorm\NoReturn;
     redirect($path);
 }
 
-#[NoReturn] function redirectToPreviousPage($msg): void
+#[NoReturn] function redirectToPreviousPage(string $msg): void
 {
     $path = '/'; // default path
     $urlParams = ''; // default URL parameters
@@ -43,9 +43,15 @@ use JetBrains\PhpStorm\NoReturn;
 
     parse_str($urlParams, $urlParams); // convert the query string to an associative array
 
-    $urlParams['status'] = $msg; // add the error message to the URL parameters / overwrite it if it already exists
+    if ($msg !== '') {
+        $urlParams['status'] = $msg; // add the error message to the URL parameters / overwrite it if it already exists
+    }
 
-    redirect($path . '?' . http_build_query($urlParams)); // redirect to the previous page with the error message
+    if (count($urlParams) !== 0) {
+        redirect($path . '?' . http_build_query($urlParams)); // redirect to the previous page with the error message
+    } else {
+        redirect($path); // redirect to the previous page
+    }
 }
 
 /**

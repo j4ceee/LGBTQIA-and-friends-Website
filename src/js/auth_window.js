@@ -1,14 +1,8 @@
 
-window.addEventListener('load', function() { // when page is loaded
-    let authOverlay = document.getElementById('auth_overlay');
-
-    // add event listener to auth overlay to close auth window when clicked
-    authOverlay.addEventListener('click', closeAuthWindow);
-});
-
 function toggleAuthWindow() {
-    let authWindow = document.getElementById('auth_window');
-    if (authWindow.style.display === 'flex') {
+    let authDialog = document.getElementById('auth_dialog');
+    // if dialog is open, close it
+    if (authDialog.open) {
         closeAuthWindow();
     } else {
         openAuthWindow();
@@ -16,58 +10,48 @@ function toggleAuthWindow() {
 }
 
 function openAuthWindow() {
-    let authWindow = document.getElementById('auth_window');
-    let authButton = document.getElementById('auth_button');
+    let authDialog = document.getElementById('auth_dialog');
+    let authForm = document.getElementById('auth_form');
     let authIcon = document.getElementById('auth_icon');
-    let authOverlay = document.getElementById('auth_overlay');
+    let authOverlay = document.getElementById('auth_dial_overlay');
 
     // show auth window
-    authWindow.style.display = 'flex'; // show auth window
-    // make button unclickable
-    authButton.style.pointerEvents = 'none';
+    authDialog.showModal();
 
     setTimeout(() => {
-        authWindow.style.maxHeight = '20rem'; // set max height of auth window
-        authWindow.style.padding = '1rem'; // set padding of auth window
-        authButton.style.pointerEvents = ''; // make button clickable again
+        authForm.style.maxHeight = '20rem'; // set max height of auth window
+        authForm.style.padding = '1rem'; // set padding of auth window
+
+        // add event listener to auth overlay to close auth window when clicked
+        authOverlay.addEventListener('click', closeAuthWindow);
+
     }, 1);
 
     // make background colour of auth_icon blue
     authIcon.style.transition = 'background-color 0.2s';
     authIcon.style.backgroundColor = 'var(--alt-blue)';
-
-    // make auth overlay visible to darken other elements
-    authOverlay.style.display = 'block'
-
-    authButton.addEventListener('click', closeAuthWindow);
 }
 
 function closeAuthWindow() {
-    let authWindow = document.getElementById('auth_window');
+    let authDialog = document.getElementById('auth_dialog');
+    let authForm = document.getElementById('auth_form');
     let authIcon = document.getElementById('auth_icon');
-    let authOverlay = document.getElementById('auth_overlay');
-    let authButton = document.getElementById('auth_button');
+    let authOverlay = document.getElementById('auth_dial_overlay');
+
+    // remove event listener from auth overlay
+    authOverlay.removeEventListener('click', closeAuthWindow);
 
     // hide auth window
-    authWindow.style.maxHeight = ''; // remove max height of auth window
-    authWindow.style.padding = ''; // remove padding of auth window
-    authButton.style.pointerEvents = 'none'; // make button unclickable
+    authForm.style.maxHeight = ''; // remove max height of auth window
+    authForm.style.padding = ''; // remove padding of auth window
 
     // after .2s, hide auth window
     setTimeout(() => {
-        authWindow.style.display = '';
-
-        // hide auth overlay
-        authOverlay.style.display = 'none';
-
-        authButton.style.pointerEvents = ''; // make button clickable again
+        authDialog.close(); // close auth window
     }, 200);
 
     // remove in-line background colour style from auth_icon
     authIcon.style.backgroundColor = '';
-
-    // remove event listener from auth button
-    authButton.removeEventListener('click', closeAuthWindow);
 }
 
 function setNotRequired(name) {

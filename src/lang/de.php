@@ -39,4 +39,5 @@ const lang_strings = [
     'download' => 'Herunterladen',
     'ical_desc_default' => 'Importiert Veranstaltungen aus den letzten 12 Monaten & den nächsten 8 Monaten (empfohlen)',
     'ical_desc_year' => 'Importiert Veranstaltungen aus dem gesamten ausgewählten Jahr',
+    'full_calendar' => 'Kompletter Kalender',
 ];

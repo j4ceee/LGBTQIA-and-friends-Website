@@ -20,7 +20,7 @@ $PDO = $dbConnection->useDB();
 
 // ----------------- DATABASE CONNECTION END -------------------
 
-require_once(__DIR__ . '/util/auth_session_start.php'); // include language file
+require_once(__DIR__ . '/util/auth_session_start.php'); // start session
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
@@ -45,6 +45,11 @@ template_header($dbConnection, $lang, 'home');
             <div class="section_header_underline"></div>
         </div>
         <div class="admin_controls">
+            <?php
+            if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
+                echo '<a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>';
+            }
+            ?>
             <a href="./event_manage.php" class="lgbt_button">Add Event</a>
             <a href="./util/refresh_ics.php" class="lgbt_button">Refresh ICS files</a>
         </div>
@@ -69,6 +74,6 @@ template_header($dbConnection, $lang, 'home');
 </div>
 
 <?php
-template_footer(["view_calendar.js"]);
+template_footer($dbConnection, ["view_calendar.js"], $loggedIn);
 ?>
 
