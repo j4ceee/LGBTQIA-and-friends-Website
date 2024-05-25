@@ -35,7 +35,7 @@ template_header($dbConnection, $lang, 'cal');
 ?>
 
 <div>
-    <?php gen_calendar($lang, 1); ?>
+    <?php gen_calendar($lang, 1, "full"); ?>
 </div>
 
 <?php

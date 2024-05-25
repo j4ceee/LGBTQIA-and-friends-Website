@@ -23,7 +23,7 @@ window.addEventListener('load', function() { // when page is loaded
     });
 
     // add an event listener to the default calendar copy button
-    document.getElementById('default_calendar_copy_button').addEventListener('click', (event) => {
+    document.getElementById('default_calendar_copy_button').addEventListener('click', () => {
         let anchorElement = document.getElementById('default_calendar_link');
         // default_calendar_link is the anchor tag that contains the link, copy a href attribute
         let copyText = anchorElement.getAttribute('href');
@@ -41,15 +41,12 @@ window.addEventListener('load', function() { // when page is loaded
 
         // update the links to the selected year link
         let yearLink = dropdownElement.value;
-        // get data-file attribute from the selected option
-        let fileName = dropdownElement.options[dropdownElement.selectedIndex].getAttribute('data-file');
 
         anchorElement.setAttribute('href', yearLink);
-        anchorElement.setAttribute('download', fileName);
     });
 
     // add an event listener to the copy button for the year calendar
-    document.getElementById('year_calendar_copy_button').addEventListener('click', (event) => {
+    document.getElementById('year_calendar_copy_button').addEventListener('click', () => {
         let anchorElement = document.getElementById('year_calendar_link');
         // year_calendar_link is the anchor tag that contains the link, copy a href attribute
         let copyText = anchorElement.getAttribute('href');

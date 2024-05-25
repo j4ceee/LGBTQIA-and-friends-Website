@@ -8,11 +8,29 @@
 }
 
 @font-face {
+    font-family: 'Baloo 2 Bold Fallback';
+    src: local(Arial Black);
+    size-adjust: 81%;
+    ascent-override: 129%;
+    descent-override: 61%;
+    line-gap-override: 5%;
+}
+
+@font-face {
     font-family: 'Baloo 2 Default';
     src: url('../font/Baloo2-Regular.woff2') format('woff2');
     font-weight: 400; /* normal */
     font-style: normal;
     font-display: swap;
+}
+
+@font-face {
+    font-family: 'Baloo 2 Default Fallback';
+    src: local(Verdana);
+    size-adjust: 86%;
+    ascent-override: 120%;
+    descent-override: 57%;
+    line-gap-override: 8%;
 }
 
 @font-face {
@@ -24,11 +42,29 @@
 }
 
 @font-face {
+    font-family: 'Baloo 2 SemiBold Fallback';
+    src: local(Verdana);
+    size-adjust: 88%;
+    ascent-override: 120%;
+    descent-override: 55%;
+    line-gap-override: 5%;
+}
+
+@font-face {
     font-family: 'Baloo 2 Medium';
     src: url('../font/Baloo2-Medium.woff2') format('woff2');
     font-weight: 500; /* medium */
     font-style: normal;
     font-display: swap;
+}
+
+@font-face {
+    font-family: 'Baloo 2 Medium Fallback';
+    src: local(Verdana);
+    size-adjust: 87%;
+    ascent-override: 120%;
+    descent-override: 55%;
+    line-gap-override: 8%;
 }
 
 @font-face {
@@ -39,6 +75,15 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Baloo 2 Boldest Fallback';
+    src: local(Arial Black);
+    size-adjust: 82%;
+    ascent-override: 129%;
+    descent-override: 58%;
+    line-gap-override: 5%;
+}
+
 
 /*--------------------Default page setup-------------------------*/
 
@@ -47,8 +92,16 @@
     --win-border: #5e5e5e;
     --win-selected: #282828;
 
+    --white-text: #eeeeee;
+    --dark-text: #333333;
+
     --lgbt-text: #eeeeee;
     --lgbt-bg: #333333;
+
+    /*
+    --lgbt-text: #333333;
+    --lgbt-bg: #eeeeee;
+    /**/
 
     --lgbt-red: #eb3b42;
     --lgbt-orange: #ff9101;
@@ -113,7 +166,7 @@ main {
     border-radius: .4rem;
     padding: .2rem .5rem;
     margin: 0;
-    font-family: "Baloo 2 Default";
+    font-family: "Baloo 2 Default", 'Baloo 2 Default Fallback';
     transition: .2s, height 0ms;
 }
 
@@ -179,6 +232,41 @@ main {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.lgbt_button {
+    background-color: transparent;
+    border: var(--lgbt-blue) .15rem  solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--lgbt-blue);
+    border-radius: .7rem;
+    text-decoration: none;
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-size: 1.1rem;
+    padding: .2rem .5rem;
+    transition: 0.2s;
+}
+.lgbt_button:hover {
+    background-color: var(--lgbt-blue);
+    border: var(--lgbt-blue) .15rem  solid;
+    color: var(--lgbt-bg);
+    box-shadow: 0 0 .1rem var(--lgbt-blue);
+    transition: 0.2s;
+}
+.lgbt_button_grey {
+    color: var(--lgbt-text);
+    border: .15rem solid var(--win-border);
+}
+
+.lgbt_button_highlight {
+    border: var(--lgbt-blue) .15rem  solid;
+}
+
+.lgbt_button_smaller {
+    font-size: .8rem;
 }
 
 /*--------------------Header-------------------------*/
@@ -575,24 +663,8 @@ footer {
 .section_heading {
     font-size: 2rem;
     margin: 0;
-    text-wrap: none;
     text-wrap: nowrap;
     padding: 0 1rem 0 1rem; /* top right bottom left */
-    --outline-thickness: 1px;
-    --outline-thickness-neg: -1px;
-    --outline-color: rgba(0, 0, 0, 0.8);
-
-    /*
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-    */
-
-
-    text-shadow:
-            var(--outline-thickness) var(--outline-thickness) 0 var(--outline-color),
-            var(--outline-thickness-neg) var(--outline-thickness) 0 var(--outline-color),
-            var(--outline-thickness-neg) var(--outline-thickness-neg) 0 var(--outline-color),
-            var(--outline-thickness) var(--outline-thickness-neg) 0 var(--outline-color)
-
 }
 
 .section_header_underline {
@@ -621,11 +693,25 @@ section > * {
 }
 
 p {
-    font-family: "Baloo 2 Medium";
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     font-size: 1.1rem;
 }
 
 /*--------------------Homepage-------------------------*/
+
+.admin_controls {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.admin_controls > a {
+    text-wrap: nowrap;
+}
 
 .welcome_slide{
     height: 100vh;
@@ -748,15 +834,14 @@ p {
 
 .heading_start {
     display: flex;
-    font-family: "Baloo 2 Boldest";
+    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback';
     line-height: 2.6rem;
-    letter-spacing: -0.1rem;
     flex-direction: column;
     align-items: center;
-    text-wrap: none;
     text-wrap: nowrap;
     order: 2;
     margin: 1rem 0 0;
+    color: var(--white-text);
 
     --outline-thickness: 0.06rem;
     --outline-thickness-neg: -0.06rem;
@@ -776,6 +861,7 @@ p {
     text-align: center;
     margin: 0;
     padding: 0;
+    letter-spacing: .3rem;
 }
 
 .heading_start .heading_btm {
@@ -784,6 +870,7 @@ p {
     text-align: center;
     margin: 0;
     padding: 0;
+    letter-spacing: .1rem;
 }
 
 .heading_logo {
@@ -794,11 +881,14 @@ p {
 @media screen and (max-width: 768px) {
     .heading_start .heading_top {
         font-size: 2.2rem;
+        text-wrap: wrap;
+        letter-spacing: .1rem;
     }
 
     .heading_start .heading_btm {
         font-size: 1.5rem;
         line-height: 1.4rem;
+        letter-spacing: 0;
     }
 
     .heading_logo {
@@ -916,23 +1006,23 @@ p {
     min-height: 5rem;
 }
 
-.form_req_marking
-{
+.form_req_marking {
     color: var(--lgbt-red);
-    font-family: "Baloo 2 Boldest";
+    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback';
     line-height: .1rem;
 }
 
 /*--------------------Calendar Page-------------------------*/
 
 .calendar_container {
-    margin: 3rem 0 0 0;
+    margin: 1rem 0 0 0;
     max-width: 68rem;
     width: 100%;
 }
 
 .calendar_list {
     padding: 1rem 1rem 2rem 1rem;
+    margin: 1rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -941,11 +1031,15 @@ p {
     border-radius: 1rem;
 }
 .calendar_error {
-    padding: 1.8rem 1rem 1rem 1rem;
+    padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.calendar_error > p {
+    padding: 0;
+}
+
 .calendar_small {
     max-height: 40vh;
     overflow-y: auto;
@@ -1012,17 +1106,17 @@ p {
 .calendar_item_day {
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold";
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     color: var(--alt-blue);
 }
 .calendar_item_month {
     font-size: 1.4rem;
     line-height: 1.4rem;
-    font-family: "Baloo 2 SemiBold";
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     color: var(--alt-blue);
 }
 .calendar_item_year {
-    font-family: "Baloo 2 Medium";
+    font-family: "Baloo 2 Medium", 'Baloo 2 SemiBold Fallback';
     font-size: .9rem;
     line-height: 1.2rem;
 }
@@ -1035,7 +1129,7 @@ p {
 .calendar_item_name {
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold";
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     color: var(--alt-blue);
     margin: 0;
     padding-bottom: .8rem;
@@ -1044,7 +1138,7 @@ p {
 .calendar_item_desc {
     font-size: 1rem;
     line-height: 1.3rem;
-    font-family: "Baloo 2 Medium";
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     padding-bottom: .3rem;
     margin: 0;
     text-align: justify;
@@ -1072,7 +1166,7 @@ p {
     text-align: right;
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold";
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     margin: 0;
     padding-bottom: .1rem;
 }
@@ -1080,10 +1174,18 @@ p {
     text-align: right;
     font-size: 1.2rem;
     line-height: 1.2rem;
-    font-family: "Baloo 2 Medium";
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     padding-bottom: .1rem;
     margin: 0;
 
+}
+
+/* credit: https://stackoverflow.com/a/73447722 */
+.ical_options_details .ical_options_toggle {
+    transition: margin 150ms ease-out;
+}
+.ical_options_details[open] .ical_options_toggle {
+    margin-bottom: 10px;
 }
 
 .ical_options_toggle {
@@ -1091,7 +1193,7 @@ p {
     cursor: pointer;
     font-size: 1.2rem;
     line-height: 1.2rem;
-    font-family: "Baloo 2 Medium";
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     padding: .5rem;
     color: var(--alt-blue);
 }
@@ -1099,7 +1201,7 @@ p {
 .calendar_link_copy_cont {
     display: flex;
     flex-direction: row;
-    gap: 2rem;
+    gap: 4rem;
     justify-content: space-evenly;
     margin: 0;
     padding: 1.5rem 0 0 0;
@@ -1109,13 +1211,16 @@ p {
 .calendar_link_copy_cont > div {
     display: flex;
     flex-direction: column;
+    width: min-content;
+    text-wrap: nowrap;
 }
 
 .ical_options_header {
     color: var(--lgbt-text);
     text-align: center;
+    text-decoration: underline;
 }
-.calendar_copy_buttons {
+.calendar_option_controls {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -1123,27 +1228,28 @@ p {
     align-items: center;
     margin: 0;
     padding: 0;
-}
-.ical_copy_button {
-    background-color: transparent;
-    border: var(--lgbt-blue) 3px solid;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: var(--lgbt-blue);
-    border-radius: .7rem;
-    text-decoration: none;
-    font-family: "Baloo 2 SemiBold";
-    font-size: 1.1rem;
-    padding: .2rem .5rem;
-    transition: 0.2s;
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
 }
 
-.ical_copy_button:hover {
-    background-color: var(--lgbt-blue);
-    color: var(--lgbt-bg);
-    transition: 0.2s;
+.calendar_year_select {
+    justify-content: space-between;
+    margin-bottom: .5rem;
+}
+
+.ical_year_select {
+    background-color: var(--lgbt-bg);
+}
+.ical_year_select:hover {
+    background-color: var(--lgbt-bg);
+    color: var(--lgbt-blue);
+    border: var(--lgbt-blue) .15rem  solid;
+}
+
+.ical_options_desc {
+    text-wrap: wrap;
+    text-align: justify;
+    font-size: 1rem;
+    line-height: 1.2rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -1173,8 +1279,8 @@ p {
         flex-basis: 100%;
     }
     .calendar_item_name {
-        font-size: 1.4rem;
-        line-height: 1.4rem;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
     }
 
     .calendar_item_location {
@@ -1193,5 +1299,9 @@ p {
         text-align: left;
         font-size: 1.2rem;
         line-height: 1.2rem;
+    }
+
+    .calendar_link_copy_cont {
+        gap: 2rem;
     }
 }

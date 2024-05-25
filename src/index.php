@@ -44,8 +44,10 @@ template_header($dbConnection, $lang, 'home');
             <h2 class="section_heading"><?php echo lang_strings['admin'] ?></h2>
             <div class="section_header_underline"></div>
         </div>
-        <a href="./event_manage.php">Add Event</a>
-        <a href="./util/refresh_ics.php">Refresh ICS files</a>
+        <div class="admin_controls">
+            <a href="./event_manage.php" class="lgbt_button">Add Event</a>
+            <a href="./util/refresh_ics.php" class="lgbt_button">Refresh ICS files</a>
+        </div>
     </section>
 
     <section class="about">
@@ -61,7 +63,7 @@ template_header($dbConnection, $lang, 'home');
     </section>
 
     <?php
-    gen_calendar($lang, 2);
+    gen_calendar($lang, 2, "compact");
     ?>
 
 </div>

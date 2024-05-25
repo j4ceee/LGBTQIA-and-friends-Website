@@ -15,7 +15,7 @@ const lang_strings = [
     'logout' => 'Logout',
     'about_text' => "🌈 Welcome to the LGBTQIA+ & friends group at Ansbach University! 🎉 <br>Whether you're part of the community or a supportive friend, we warmly invite you to join us. Since 2018, we've provided a safe space to openly discuss sexual orientation and gender identity, support each other, and have lots of fun together! 🤝 Feel free to come to our next meeting and become part of our group. Let's work together to create a diverse and inclusive campus culture! 💬✨",
     'events' => 'Events',
-    'no_events' => 'No events found.',
+    'no_events' => 'No upcoming events.',
     'user_greet' => 'Welcome back,',
     'months' => [
         'January',
@@ -37,6 +37,8 @@ const lang_strings = [
     'show_ical_controls' => 'Show calendar import options',
     'copy_link' => 'Copy link',
     'download' => 'Download',
+    'ical_desc_default' => 'Imports events from the past 12 months & the next 8 months (recommended)',
+    'ical_desc_year' => 'Imports events from the entire selected year',
 ];
 
 
