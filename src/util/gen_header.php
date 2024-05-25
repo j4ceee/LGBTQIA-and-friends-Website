@@ -1,8 +1,9 @@
-<?php /** @noinspection CssUnknownTarget */
+<?php /** @noinspection HtmlUnknownTarget */
+/** @noinspection HtmlRequiredTitleElement */
+/** @noinspection CssUnknownTarget */
 function template_header($dbConnection, string $lang, $lang_title = "home"): void
 {
     // TODO: support for switching between dark and light mode
-    // TODO: support for changing the language
 
     $PDO = $dbConnection->getConnection();
 
@@ -46,103 +47,45 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     <div class="page_wrap">
         <header>
             <div class="cont_logo_nav">
-                <nav class="navbar">
-    EOT;
-    echo '<a href="./index.php" '.$index.'>'.lang_strings['home'].'</a>';
-    echo '<a href="./calendar.php" '.$calendar.'>'.lang_strings['cal'].'</a>';
-
-
-    if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
-        echo '<a href="./util/setup_db.php">Setup DB</a>';
-    }
-
-    echo <<<EOT
-                </nav>
-            
                 <div class="logo-header">
                     <a href="./index.php">
                         <img class="logo" src="./img/lgbt_bunny_white.svg" alt="Logo">
                     </a>
                 </div>
-            </div>
-            <button class="auth_button" id="auth_button" onclick="toggleAuthWindow()">
-                <div class="auth_icon" id="auth_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain" ></div>
-            </button>
-    </header>
+                
+                <nav class="navbar nav-top">
+                <ul class="nav_list">
     EOT;
 
-    if (!$loggedIn) {
-        // collect all lang strings for the auth form
-        $l_login = lang_strings['login'];
-        $l_user = lang_strings['user'];
-        $l_email = lang_strings['email'];
-        $l_pass = lang_strings['pass'];
+    echo '<li><a href="./" '.$index.'>'.lang_strings['home'].'</a></li>';
 
-        echo <<<EOT
-        <form class="auth_form" id="auth_window" action="./util/auth_login.php" method="post">
-        <fieldset class="auth_fieldset">
-            <legend>$l_login</legend>
-            <div class="auth_input_cont">
-                <input type="text" class="win_dark_input win_input_auth" name="auth_username" id="auth_username" placeholder="$l_user" required>
-                <label for="auth_username" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain" ></div>
-                </label>
-            </div>
-            <div class="auth_input_cont" >
-                <input type="email" class="win_dark_input win_input_auth" name="auth_email" id="auth_email" placeholder="$l_email" required>
-                <label for="auth_email" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-email-842043-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-email-842043-grey.svg) no-repeat center / contain" ></div>
-                </label>
-            </div>
-            <div class="auth_input_cont">
-                <input type="password" class="win_dark_input win_input_auth" name="auth_password" id="auth_password" placeholder="$l_pass" required>
-                <label for="auth_password" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain" ></div>
-                </label>
-            </div>
-        EOT;
-
-        // honeypot field -> hidden from users & screen readers -> only bots will fill this field
-        // if honeypot field is not empty -> redirect to previous page
-        // is set as not required in JS when form is submitted
-        echo <<<EOT
-            <div class="auth_input_cont auth_pin" aria-hidden="true">
-                <input type="password" class="win_dark_input win_input_auth" name="auth_pin" id="auth_pin" placeholder="PIN" aria-hidden="true" tabindex="-1" required>
-                <label for="auth_password" class="auth_input_icon_bg" aria-hidden="true">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain" aria-hidden="true"></div>
-                </label>
-            </div>
-            EOT;
-        echo <<<EOT
-        </fieldset>
-        <button class="auth_submit_btn" type="submit" onclick="setNotRequired('auth_pin')">
-            <p>$l_login</p>
-            <div class="auth_input_icon auth_submit_icon" style="mask: url(./img/noun-login-1019092-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-login-1019092-grey.svg) no-repeat center / contain" ></div>
-        </button>
-        EOT;
-    } else {
-        $username = htmlspecialchars($_SESSION['name']);
-
-        // collect all lang strings for the auth form
-        $l_logout = lang_strings['logout'];
-        $l_user_greet = lang_strings['user_greet'];
-
-        echo <<<EOT
-        <form class="auth_form" id="auth_window" action="./util/auth_logout.php" method="post" autocomplete="off">
-            <div class="auth_greeting">
-                <p class="auth_welcome">$l_user_greet</p>
-                <div class="auth_user">
-                    <p class="auth_user">$username</p>
-                    <p class="auth_welcome">!</p>
-                </div>
-            </div>
-            <button class="auth_submit_btn auth_signout_btn" type="submit">
-                <p>$l_logout</p>
-                <div class="auth_input_icon auth_submit_icon" style = "mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain; -webkit-mask: url(./img/noun-login-1019092-logout-grey.svg) no-repeat center / contain" ></div >
-            </button>
-        EOT;
+    if ($PDO !== null || $dbConnection->checkDBSchema() === true) {
+        echo '<li><a href="./calendar.php" '.$calendar.'>'.lang_strings['cal'].'</a></li>';
     }
-    echo "</form>";
+
+    $l_de = '<a href="./util/lang_change.php?lang=de" aria-label="Sprache wechseln: Deutsch">🇩🇪 DE</a>';
+    $l_en = '<a href="./util/lang_change.php?lang=en" aria-label="Change language: English">🇬🇧 EN</a>';
+
+    if ($lang === 'de') {
+        $l_de = "<div aria-label='Sprache: Deutsch (aktiv)' class='active'>🇩🇪 DE</div>";
+    }
+    if ($lang === 'en') {
+        $l_en = "<div aria-label='Language: English (active)' class='active'>🇬🇧 EN</div>";
+    }
+
+    echo <<<EOT
+                </ul>
+                </nav>
+            </div>
+            
+            <div class="cont_lang">
+                <ul class="lang_selection">
+                    <li lang="de" class="lang_option">$l_de</li>
+                    <li lang="en" class="lang_option">$l_en</li>
+                </ul>
+            </div>
+    </header>
+    EOT;
 
     if ($lang_title === 'home') {
         echo "<main style='padding: 0 0 6rem 0;'>";
@@ -150,7 +93,4 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     else {
         echo "<main style='padding: 5rem 0 6rem 0;'>";
     }
-
-
-    echo '<div class="loading_overlay auth_overlay" id="auth_overlay" style="display: none"></div>';
 }

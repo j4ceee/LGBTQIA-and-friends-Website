@@ -39,5 +39,5 @@ template_header($dbConnection, $lang, 'cal');
 </div>
 
 <?php
-template_footer(["view_calendar.js"]);
+template_footer($dbConnection, ["view_calendar.js"], $loggedIn);
 ?>

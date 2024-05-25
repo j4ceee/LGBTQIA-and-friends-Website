@@ -78,6 +78,7 @@ function print_calendar($lang, $style, bool $admin): void
         echo "</div>";
     } else {
         if ($style === "compact") {
+            echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "</a></p>";
             if (count($events) > 2) {
                 echo "<ul class='calendar_list calendar_large'>";
             } else {
@@ -220,7 +221,7 @@ function print_ics_controls($lang): void
                     //echo "<img class='default_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
                     echo lang_strings['copy_link'];
                     echo "</button>";
-                    //echo "<a id='default_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
+                    echo "<a id='default_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button default_calendar_link' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
                     echo "</div>";
                     echo "<p class='ical_options_desc'>". lang_strings['ical_desc_default'] ."</p>";
                 echo "</div>";

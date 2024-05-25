@@ -39,6 +39,7 @@ const lang_strings = [
     'download' => 'Download',
     'ical_desc_default' => 'Imports events from the past 12 months & the next 8 months (recommended)',
     'ical_desc_year' => 'Imports events from the entire selected year',
+    'full_calendar' => 'Full calendar',
 ];
 
 
