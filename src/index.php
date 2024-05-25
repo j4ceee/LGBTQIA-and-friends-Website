@@ -1,12 +1,24 @@
 <?php
 require_once(__DIR__ . '/util/gen_header.php');
 require_once(__DIR__ . '/util/gen_footer.php');
-require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 require_once(__DIR__ . '/util/utils.php'); // include utility functions
 require_once(__DIR__ . '/util/conf.php'); // include configuration file
+require_once(__DIR__ . '/util/gen_calendar.php');
+
+if (ENV === "dev") {
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+}
+
+// ------------------- DATABASE CONNECTION -------------------
+
+require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 
 $dbConnection = new DBConnection();
-$PDO = $dbConnection->getConnection();
+$PDO = $dbConnection->useDB();
+
+// ----------------- DATABASE CONNECTION END -------------------
 
 require_once(__DIR__ . '/util/auth_session_start.php'); // include language file
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
@@ -32,8 +44,10 @@ template_header($dbConnection, $lang, 'home');
             <h2 class="section_heading"><?php echo lang_strings['admin'] ?></h2>
             <div class="section_header_underline"></div>
         </div>
-        <a href="./event_manage.php">Add Event</a>
-        <a href="./util/refresh_ics.php">Refresh ICS files</a>
+        <div class="admin_controls">
+            <a href="./event_manage.php" class="lgbt_button">Add Event</a>
+            <a href="./util/refresh_ics.php" class="lgbt_button">Refresh ICS files</a>
+        </div>
     </section>
 
     <section class="about">
@@ -48,15 +62,13 @@ template_header($dbConnection, $lang, 'home');
         </div>
     </section>
 
-    <section class="events">
-        <div class="section_header">
-            <h2 class="section_heading"><?php echo lang_strings['events'] ?></h2>
-            <div class="section_header_underline"></div>
-        </div>
-    </section>
+    <?php
+    gen_calendar($lang, 2, "compact");
+    ?>
+
 </div>
 
 <?php
-template_footer();
+template_footer(["view_calendar.js"]);
 ?>
 

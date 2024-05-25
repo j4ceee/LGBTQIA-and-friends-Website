@@ -191,7 +191,7 @@ class ICSGenerator
     {
         // split the textblock into lines with a maximum length of 75 characters, excluding linebreak CRLF
         // the newly created line should start with a space
-        $textblock = wordwrap($textblock, 75, "\r\n ", true);
+        $textblock = wordwrap($textblock, 74, "\r\n ", true);
 
         //add linrbreak at the end
         $textblock .= "\r\n";

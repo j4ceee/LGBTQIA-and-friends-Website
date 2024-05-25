@@ -4,11 +4,17 @@ require_once(__DIR__ . '/util/gen_footer.php');
 require_once(__DIR__ . '/util/utils.php'); // include utility functions
 require_once(__DIR__ . '/util/conf.php'); // include configuration file
 
+if (ENV === "dev") {
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+}
+
 // ------------------- LOGIN CHECK -------------------
 
-require_once(__DIR__ . '/auth_session_start.php'); // start session
+require_once(__DIR__ . '/util/auth_session_start.php'); // start session
 
-require_once(__DIR__ . '/auth_login_check.php'); // check if user is logged in
+require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
 /*
@@ -21,7 +27,7 @@ if (!$loggedIn) {
 
 // ------------------- DATABASE CONNECTION -------------------
 
-require_once(__DIR__ . '/conn_db.php'); // include database connection file
+require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 
 $dbConnection = new DBConnection();
 $PDO = $dbConnection->useDB();
@@ -41,7 +47,9 @@ if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
 require_once(__DIR__ . '/util/get_lang.php'); // get language
 /* @var string $lang */
 
-template_header($dbConnection, $lang, 'Manage Event');
+
+
+template_header($dbConnection, $lang, 'event_add');
 ?>
 
     <form class="manage_event_form" action="./util/validate_add.php" method="post" autocomplete="off">

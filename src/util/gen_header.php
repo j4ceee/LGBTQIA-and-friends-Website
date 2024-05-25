@@ -11,7 +11,6 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
 
     $index = '';
     $calendar = '';
-    $about = '';
 
     switch ($lang_title) {
         case 'home':
@@ -50,7 +49,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
                 <nav class="navbar">
     EOT;
     echo '<a href="./index.php" '.$index.'>'.lang_strings['home'].'</a>';
-    echo '<a href="#" '.$calendar.'>'.lang_strings['cal'].'</a>';
+    echo '<a href="./calendar.php" '.$calendar.'>'.lang_strings['cal'].'</a>';
 
 
     if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
@@ -143,10 +142,15 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
             </button>
         EOT;
     }
-    echo <<<EOT
-    </form>
+    echo "</form>";
 
-    <main>
-        <div class="loading_overlay auth_overlay" id="auth_overlay" style="display: none"></div>
-    EOT;
+    if ($lang_title === 'home') {
+        echo "<main style='padding: 0 0 6rem 0;'>";
+    }
+    else {
+        echo "<main style='padding: 5rem 0 6rem 0;'>";
+    }
+
+
+    echo '<div class="loading_overlay auth_overlay" id="auth_overlay" style="display: none"></div>';
 }

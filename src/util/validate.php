@@ -119,8 +119,8 @@ function check_string_length($post): void
         'event_location' => 100,
         'event_name_de' => 50,
         'event_name_en' => 50,
-        'event_desc_de' => 255,
-        'event_desc_en' => 255
+        'event_desc_de' => 1500,
+        'event_desc_en' => 1500
     ];
 
     foreach ($stringLengths as $field => $length) {
