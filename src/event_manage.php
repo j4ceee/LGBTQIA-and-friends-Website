@@ -29,7 +29,7 @@ if (!$loggedIn) {
 
 require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 
-$dbConnection = new DBConnection();
+$dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
@@ -139,5 +139,5 @@ template_header($dbConnection, $lang, 'event_add');
 
 
 <?php
-template_footer(["manage_event.js"]);
+template_footer($dbConnection, ["manage_event.js"], $loggedIn);
 ?>

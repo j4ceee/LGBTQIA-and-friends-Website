@@ -22,7 +22,7 @@ if (!$loggedIn) {
 
 require_once(__DIR__ . '/conn_db.php'); // include database connection file
 
-$dbConnection = new DBConnection();
+$dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {

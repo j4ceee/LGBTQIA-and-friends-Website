@@ -4,7 +4,7 @@ require_once(__DIR__ . '/validate.php'); // validate functions
 require_once(__DIR__ . '/utils.php'); // include utility functions
 require_once(__DIR__ . '/conf.php'); // include configuration file
 
-$dbConnection = new DBConnection();
+$dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {

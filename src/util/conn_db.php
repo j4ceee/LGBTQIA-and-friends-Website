@@ -1,18 +1,30 @@
 <?php
 
 class DBConnection {
-    private ?PDO $connection;
+    private static $instance = null;
+    private ?PDO $conn;
     private string $dbname;
     private string $servername;
     private string $username;
     private string $password;
 
-    public function __construct() {
+    private function __construct() {
         $this->dbname = getenv('DB_NAME');
         $this->servername = getenv('DB_HOST');
         $this->username = getenv('DB_USER');
         $this->password = trim(file_get_contents(getenv('PASSWORD_FILE_PATH')));
         $this->connect();
+    }
+
+    // Singleton pattern (ensures only one instance of DBConnection is created)
+    public static function getInstance(): ?DBConnection
+    {
+        if (self::$instance == null)
+        {
+            self::$instance = new DBConnection();
+        }
+
+        return self::$instance;
     }
 
     private function connect(): void
@@ -22,15 +34,18 @@ class DBConnection {
         $password = $this->password;
 
         try {
-            $this->connection = new PDO("mysql:host=$servername", $username, $password);
+            if(!isset($this->conn)) {
+                // Create connection (if not already created)
+                $this->conn = new PDO("mysql:host=$servername", $username, $password);
+            }
         } catch(PDOException) {
-            $this->connection = null;
+            $this->conn = null;
         }
     }
 
     public function getConnection(): PDO|null
     {
-        return $this->connection;
+        return $this->conn;
     }
 
     public function getDbname(): string
@@ -38,27 +53,12 @@ class DBConnection {
         return $this->dbname;
     }
 
-    public function getServername(): string
-    {
-        return $this->servername;
-    }
-
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
     function checkDBExists(): bool
     {
-        if ($this->connection === null) {
+        if ($this->conn === null) {
             return false;
         }
-        $stmt = $this->connection->prepare("SHOW DATABASES LIKE :dbname"); // prepare statement to check if database exists, :dbname is a placeholder
+        $stmt = $this->conn->prepare("SHOW DATABASES LIKE :dbname"); // prepare statement to check if database exists, :dbname is a placeholder
         $stmt->bindParam(':dbname', $this->dbname); // bind parameter :dbname to $this->dbname
         $stmt->execute(); // execute statement
         $result = $stmt->fetchAll(); // fetch all results and store in $result
@@ -70,11 +70,11 @@ class DBConnection {
     {
         $reqTables = array("event_types", "events", "accounts");
 
-        if ($this->connection === null) {
+        if ($this->conn === null) {
             return false;
         }
         try {
-            $stmt = $this->connection->prepare("SHOW TABLES FROM " . $this->dbname); // prepare statement to check if database schema exists
+            $stmt = $this->conn->prepare("SHOW TABLES FROM " . $this->dbname); // prepare statement to check if database schema exists
             $stmt->execute(); // execute statement
             $result = $stmt->fetchAll(); // fetch all results and store in $result
         } catch (PDOException) {
@@ -96,18 +96,19 @@ class DBConnection {
         return true;
     }
 
-    function useDB(): ?PDO
+    function useDB(): PDO|null
     {
-        if ($this->connection === null) {
+        if ($this->conn === null) {
             return null;
         }
         try {
             $dbname = $this->dbname;
-            $stmt = $this->connection->prepare("USE $dbname"); // use database
+            $stmt = $this->conn->prepare("USE $dbname"); // use database
             $stmt->execute(); // execute statement
         } catch (PDOException) {
             return null;
         }
-        return $this->connection;
+
+        return $this->conn;
     }
 }
