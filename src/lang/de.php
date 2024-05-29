@@ -40,4 +40,12 @@ const lang_strings = [
     'ical_desc_default' => 'Importiert Veranstaltungen aus den letzten 12 Monaten & den nächsten 8 Monaten (empfohlen)',
     'ical_desc_year' => 'Importiert Veranstaltungen aus dem gesamten ausgewählten Jahr',
     'full_calendar' => 'Kompletter Kalender',
+
+    /* alt text for images */
+    'alt_signet' => 'Signet der LGBTQIA+ & friends Gruppe der Hochschule Ansbach',
+    'alt_signet_link' => 'Signet der LGBTQIA+ & friends Gruppe der Hochschule Ansbach, Link zur Startseite',
+    'account_icon' => 'Account-Icon',
+    'user_icon' => 'Benutzer-Icon',
+    'email_icon' => 'E-Mail-Icon',
+    'pass_icon' => 'Passwort-Icon',
 ];

@@ -22,11 +22,14 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
     if ($PDO !== null || $dbConnection->checkDBSchema() === true) {
         echo '<li><a href="./calendar.php">'.lang_strings['cal'].'</a></li>';
     }
+
+    $auth_btn_alt = "alt='". lang_strings['account_icon']."'";
+
     echo <<<EOT
             </ul>
         </nav>
         <button class="auth_button" id="auth_button" onclick="toggleAuthWindow()">
-            <div class="auth_icon" id="auth_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-user-6714086-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
+            <div role="img" $auth_btn_alt class="auth_icon" id="auth_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-user-6714086-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
         </button>
     </footer>
 </div>
@@ -55,6 +58,10 @@ function gen_login_dialog(bool $loggedIn = false): void{
         $l_email = lang_strings['email'];
         $l_pass = lang_strings['pass'];
 
+        $user_icon_alt = "alt='". lang_strings['user_icon']."'";
+        $email_icon_alt = "alt='". lang_strings['email_icon']."'";
+        $pass_icon_alt = "alt='". lang_strings['pass_icon']."'";
+
         echo <<<EOT
         <form class="auth_form" id="auth_form" action="./util/auth_login.php" method="post">
         <fieldset class="auth_fieldset">
@@ -62,19 +69,19 @@ function gen_login_dialog(bool $loggedIn = false): void{
             <div class="auth_input_cont">
                 <input type="text" class="win_dark_input win_input_auth" name="auth_username" id="auth_username" placeholder="$l_user" required>
                 <label for="auth_username" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-user-6714086-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
+                    <div role="img" $user_icon_alt class="auth_input_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-user-6714086-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
                 </label>
             </div>
             <div class="auth_input_cont" >
                 <input type="email" class="win_dark_input win_input_auth" name="auth_email" id="auth_email" placeholder="$l_email" required>
                 <label for="auth_email" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-email-842043-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-email-842043-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
+                    <div role="img" $email_icon_alt class="auth_input_icon" style="mask: url(./img/noun-email-842043-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-email-842043-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
                 </label>
             </div>
             <div class="auth_input_cont">
                 <input type="password" class="win_dark_input win_input_auth" name="auth_password" id="auth_password" placeholder="$l_pass" required>
                 <label for="auth_password" class="auth_input_icon_bg">
-                    <div class="auth_input_icon" style="mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-password-2891566-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
+                    <div role="img" $pass_icon_alt class="auth_input_icon" style="mask: url(./img/noun-password-2891566-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-password-2891566-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
                 </label>
             </div>
         EOT;

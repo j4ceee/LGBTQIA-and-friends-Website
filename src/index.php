@@ -24,7 +24,7 @@ require_once(__DIR__ . '/util/auth_session_start.php'); // start session
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
-require_once(__DIR__ . '/util/get_lang.php'); // get language
+require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
 
 template_header($dbConnection, $lang, 'home');
@@ -34,7 +34,7 @@ template_header($dbConnection, $lang, 'home');
     <div class="welcome_slide_content">
         <h1 class="heading_start"><span class="heading_top"><?php echo lang_strings['title'] ?></span>
             <span class="heading_btm"><?php echo lang_strings['uni'] ?></span></h1>
-        <img class="heading_logo" src="./img/lgbt_bunny.svg" alt="Logo">
+        <img class="heading_logo" src="./img/lgbt_bunny.svg" alt="<?php echo lang_strings['alt_signet'] ?>">
     </div>
 </div>
 

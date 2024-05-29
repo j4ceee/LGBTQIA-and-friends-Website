@@ -48,8 +48,10 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
         <header>
             <div class="cont_logo_nav">
                 <div class="logo-header">
-                    <a href="./index.php">
-                        <img class="logo" src="./img/lgbt_bunny_white.svg" alt="Logo">
+                    <a href="./">
+    EOT;
+                        echo '<img class="logo" src="./img/lgbt_bunny_white.svg" alt="'.lang_strings['alt_signet_link'].'">';
+    echo <<<EOT
                     </a>
                 </div>
                 

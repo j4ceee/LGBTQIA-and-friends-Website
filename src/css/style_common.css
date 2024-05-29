@@ -1,8 +1,8 @@
-
+/* bold */ /*
 @font-face {
     font-family: 'Baloo 2 Bold';
     src: url('../font/Baloo2-Bold.woff2') format('woff2');
-    font-weight: 700; /* bold */
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
@@ -15,11 +15,13 @@
     descent-override: 61%;
     line-gap-override: 5%;
 }
+*/
 
+/* normal */
 @font-face {
     font-family: 'Baloo 2 Default';
     src: url('../font/Baloo2-Regular.woff2') format('woff2');
-    font-weight: 400; /* normal */
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
@@ -33,10 +35,11 @@
     line-gap-override: 8%;
 }
 
+/* semi-bold */
 @font-face {
     font-family: 'Baloo 2 SemiBold';
     src: url('../font/Baloo2-SemiBold.woff2') format('woff2');
-    font-weight: 600; /* semi-bold */
+    font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
@@ -50,10 +53,11 @@
     line-gap-override: 5%;
 }
 
+/* medium */
 @font-face {
     font-family: 'Baloo 2 Medium';
     src: url('../font/Baloo2-Medium.woff2') format('woff2');
-    font-weight: 500; /* medium */
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
@@ -67,10 +71,11 @@
     line-gap-override: 8%;
 }
 
+/* extra-bold */
 @font-face {
     font-family: 'Baloo 2 Boldest';
     src: url('../font/Baloo2-ExtraBold.woff2') format('woff2');
-    font-weight: 800; /* extra-bold */
+    font-weight: 800;
     font-style: normal;
     font-display: swap;
 }
@@ -284,7 +289,7 @@ header {
     background-color: transparent;
     align-items: center;
 }
-/* blur everything behind the header with a backdrop filter with gradient opcaity */
+/* blur everything behind the header with a backdrop filter with gradient opacity */
 header:after {
     content: "";
     background: linear-gradient(180deg, #3333334a 40%, transparent 100%);
@@ -334,7 +339,6 @@ header:after {
 }
 
 .logo-header {
-    height: 3rem;
     align-self: center;
     order: 1;
     cursor: pointer;
@@ -342,12 +346,11 @@ header:after {
 
 .logo-header > a {
     display: inline-block;
-    width: fit-content;
-    height: 100%;
 }
 
 .logo {
-    height: 100%;
+    height: 3rem;
+    width: auto;
     -webkit-transition: -webkit-transform 0.2s;
     transition: -webkit-transform 0.2s;
     transition: transform 0.4s;
@@ -861,7 +864,6 @@ p {
 
     -webkit-animation: colourchange 200s linear infinite;
     -moz-animation: colourchange 200s linear infinite;
-    -o-animation: colourchange 200s linear infinite;
     animation: colourchange 200s linear infinite;
 }
 
@@ -889,29 +891,6 @@ p {
     }
 }
 @-moz-keyframes colourchange {
-    0% {
-        background-color: var(--lgbt-red);
-    }
-    16.666% {
-        background-color: var(--lgbt-orange);
-    }
-    33.333% {
-        background-color: var(--lgbt-yellow);
-    }
-    50% {
-        background-color: var(--lgbt-green);
-    }
-    66.666% {
-        background-color: var(--lgbt-blue);
-    }
-    83.333% {
-        background-color: var(--lgbt-purple);
-    }
-    100% {
-        background-color: var(--lgbt-red);
-    }
-}
-@-o-keyframes colourchange {
     0% {
         background-color: var(--lgbt-red);
     }
@@ -1154,6 +1133,10 @@ p {
     max-width: 68rem;
     width: 100%;
     position: relative;
+}
+
+.calendar_container_compact {
+    margin: 2rem 0 0 0;
 }
 
 .calendar_list {

@@ -22,6 +22,22 @@ window.addEventListener('load', function() { // when page is loaded
         });
     });
 
+    let iCal = null;
+
+    try {
+        iCal = document.getElementById('ical_controls_cont');
+        // get the ical controls container
+        // iCal is element if found, null if not found
+    } catch (e) {
+        // do nothing
+    }
+
+    if (iCal === null) {
+        // if iCal is not found, do not add event listeners
+
+        return;
+    }
+
     // add an event listener to the default calendar copy button
     document.getElementById('default_calendar_copy_button').addEventListener('click', () => {
         let anchorElement = document.getElementById('default_calendar_link');

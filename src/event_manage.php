@@ -44,7 +44,7 @@ if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
 
 // ------------------- EDIT MODE END ---------------------------
 
-require_once(__DIR__ . '/util/get_lang.php'); // get language
+require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
 
 

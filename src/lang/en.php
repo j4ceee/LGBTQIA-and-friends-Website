@@ -40,6 +40,14 @@ const lang_strings = [
     'ical_desc_default' => 'Imports events from the past 12 months & the next 8 months (recommended)',
     'ical_desc_year' => 'Imports events from the entire selected year',
     'full_calendar' => 'Full calendar',
+
+    /* alt text for images */
+    'alt_signet' => 'Signet of the LGBTQIA+ & friends group at Ansbach University',
+    'alt_signet_link' => 'Signet of the LGBTQIA+ & friends group at Ansbach University, link to homepage',
+    'account_icon' => 'Account icon',
+    'user_icon' => 'User icon',
+    'email_icon' => 'Email icon',
+    'pass_icon' => 'Password icon',
 ];
 
 
