@@ -15,7 +15,7 @@ if (ENV === "dev") {
 
 require_once(__DIR__ . '/util/conn_db.php'); // include database connection file
 
-$dbConnection = new DBConnection();
+$dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 // ----------------- DATABASE CONNECTION END -------------------

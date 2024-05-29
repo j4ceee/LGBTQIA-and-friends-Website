@@ -294,7 +294,7 @@ header:after {
     width: 100%;
     height: 9rem;
     mask: linear-gradient(180deg, black 70%, transparent 100%);
-    backdrop-filter: blur(.5rem) contrast(110%);
+    backdrop-filter: blur(.5rem);
     z-index: -9;
     pointer-events: none;
 }
@@ -1158,13 +1158,15 @@ p {
 
 .calendar_list {
     padding: 1rem 1rem 2rem 1rem;
-    margin: 1rem 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
     background-color:  rgb(46, 46, 46);
     border-radius: 1rem;
+    position: relative;
+    z-index: 2;
 }
 .calendar_error {
     padding: 2rem;
@@ -1396,7 +1398,8 @@ p {
     position: absolute;
     margin: 0;
     right: 2rem;
-    top: -.9rem;
+    top: -2.3rem;
+    z-index: 1;
 }
 .full_calendar_link a {
     color: var(--alt-blue);
@@ -1407,11 +1410,26 @@ p {
     border-radius: 1.5rem 1.5rem 0 0;
     background-color: rgb(46, 46, 46);
     padding: .5rem 1rem 0.2rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
 }
 .full_calendar_link a:hover,
 .full_calendar_link a:focus-within {
     color: var(--lgbt-bg);
     background-color: var(--lgbt-blue);
+    transition: 0.2s;
+}
+.full_calendar_icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: var(--lgbt-blue);
+    transition: 0.2s;
+}
+.full_calendar_link a:hover .full_calendar_icon,
+.full_calendar_link a:focus-within .full_calendar_icon {
+    background-color: var(--lgbt-bg);
     transition: 0.2s;
 }
 
@@ -1470,10 +1488,14 @@ p {
 
     .full_calendar_link {
         right: 0.5rem;
-        top: -.7rem;
+        top: -1.9rem;
     }
 
     .full_calendar_link a {
         font-size: .9rem;
+    }
+    .full_calendar_icon {
+        width: 1rem;
+        height: 1rem;
     }
 }

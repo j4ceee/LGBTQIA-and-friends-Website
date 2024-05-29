@@ -1,7 +1,7 @@
-<?php
+<?php /** @noinspection CssUnknownTarget */
 // generate frontend calendar
 
-function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false)
+function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false): void
 {
     echo "<section class='calendar'>";
         echo "<div class='section_header'>";
@@ -78,7 +78,7 @@ function print_calendar($lang, $style, bool $admin): void
         echo "</div>";
     } else {
         if ($style === "compact") {
-            echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "</a></p>";
+            echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "<span class='full_calendar_icon' style='mask: url(./img/noun-share-3066989.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-share-3066989.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a></p>";
             if (count($events) > 2) {
                 echo "<ul class='calendar_list calendar_large'>";
             } else {

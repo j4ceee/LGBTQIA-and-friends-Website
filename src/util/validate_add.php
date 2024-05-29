@@ -25,7 +25,7 @@ if (!$loggedIn) {
 
 // ------------------- DATABASE CONNECTION -------------------
 
-$dbConnection = new DBConnection();
+$dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
