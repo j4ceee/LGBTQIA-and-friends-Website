@@ -7,6 +7,15 @@ RUN --mount=type=bind,source=composer.json,target=composer.json \
     --mount=type=cache,target=/tmp/cache \
     composer install --no-dev --no-interaction
 
+FROM node:20-alpine as node-builder
+
+# Install npm, inotify-tools, and clean-css-cli using apk and npm
+RUN apk add --no-cache inotify-tools
+
+WORKDIR /app
+
+COPY ./node_sh /app/node_sh
+
 FROM php:8.2-apache as final
 
 RUN docker-php-ext-install pdo pdo_mysql
