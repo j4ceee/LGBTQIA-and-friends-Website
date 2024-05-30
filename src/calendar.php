@@ -28,7 +28,7 @@ require_once(__DIR__ . '/util/auth_session_start.php'); // include language file
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
 /* @var bool $loggedIn */
 
-require_once(__DIR__ . '/util/get_lang.php'); // get language
+require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
 
 template_header($dbConnection, $lang, 'cal');

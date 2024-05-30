@@ -68,16 +68,18 @@ function get_all_events(): false|array
 
 function print_calendar($lang, $style, bool $admin): void
 {
-    echo "<div class='calendar_container'>";
+    $cal_cont = "<div class='calendar_container'>";
     // get all events
     $events = get_all_events();
 
     if ($events === false || count($events) === 0) {
+        echo $cal_cont;
         echo "<div class='calendar_list calendar_error'>";
         echo "<p class='calendar_item_name'>" . lang_strings['no_events'] . "</p>";
         echo "</div>";
     } else {
         if ($style === "compact") {
+            echo "<div class='calendar_container calendar_container_compact'>";
             echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "<span class='full_calendar_icon' style='mask: url(./img/noun-share-3066989.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-share-3066989.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a></p>";
             if (count($events) > 2) {
                 echo "<ul class='calendar_list calendar_large'>";
@@ -85,6 +87,7 @@ function print_calendar($lang, $style, bool $admin): void
                 echo "<ul class='calendar_list calendar_small'>";
             }
         } else {
+            echo $cal_cont;
             echo "<ul class='calendar_list'>";
         }
 
@@ -210,7 +213,7 @@ function print_ics_controls($lang): void
 
     if (count($ics_main_file) > 0 && count($ics_year_files) > 0) {
         // options to copy calendar link to clipboard
-        echo "<details class='ical_options_details'>";
+        echo "<details id='ical_controls_cont' class='ical_options_details'>";
             echo "<summary class='ical_options_toggle'>". lang_strings['show_ical_controls'] ."</summary>";
             echo "<div class='calendar_link_copy_cont'>";
                 echo "<div class='default_calendar_copy'>";
