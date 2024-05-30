@@ -35,8 +35,14 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     EOT;
     if ($lang_title !== 'home') {
         echo "<title>$title — ".lang_strings['title']."</title>";
+        if (isset(lang_strings['meta_desc_'.$lang_title])) {
+            echo '<meta name="description" content="'.lang_strings['meta_desc_'.$lang_title].'">';
+        } else {
+            echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
+        }
     } else {
         echo "<title>".lang_strings['title']." | ".lang_strings['uni']."</title>";
+        echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
     }
 
     echo <<<EOT

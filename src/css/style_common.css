@@ -350,7 +350,7 @@ header:after {
 
 .logo {
     height: 3rem;
-    width: auto;
+    width: 3rem;
     -webkit-transition: -webkit-transform 0.2s;
     transition: -webkit-transform 0.2s;
     transition: transform 0.4s;
@@ -401,8 +401,6 @@ header:after {
     background: var(--alt-blue);
     color: var(--lgbt-bg);
     /* text-shadow: 0 0 2px;*/
-    background-size: 150% 150%;
-    animation: gradient 15s ease infinite;
     border-radius: 2rem;
 }
 
@@ -410,18 +408,6 @@ header:after {
     color: var(--lgbt-bg);
     text-shadow: none;
     transition: 0.2s;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0 50%;
-    }
 }
 
 .cont_lang {
@@ -860,80 +846,80 @@ p {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--lgbt-red);
+    background-color: var(--lgbt-orange);
 
-    -webkit-animation: colourchange 200s linear infinite;
-    -moz-animation: colourchange 200s linear infinite;
-    animation: colourchange 200s linear infinite;
+    -webkit-animation: colourchange 60s linear infinite;
+    -moz-animation: colourchange 60s linear infinite;
+    animation: colourchange 60s linear infinite;
 }
 
 @-webkit-keyframes colourchange {
     0% {
-        background-color: var(--lgbt-red);
-    }
-    16.666% {
         background-color: var(--lgbt-orange);
     }
-    33.333% {
+    16.666% {
         background-color: var(--lgbt-yellow);
     }
-    50% {
+    33.333% {
         background-color: var(--lgbt-green);
     }
+    50% {
+        background-color: var(--alt-blue);
+    }
     66.666% {
-        background-color: var(--lgbt-blue);
+        background-color: var(--alt-purple);
     }
     83.333% {
-        background-color: var(--lgbt-purple);
+        background-color: var(--lgbt-red);
     }
     100% {
-        background-color: var(--lgbt-red);
+        background-color: var(--lgbt-orange);
     }
 }
 @-moz-keyframes colourchange {
     0% {
-        background-color: var(--lgbt-red);
-    }
-    16.666% {
         background-color: var(--lgbt-orange);
     }
-    33.333% {
+    16.666% {
         background-color: var(--lgbt-yellow);
     }
-    50% {
+    33.333% {
         background-color: var(--lgbt-green);
     }
+    50% {
+        background-color: var(--alt-blue);
+    }
     66.666% {
-        background-color: var(--lgbt-blue);
+        background-color: var(--alt-purple);
     }
     83.333% {
-        background-color: var(--lgbt-purple);
+        background-color: var(--lgbt-red);
     }
     100% {
-        background-color: var(--lgbt-red);
+        background-color: var(--lgbt-orange);
     }
 }
 @keyframes colourchange {
     0% {
-        background-color: var(--lgbt-red);
-    }
-    16.666% {
         background-color: var(--lgbt-orange);
     }
-    33.333% {
+    16.666% {
         background-color: var(--lgbt-yellow);
     }
-    50% {
+    33.333% {
         background-color: var(--lgbt-green);
     }
+    50% {
+        background-color: var(--alt-blue);
+    }
     66.666% {
-        background-color: var(--lgbt-blue);
+        background-color: var(--alt-purple);
     }
     83.333% {
-        background-color: var(--lgbt-purple);
+        background-color: var(--lgbt-red);
     }
     100% {
-        background-color: var(--lgbt-red);
+        background-color: var(--lgbt-orange);
     }
 }
 

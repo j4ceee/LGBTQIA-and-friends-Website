@@ -24,11 +24,12 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
     }
 
     $auth_btn_alt = "alt='". lang_strings['account_icon']."'";
+    $auth_btn_title = "title='". lang_strings['account_button']."'";
 
     echo <<<EOT
             </ul>
         </nav>
-        <button class="auth_button" id="auth_button" onclick="toggleAuthWindow()">
+        <button class="auth_button" id="auth_button" onclick="toggleAuthWindow()" $auth_btn_title>
             <div role="img" $auth_btn_alt class="auth_icon" id="auth_icon" style="mask: url(./img/noun-user-6714086-grey.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-user-6714086-grey.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>
         </button>
     </footer>
