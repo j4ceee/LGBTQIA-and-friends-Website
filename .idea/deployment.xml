@@ -13,6 +13,21 @@
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/src" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/unminified" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="jacee.dev - NXGuardian">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="jacee.dev - Root">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

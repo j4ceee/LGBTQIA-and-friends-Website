@@ -9,8 +9,8 @@ while inotifywait -e modify,create,delete /app/css; do
         base_name=$(basename "$file" .css)
         # check if the file name already contains .min
         if echo "$base_name" | grep -qv ".min"; then
-            # run your minification command with .min inserted between the file name and file type
-            cleancss -o "/app/css/min/${base_name}.min.css" "$file"
+            # run minification command with .min between the file name & type
+            cleancss --with-rebase -o "/app/css/min/${base_name}.min.css" -O1 all:off "$file"
         fi
     done
 done
