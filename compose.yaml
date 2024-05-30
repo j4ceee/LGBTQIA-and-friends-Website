@@ -14,6 +14,9 @@ services:
       - DB_HOST=db
       - DB_NAME=lgbtfriendsdb
       - DB_USER=root
+    volumes:
+      - './src/css/min:/var/www/html/css/min:rw'
+      - './src/js/min:/var/www/html/js/min:rw'
     develop:
       watch:
         - action: sync
@@ -45,6 +48,25 @@ services:
       - db
     environment:
       - PMA_HOST=db
+  node:
+    build:
+      context: .
+      target: node-builder
+    working_dir: /app
+    volumes:
+      - './src/css/min:/app/css/min:rw'
+      - './src/js/min:/app/js/min:rw'
+    develop:
+      watch:
+        - action: sync
+          path: ./src/css
+          target: /app/css
+        - action: sync
+          path: ./src/js
+          target: /app/js
+    environment:
+      - SHELL=/bin/sh
+    command: ["/bin/sh", "-c", "ls -la && /app/node_sh/node_start.sh"]
 volumes:
   db-data:
 secrets:

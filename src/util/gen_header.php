@@ -40,7 +40,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     }
 
     echo <<<EOT
-        <link rel="stylesheet" href="./css/style_common.css">
+        <link rel="stylesheet" href="./css/min/style_common.min.css">
         <link rel="icon" type="image/png" sizes="32x32" href="../img/lgbt_bunny.png">
     </head>
     <body>

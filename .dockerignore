@@ -31,5 +31,7 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 **/vendor
+**/src/css/min
+**/src/js/min
 LICENSE
 README.md
