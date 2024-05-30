@@ -1,5 +1,8 @@
 <?php
 const lang_strings = [
+    'meta_desc_home' => 'Welcome to the LGBTQIA+ & friends group! We are a queer student group at Ansbach University.',
+    'meta_desc_cal' => 'Feel free to drop by! Here you can find all upcoming meetings of the LGBTQIA+ & friends group.',
+
     'home' => 'Home',
     'cal' => 'Calendar',
     'event_edit' => 'Edit Event',
@@ -40,6 +43,8 @@ const lang_strings = [
     'ical_desc_default' => 'Imports events from the past 12 months & the next 8 months (recommended)',
     'ical_desc_year' => 'Imports events from the entire selected year',
     'full_calendar' => 'Full calendar',
+
+    'account_button' => 'Open account menu',
 
     /* alt text for images */
     'alt_signet' => 'Signet of the LGBTQIA+ & friends group at Ansbach University',
