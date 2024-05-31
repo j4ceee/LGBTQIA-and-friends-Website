@@ -26,7 +26,7 @@ if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
 
 require_once(__DIR__ . '/util/auth_session_start.php'); // include language file
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
-/* @var bool $loggedIn */
+/* @var $loggedIn */
 
 require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
@@ -41,7 +41,15 @@ if (ENV === "dev") {
 ?>
 
 <div>
-    <?php gen_calendar($lang, 1, "full"); ?>
+    <?php
+    $event_id = null;
+
+    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        $event_id = $_GET['id'];
+    }
+
+    gen_calendar($lang, 1, "full", $loggedIn, $event_id);
+    ?>
 </div>
 
 <?php

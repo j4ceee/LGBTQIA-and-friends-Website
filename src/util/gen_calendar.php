@@ -1,7 +1,7 @@
 <?php /** @noinspection CssUnknownTarget */
 // generate frontend calendar
 
-function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false): void
+function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false, int $event_id = null): void
 {
     echo "<section class='calendar'>";
         echo "<div class='section_header'>";
@@ -11,18 +11,29 @@ function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bo
 
         if ($style === "compact") {
             // when compact (e.g. homepage), ics controls are below the calendar
-            print_calendar($lang, $style, $admin);
+            // get only future events & no id filter
+
+            $events = get_all_events(false);
+
+            print_calendar($lang, $style, $events, $admin);
             print_ics_controls($lang);
         } else {
+            // get all events or only one event if id is set
+            if ($event_id !== null) {
+                $events = get_all_events(false, $event_id);
+            } else {
+                $events = get_all_events(true);
+            }
+
             // when not compact (e.g. calendar page), ics controls are above the calendar
             print_ics_controls($lang);
-            print_calendar($lang, $style, $admin);
+            print_calendar($lang, $style, $events, $admin);
         }
 
     echo "</section>";
 }
 
-function get_all_events(bool $past7Days): false|array
+function get_all_events(bool $past7Days, int $event_id = null): false|array
 {
     global $PDO;
     global $dbConnection;
@@ -31,26 +42,32 @@ function get_all_events(bool $past7Days): false|array
         return false;
     }
 
-    // get current datetime
-    try {
-        $datetime_current = new DateTime('now', new DateTimeZone('UTC'));
-    } catch (Exception) {
-        return false;
-    }
-    $datetime_current = $datetime_current->format('Y-m-d H:i:s');
+    if ($event_id !== null) {
+        $condition = "e.id = :event_id";
+    } else {
+        // get current datetime
+        try {
+            $datetime_current = new DateTime('now', new DateTimeZone('UTC'));
+        } catch (Exception) {
+            return false;
+        }
+        $datetime_current = $datetime_current->format('Y-m-d H:i:s');
 
-    // get datetime 7 days ago
-    try {
-        $datetime_past7Days = new DateTime('now', new DateTimeZone('UTC'));
-    } catch (Exception) {
-        return false;
-    }
-    $datetime_past7Days->modify('-7 days');
-    $datetime_past7Days = $datetime_past7Days->format('Y-m-d H:i:s');
+        // get datetime 7 days ago
+        try {
+            $datetime_past7Days = new DateTime('now', new DateTimeZone('UTC'));
+        } catch (Exception) {
+            return false;
+        }
+        $datetime_past7Days->modify('-7 days');
+        $datetime_past7Days = $datetime_past7Days->format('Y-m-d H:i:s');
 
-    $events_range = "date_start >= '".$datetime_current."'";
-    if ($past7Days) {
-        $events_range = "date_start >= '".$datetime_past7Days."'";
+        $events_range = "date_start >= '".$datetime_current."'";
+        if ($past7Days) {
+            $events_range = "date_start >= '".$datetime_past7Days."'";
+        }
+
+        $condition = $events_range;
     }
 
     $sql = "SELECT
@@ -75,28 +92,24 @@ function get_all_events(bool $past7Days): false|array
             ON
                 e.event_location_id = el.id
             WHERE
-                ".$events_range."
+                ".$condition."
             ORDER BY
                 date_start";
 
     $stmt = $PDO->prepare($sql);
+    if ($event_id !== null) {
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+    }
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function print_calendar($lang, $style, bool $admin): void
+function print_calendar($lang, $style, $events, bool $admin): void
 {
     $cal_cont_start = "<div class='calendar_container";
     $cal_cont_end = "'>";
     $cal_cont_classes = '';
-
-    // get all events
-    if ($style === "compact") {
-        $events = get_all_events(false);
-    } else {
-        $events = get_all_events(true);
-    }
 
     if ($events === false || count($events) === 0) {
         if ($style === "compact") {

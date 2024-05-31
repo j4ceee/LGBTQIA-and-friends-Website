@@ -13,9 +13,9 @@ require_once(__DIR__ . '/auth_session_start.php'); // start session
 session_regenerate_id(true); // regenerate session ID to prevent session fixation attacks
 
 require_once(__DIR__ . '/auth_login_check.php'); // check if user is logged in
-/* @var bool $loggedIn */
+/* @var $loggedIn */
 
-/*
+/* // TODO: enable login system
 if (!$loggedIn) {
     redirectError("/", 334);
 }
@@ -34,17 +34,6 @@ if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
 
 // ----------------- DATABASE CONNECTION END -------------------
 
-
-if (ENV === "dev") {
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-    error_reporting(E_ALL);
-
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     validate_event_details($_POST);
 
@@ -58,10 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // if event name already exists, get the ID
     // if event name does not exist, add it (but both names must be unique)
 
-    $event_id = validate_existing_event_type($event_name_de, $event_name_en);
+    $event_type_id = validate_existing_event_type($event_name_de, $event_name_en);
 
-    if ($event_id === null) {
-        $event_id = add_event_type($event_name_de, $event_name_en); // add event type into database
+    if ($event_type_id === null) {
+        $event_type_id = add_event_type($event_name_de, $event_name_en); // add event type into database
     }
 
 
@@ -89,8 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_start = trim($_POST['event_date_start']);    // is a datetime in the format 2001-12-16T16:00
     $event_end = trim($_POST['event_date_end']);        // same as above
 
-    $event_start = new DateTime($event_start, new DateTimeZone('Europe/Berlin'));
-    $event_end = new DateTime($event_end, new DateTimeZone('Europe/Berlin'));
+    try {
+        $event_start = new DateTime($event_start, new DateTimeZone('Europe/Berlin'));
+        $event_end = new DateTime($event_end, new DateTimeZone('Europe/Berlin'));
+    } catch (Exception $e) {
+        $PDO->rollBack();
+        redirectToPreviousPage("400");
+    }
     $event_start->setTimezone(new DateTimeZone('UTC'));
     $event_end->setTimezone(new DateTimeZone('UTC'));
 
@@ -101,7 +95,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_uid = generate_event_id();
 
     // handle other dates--------------------------------------
-    $event_created = new DateTime('now', new DateTimeZone('UTC'));
+    try {
+        $event_created = new DateTime('now', new DateTimeZone('UTC'));
+    } catch (Exception $e) {
+        $PDO->rollBack();
+        redirectToPreviousPage("400");
+    }
     $event_created = $event_created->format('Y-m-d H:i:s');
     $event_modified = $event_created; // same as created, since it's a new event
 
@@ -133,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (:event_type_id, :event_location_id, :date_start, :date_end, :uid, :date_created, :date_modified, :desc_de_override, :desc_en_override, :sequence)";
     $stmt = $PDO->prepare($sql);
     $stmt->execute([
-        ':event_type_id' => $event_id,
+        ':event_type_id' => $event_type_id,
         ':event_location_id' => $event_location_id,
         ':date_start' => $event_start,
         ':date_end' => $event_end,
@@ -145,24 +144,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ':sequence' => $event_seq
     ]);
 
-    if (ENV === "dev") {
-        // print entire PDO transaction
-        echo "Adding new event:<br>";
-        echo "Event Title DE: $event_name_de / Event Title EN: $event_name_en / Event ID: $event_id<br>";
-        echo "Event Location: $event_location / Event Location ID: $event_location_id<br>";
-        echo "Event start: $event_start<br>";
-        echo "Event end: $event_end<br>";
-        echo "Event UID: $event_uid<br>";
-        echo "Event created: $event_created<br>";
-        echo "Event modified: $event_modified<br>";
-        echo "Event desc DE: $event_desc_de<br>";
-        echo "Event desc EN: $event_desc_en<br>";
-        echo "Event sequence: $event_seq<br>";
-    }
+    $event_id = $PDO->lastInsertId();
 
     $PDO->commit();
     //$PDO->rollBack();
 
+    // TODO: Singleton pattern for ICSGenerator
     $ICSGen = new ICSGenerator();
     $ICSGen->generateICS();
+
+    redirect("/calendar.php?id=" . $event_id);
 }

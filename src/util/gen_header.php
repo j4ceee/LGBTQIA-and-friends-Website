@@ -8,7 +8,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     $PDO = $dbConnection->getConnection();
 
     require(__DIR__ . '/auth_login_check.php'); // check if user is logged in
-    /* @var bool $loggedIn */
+    /* @var $loggedIn */
 
     $index = '';
     $calendar = '';
