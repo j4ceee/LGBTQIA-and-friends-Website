@@ -193,8 +193,8 @@ function print_calendar($lang, $style, $events, bool $admin): void
             } catch (Exception $e) {
                 if ($admin) {
                     echo "<li class='calendar_item'>";
-                    echo "<p class='calendar_item_desc'> Error with Event: " . $event_name . "</p>";
-                    echo "<p class='calendar_item_desc'>" . $e . "</p>";
+                        echo "<p class='calendar_item_desc'> Error with Event: " . $event_name . "</p>";
+                        echo "<p class='calendar_item_desc'>" . $e . "</p>";
                     echo "</li>";
                 }
                 continue; // skip event if date is invalid
@@ -258,10 +258,10 @@ function print_calendar($lang, $style, $events, bool $admin): void
                 echo "</div>";
 
                 if ($style !== "compact" && $admin) {
-                    echo "<div class='calendar_item_admin_ctrl'>"; // ./edit_event.php?id=".$event_id." ./delete_event.php?id=".$event_id."
+                    echo "<div class='calendar_item_admin_ctrl'>"; // ./edit_event.php?id=".$event_id."
                         echo "<div class='calendar_item_admin_cont'>";
-                            echo "<a class='calendar_item_admin_link cal_admin_left' href='' onclick=''><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
-                            echo "<a class='calendar_item_admin_link cal_admin_right' href='' onclick=''><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_left' href='' title='".lang_strings['event_edit']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_right' href='./event_delete.php?id=".$event_id."' title='".lang_strings['event_delete']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
                         echo "</div>";
                     echo "</div>";
                 }

@@ -6,7 +6,7 @@ use JetBrains\PhpStorm\NoReturn;
  * REDIRECT FUNCTIONS
  */
 
-#[NoReturn] function redirect($path = '/', string $msg = ''): void
+#[NoReturn] function redirect($path = '/'): void
 {
     //redirect to the given path, '' = home
     header("Location: " . BASE_URL . $path);
@@ -80,6 +80,9 @@ $errorDict = [
 
     // database errors
     "600" => "Error! Database not set up correctly.",
+
+    // success messages
+    "200" => "Success! ",
 ];
 
 function getErrorMsg(bool $alertError = true): string

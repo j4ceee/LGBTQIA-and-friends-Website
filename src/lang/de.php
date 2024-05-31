@@ -5,8 +5,6 @@ const lang_strings = [
 
     'home' => 'Home',
     'cal' => 'Kalender',
-    'event_edit' => 'Treffen bearbeiten',
-    'event_add' => 'Treffen hinzufügen',
     'about' => 'Über uns',
     'title' => 'LGBTQIA+ & friends',
     'uni' => 'Hochschule Ansbach',
@@ -45,6 +43,10 @@ const lang_strings = [
     'full_calendar' => 'Kompletter Kalender',
 
     'account_button' => 'Account-Menü öffnen',
+
+    'event_add' => 'Treffen hinzufügen',
+    'event_delete' => 'Lösche Treffen ',
+    'event_edit' => 'Bearbeite Treffen ',
 
     /* alt text for images */
     'alt_signet' => 'Signet der LGBTQIA+ & friends Gruppe der Hochschule Ansbach',

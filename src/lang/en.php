@@ -5,8 +5,6 @@ const lang_strings = [
 
     'home' => 'Home',
     'cal' => 'Calendar',
-    'event_edit' => 'Edit Event',
-    'event_add' => 'Add Event',
     'about' => 'About us',
     'title' => 'LGBTQIA+ & friends',
     'uni' => 'Ansbach University',
@@ -45,6 +43,10 @@ const lang_strings = [
     'full_calendar' => 'Full calendar',
 
     'account_button' => 'Open account menu',
+
+    'event_add' => 'Add Event',
+    'event_delete' => 'Delete Event ',
+    'event_edit' => 'Edit Event ',
 
     /* alt text for images */
     'alt_signet' => 'Signet of the LGBTQIA+ & friends group at Ansbach University',
