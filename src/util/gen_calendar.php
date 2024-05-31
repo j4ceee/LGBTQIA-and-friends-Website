@@ -1,7 +1,7 @@
 <?php /** @noinspection CssUnknownTarget */
 // generate frontend calendar
 
-function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false): void
+function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false, int $event_id = null): void
 {
     echo "<section class='calendar'>";
         echo "<div class='section_header'>";
@@ -10,28 +10,64 @@ function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bo
         echo "</div>";
 
         if ($style === "compact") {
-            // output calendar
-            print_calendar($lang, $style, $admin);
+            // when compact (e.g. homepage), ics controls are below the calendar
+            // get only future events & no id filter
 
-            // output ics controls
+            $events = get_all_events(false);
+
+            print_calendar($lang, $style, $events, $admin);
             print_ics_controls($lang);
-
         } else {
-            print_ics_controls($lang);
-            print_calendar($lang, $style, $admin);
-        }
+            // get all events or only one event if id is set
+            if ($event_id !== null) {
+                $events = get_all_events(false, $event_id);
+            } else {
+                $events = get_all_events(true);
+            }
 
+            // when not compact (e.g. calendar page), ics controls are above the calendar
+            print_ics_controls($lang);
+            print_calendar($lang, $style, $events, $admin);
+        }
 
     echo "</section>";
 }
 
-function get_all_events(): false|array
+function get_all_events(bool $past7Days, int $event_id = null): false|array
 {
     global $PDO;
     global $dbConnection;
 
     if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
         return false;
+    }
+
+    if ($event_id !== null) {
+        $condition = "e.id = :event_id";
+    } else {
+        // get current datetime
+        try {
+            $datetime_current = new DateTime('now', new DateTimeZone('UTC'));
+        } catch (Exception) {
+            return false;
+        }
+        $datetime_current = $datetime_current->format('Y-m-d H:i:s');
+
+        // get datetime 7 days ago
+        try {
+            $datetime_past7Days = new DateTime('now', new DateTimeZone('UTC'));
+        } catch (Exception) {
+            return false;
+        }
+        $datetime_past7Days->modify('-7 days');
+        $datetime_past7Days = $datetime_past7Days->format('Y-m-d H:i:s');
+
+        $events_range = "date_start >= '".$datetime_current."'";
+        if ($past7Days) {
+            $events_range = "date_start >= '".$datetime_past7Days."'";
+        }
+
+        $condition = $events_range;
     }
 
     $sql = "SELECT
@@ -56,30 +92,38 @@ function get_all_events(): false|array
             ON
                 e.event_location_id = el.id
             WHERE
-                date_end >= NOW()
+                ".$condition."
             ORDER BY
                 date_start";
 
     $stmt = $PDO->prepare($sql);
+    if ($event_id !== null) {
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+    }
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function print_calendar($lang, $style, bool $admin): void
+function print_calendar($lang, $style, $events, bool $admin): void
 {
-    $cal_cont = "<div class='calendar_container'>";
-    // get all events
-    $events = get_all_events();
+    $cal_cont_start = "<div class='calendar_container";
+    $cal_cont_end = "'>";
+    $cal_cont_classes = '';
 
     if ($events === false || count($events) === 0) {
+        if ($style === "compact") {
+            $cal_cont_classes = ' calendar_container_compact';
+        }
+        $cal_cont = $cal_cont_start . $cal_cont_classes . $cal_cont_end;
         echo $cal_cont;
         echo "<div class='calendar_list calendar_error'>";
         echo "<p class='calendar_item_name'>" . lang_strings['no_events'] . "</p>";
         echo "</div>";
     } else {
         if ($style === "compact") {
-            echo "<div class='calendar_container calendar_container_compact'>";
+            $cal_cont_classes = ' calendar_container_compact calendar_container_link';
+            echo $cal_cont_start . $cal_cont_classes . $cal_cont_end;
             echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "<span class='full_calendar_icon' style='mask: url(./img/noun-share-3066989.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-share-3066989.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a></p>";
             if (count($events) > 2) {
                 echo "<ul class='calendar_list calendar_large'>";
@@ -87,11 +131,19 @@ function print_calendar($lang, $style, bool $admin): void
                 echo "<ul class='calendar_list calendar_small'>";
             }
         } else {
-            echo $cal_cont;
+            echo $cal_cont_start . $cal_cont_end;
             echo "<ul class='calendar_list'>";
         }
 
+        if ($admin) {
+            $cal_item_cont_classes = 'calendar_item_admin';
+        } else {
+            $cal_item_cont_classes = '';
+        }
+
         foreach ($events as $event) {
+            $cal_item_classes = '';
+
             /**
              * Event Name Formatting
              */
@@ -125,13 +177,23 @@ function print_calendar($lang, $style, bool $admin): void
              */
             // format date start as day, month int -1, year
             try {
-                $date_start = new DateTime(htmlspecialchars($event['date_start']));
+                $date_start = new DateTime(htmlspecialchars($event['date_start']), new DateTimeZone('UTC'));
                 // convert to local timezone (Berlin)
                 $date_start->setTimezone(new DateTimeZone('Europe/Berlin'));
+
+                // check if end date is in the past
+                $date_end = new DateTime(htmlspecialchars($event['date_end']), new DateTimeZone('UTC'));
+
+                $current_date = new DateTime('now', new DateTimeZone('UTC'));
+
+                if ($date_end < $current_date) {
+                    $cal_item_classes .= 'calendar_item_past';
+                }
+
             } catch (Exception $e) {
                 if ($admin) {
                     echo "<li class='calendar_item'>";
-                    echo "<p class='calendar_item_name'> Error with Event: " . $event_name . "</p>";
+                    echo "<p class='calendar_item_desc'> Error with Event: " . $event_name . "</p>";
                     echo "<p class='calendar_item_desc'>" . $e . "</p>";
                     echo "</li>";
                 }
@@ -161,39 +223,48 @@ function print_calendar($lang, $style, bool $admin): void
             /**
              * Output
              */
-            echo "<li class='calendar_item_cont'>";
-            if ($event_desc !== "") {
-                echo "<div class='calendar_item calendar_button' id='calendar_button_".$event_id."' data-event-id='".$event_id."' aria-expanded='false'>";
-            } else {
-                echo "<div class='calendar_item'>";
-            }
-            echo "<time class='calendar_item_date' datetime='".$date_start->format('Y-m-d')."'>";
-            if ($lang === 'de') {
-                echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
-                echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
-            } else {
-                echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
-                echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
-            }
-            echo "<p class='calendar_item_year'>" . $date_start_year . "</p>";
-            echo "</time>";
+            echo "<li class='calendar_item_cont $cal_item_cont_classes'>";
+                if ($event_desc !== "") {
+                    echo "<div class='calendar_item calendar_button $cal_item_classes' id='calendar_button_$event_id' data-event-id='$event_id'>";
+                } else {
+                    echo "<div class='calendar_item $cal_item_classes'>";
+                }
+                    echo "<time class='calendar_item_date' datetime='".$date_start->format('Y-m-d')."'>";
+                    if ($lang === 'de') {
+                        echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
+                        echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
+                    } else {
+                        echo "<p class='calendar_item_month'>" . $date_start_month . "</p>";
+                        echo "<p class='calendar_item_day'>" . $date_start_day . "</p>";
+                    }
+                    echo "<p class='calendar_item_year'>" . $date_start_year . "</p>";
+                    echo "</time>";
 
-            echo "<div class='calendar_item_info'>";
-            echo "<p class='calendar_item_name'>" . $event_name . "</p>";
-            // desc container should always be there, for styling purposes, if empty -> empty p
-            if ($event_desc === "") {
-                echo "<p class='calendar_item_desc'></p>";
-            } else {
-                echo "<details id='event_det_".$event_id."' class='calendar_item_desc'><summary class='calendar_item_desc_ctrl' data-event-id='".$event_id."'>Details</summary>" . nl2br($event_desc) . "</details>";
-            }
+                    echo "<div class='calendar_item_info'>";
+                    echo "<p class='calendar_item_name'>" . $event_name . "</p>";
+                    // desc container should always be there, for styling purposes, if empty -> empty p
+                    if ($event_desc === "") {
+                        echo "<p class='calendar_item_desc'></p>";
+                    } else {
+                        echo "<details id='event_det_".$event_id."' class='calendar_item_desc'><summary class='calendar_item_desc_ctrl' data-event-id='".$event_id."'>Details</summary>" . nl2br($event_desc) . "</details>";
+                    }
 
-            echo "</div>";
+                    echo "</div>";
 
-            echo "<div class='calendar_item_location'>";
-            echo "<time class='calendar_item_loc_time' datetime='".$date_start->format('H:i')."'>" . $date_start_time . "</time>";
-            echo "<p class='calendar_item_loc_name' lang='de'>" . $event_location . "</p>";
-            echo "</div>";
-            echo "</div>";
+                    echo "<div class='calendar_item_location'>";
+                    echo "<time class='calendar_item_loc_time' datetime='".$date_start->format('H:i')."'>" . $date_start_time . "</time>";
+                    echo "<p class='calendar_item_loc_name' lang='de'>" . $event_location . "</p>";
+                    echo "</div>";
+                echo "</div>";
+
+                if ($style !== "compact" && $admin) {
+                    echo "<div class='calendar_item_admin_ctrl'>"; // ./edit_event.php?id=".$event_id." ./delete_event.php?id=".$event_id."
+                        echo "<div class='calendar_item_admin_cont'>";
+                            echo "<a class='calendar_item_admin_link cal_admin_left' href='' onclick=''><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_right' href='' onclick=''><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                        echo "</div>";
+                    echo "</div>";
+                }
             echo "</li>";
         }
         echo "</ul>";

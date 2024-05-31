@@ -22,7 +22,7 @@ $PDO = $dbConnection->useDB();
 
 require_once(__DIR__ . '/util/auth_session_start.php'); // start session
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
-/* @var bool $loggedIn */
+/* @var $loggedIn */
 
 require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
@@ -46,7 +46,7 @@ template_header($dbConnection, $lang, 'home');
         </div>
         <div class="admin_controls">
             <?php
-            if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
+            if ($PDO === null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
                 echo '<a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>';
             }
             ?>

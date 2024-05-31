@@ -103,6 +103,9 @@
     --lgbt-text: #eeeeee;
     --lgbt-bg: #333333;
 
+    --lgbt-cal: #2E2E2EFF;
+    --lgbt-cal-item: #2d2d2d;
+
     /*
     --lgbt-text: #333333;
     --lgbt-bg: #eeeeee;
@@ -1122,7 +1125,12 @@ p {
 }
 
 .calendar_container_compact {
-    margin: 2rem 0 0 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.calendar_container_link {
+    margin-top: 2rem;
 }
 
 .calendar_list {
@@ -1132,7 +1140,7 @@ p {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    background-color:  rgb(46, 46, 46);
+    background-color:  var(--lgbt-cal);
     border-radius: 1rem;
     position: relative;
     z-index: 2;
@@ -1162,6 +1170,7 @@ p {
     padding: 0;
     margin: 0;
 }
+
 .calendar_item {
     display: flex;
     flex-direction: row;
@@ -1170,16 +1179,23 @@ p {
     gap: 1rem;
     padding: 1rem 2rem;
     border-radius: 1rem;
+    background-color: var(--lgbt-cal-item);
     transition: .2s;
     position: relative;
-
-    /* revert button style */
-    margin: 0;
-    background: none;
-    border: none;
-    color: var(--lgbt-text);
-    text-align: left;
 }
+
+/* styling for past events */
+.calendar_item_past {
+    background-color: var(--lgbt-cal);
+    transition: .2s;
+}
+.calendar_item_past *,
+.calendar_item_past::after {
+    opacity: 0.4;
+    transition: .2s;
+}
+
+/* pointer cursor for calendar items with expandable description */
 .calendar_button {
     cursor: pointer;
 }
@@ -1190,6 +1206,14 @@ p {
     transition: .2s;
 }
 
+.calendar_item:hover *,
+.calendar_item:focus-within *,
+.calendar_item:focus-within .calendar_item::after {
+    opacity: 1;
+    transition: .2s;
+}
+
+
 .calendar_item::after {
     /* dividing line */
     content: "";
@@ -1199,6 +1223,10 @@ p {
     bottom: -1rem;
     left: 10%;
     right: 10%;
+    pointer-events: none;
+}
+.calendar_item_admin .calendar_item::after {
+    bottom: -2.7rem;
 }
 
 .calendar_item_date {
@@ -1215,16 +1243,36 @@ p {
     line-height: 1.6rem;
     font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     color: var(--alt-blue);
+    transition: .2s;
+}
+.calendar_item_past .calendar_item_day {
+    color: var(--lgbt-text);
+    transition: .2s;
+}
+.calendar_item_past:hover .calendar_item_day,
+.calendar_item_past:focus-within .calendar_item_day {
+    color: var(--alt-blue);
+    transition: .2s;
 }
 .calendar_item_month {
     font-size: 1.4rem;
     line-height: 1.4rem;
     font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
     color: var(--alt-blue);
+    transition: .2s;
+}
+.calendar_item_past .calendar_item_month {
+    color: var(--lgbt-text);
+    transition: .2s;
+}
+.calendar_item_past:hover .calendar_item_month,
+.calendar_item_past:focus-within .calendar_item_month {
+    color: var(--alt-blue);
+    transition: .2s;
 }
 .calendar_item_year {
     font-family: "Baloo 2 Medium", 'Baloo 2 SemiBold Fallback';
-    font-size: .9rem;
+    font-size: 1.1rem;
     line-height: 1.2rem;
 }
 
@@ -1240,10 +1288,20 @@ p {
     color: var(--alt-blue);
     margin: 0;
     padding-bottom: .8rem;
+    transition: .2s;
+}
+.calendar_item_past .calendar_item_name {
+    color: var(--lgbt-text);
+    transition: .2s;
+}
+.calendar_item_past:hover .calendar_item_name,
+.calendar_item_past:focus-within .calendar_item_name {
+    color: var(--alt-blue);
+    transition: .2s;
 }
 
 .calendar_item_desc {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.3rem;
     font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     padding-bottom: .3rem;
@@ -1284,7 +1342,79 @@ p {
     font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
     padding-bottom: .1rem;
     margin: 0;
+}
 
+
+.calendar_item_admin_ctrl {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: .29rem;
+}
+
+.calendar_item_past + .calendar_item_admin_ctrl {
+    opacity: 0.4;
+    transition: .2s;
+}
+
+.calendar_item_admin_ctrl:has(.calendar_item_admin_cont:hover),
+.calendar_item_admin_ctrl:has(.calendar_item_admin_cont:focus-within),
+.calendar_item_past:hover + .calendar_item_admin_ctrl,
+.calendar_item_past:focus-within + .calendar_item_admin_ctrl {
+    opacity: 1;
+    transition: .2s;
+}
+
+.calendar_item_admin_cont {
+    display: flex;
+    flex-direction: row;
+}
+
+.calendar_item_admin_link {
+    background-color: var(--lgbt-cal-item);
+    transition: .2s;
+    cursor: pointer;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+.cal_admin_left {
+    padding-right: 1rem;
+    padding-left: 1.5rem;
+    border-radius: 2rem 0 0 2rem;
+}
+.cal_admin_right {
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+    border-radius: 0 2rem 2rem 0;
+}
+.calendar_item_past .calendar_item_admin_link {
+    background-color: var(--lgbt-cal);
+}
+.calendar_item:hover + .calendar_item_admin_ctrl .calendar_item_admin_link,
+.calendar_item:focus-within + .calendar_item_admin_ctrl .calendar_item_admin_link,
+.calendar_item_admin_cont:hover .calendar_item_admin_link,
+.calendar_item_admin_cont:focus-within .calendar_item_admin_link {
+    background-color: var(--win-selected);
+}
+.calendar_item:hover + .calendar_item_admin_ctrl .calendar_item_admin_link:hover,
+.calendar_item:focus-within + .calendar_item_admin_ctrl .calendar_item_admin_link:focus-within,
+.calendar_item_admin_ctrl .calendar_item_admin_link:hover,
+.calendar_item_admin_ctrl .calendar_item_admin_link:focus-within {
+    background-color: var(--alt-blue);
+    transition: .2s;
+}
+.cal_admin_link_icon {
+    display: block;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: var(--alt-blue);
+    transition: .2s;
+}
+.calendar_item_admin_link:hover .cal_admin_link_icon,
+.calendar_item_admin_link:focus-within .cal_admin_link_icon {
+    background-color: var(--lgbt-bg);
+    transition: .2s;
 }
 
 /* credit: https://stackoverflow.com/a/73447722 */
@@ -1377,7 +1507,7 @@ p {
     text-decoration: none;
     transition: 0.2s;
     border-radius: 1.5rem 1.5rem 0 0;
-    background-color: rgb(46, 46, 46);
+    background-color: var(--lgbt-cal);
     padding: .5rem 1rem 0.2rem 1.5rem;
     display: flex;
     flex-direction: row;
@@ -1432,12 +1562,21 @@ p {
         font-size: 1.5rem;
         line-height: 1.5rem;
     }
+    .calendar_item_year {
+        font-size: 1.0rem;
+        line-height: 1.0rem;
+    }
 
     .calendar_item_location {
         order: 2;
         width: 100%;
         flex-basis: 100%;
         align-items: flex-start;
+    }
+
+    .calendar_item_desc {
+        font-size: .9rem;
+        line-height: 1.1rem;
     }
 
     .calendar_item_loc_name {
@@ -1466,5 +1605,14 @@ p {
     .full_calendar_icon {
         width: 1rem;
         height: 1rem;
+    }
+
+    .calendar_item_admin_ctrl {
+        margin-top: .35rem;
+    }
+
+    .cal_admin_link_icon {
+        width: 1.2rem;
+        height: 1.2rem;
     }
 }
