@@ -46,7 +46,7 @@ template_header($dbConnection, $lang, 'home');
         </div>
         <div class="admin_controls">
             <?php
-            if ($PDO != null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
+            if ($PDO === null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
                 echo '<a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>';
             }
             ?>

@@ -32,6 +32,12 @@ require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
 
 template_header($dbConnection, $lang, 'cal');
+
+if (ENV === "dev") {
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);
+}
 ?>
 
 <div>

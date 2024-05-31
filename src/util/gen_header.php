@@ -67,7 +67,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
 
     echo '<li><a href="./" '.$index.'>'.lang_strings['home'].'</a></li>';
 
-    if ($PDO !== null || $dbConnection->checkDBSchema() === true) {
+    if ($PDO !== null && $dbConnection->checkDBSchema() === true) {
         echo '<li><a href="./calendar.php" '.$calendar.'>'.lang_strings['cal'].'</a></li>';
     }
 

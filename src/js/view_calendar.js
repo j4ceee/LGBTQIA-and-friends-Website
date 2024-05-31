@@ -75,15 +75,28 @@ window.addEventListener('load', function() { // when page is loaded
 
 function toggleCalDetails(event, eventId) {
   // this function toggles the visibility of the corresponding calendar details
-    const button = event.currentTarget;
+    const event_button = event.currentTarget;
     const details = document.getElementById('event_det_' + eventId);
 
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', !isExpanded);
+    const isExpanded = details.hasAttribute('open');
 
     if (isExpanded) {
+        // if the details are already open, close them
         details.removeAttribute('open');
+
+        // add calendar_item_past class if the event is in the past
+        if (event_button.getAttribute('data-past-class') === 'true') {
+            event_button.classList.add('calendar_item_past');
+            event_button.removeAttribute('data-past-class');
+        }
     } else {
+        // if the details are closed, open them
         details.setAttribute('open', 'open');
+
+        // remove calendar_item_past class & store it in temp attribute
+        if (event_button.classList.contains('calendar_item_past')) {
+            event_button.setAttribute('data-past-class', 'true');
+            event_button.classList.remove('calendar_item_past');
+        }
     }
 }
