@@ -42,9 +42,17 @@ const lang_strings = [
     'ical_desc_year' => 'Imports events from the entire selected year',
     'full_calendar' => 'Full calendar',
 
+    /* event edit */
+    'location' => 'Location',
+    'start' => 'Start',
+    'end' => 'End',
+    'use_desc' => 'Use description',
+
     'account_button' => 'Open account menu',
 
     'event_add' => 'Add Event',
+    'event_delete_p' => 'Delete Event', // page title
+    'event_edit_p' => 'Edit Event', // page title
     'event_delete' => 'Delete Event ',
     'event_edit' => 'Edit Event ',
 

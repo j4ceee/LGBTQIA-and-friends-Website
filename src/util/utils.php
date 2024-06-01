@@ -80,6 +80,7 @@ $errorDict = [
 
     // database errors
     "600" => "Error! Database not set up correctly.",
+    "601" => "Error! No event found with ID: ",
 
     // success messages
     "200" => "Success! ",

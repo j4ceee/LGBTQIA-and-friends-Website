@@ -42,9 +42,17 @@ const lang_strings = [
     'ical_desc_year' => 'Importiert Veranstaltungen aus dem gesamten ausgewählten Jahr',
     'full_calendar' => 'Kompletter Kalender',
 
+    /* event edit */
+    'location' => 'Ort',
+    'start' => 'Beginn',
+    'end' => 'Ende',
+    'use_desc' => 'Beschreibung verwenden',
+
     'account_button' => 'Account-Menü öffnen',
 
     'event_add' => 'Treffen hinzufügen',
+    'event_delete_p' => 'Treffen löschen', // page title
+    'event_edit_p' => 'Treffen bearbeiten', // page title
     'event_delete' => 'Lösche Treffen ',
     'event_edit' => 'Bearbeite Treffen ',
 
