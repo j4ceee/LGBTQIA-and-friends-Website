@@ -19,7 +19,7 @@ $dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
+    redirectStatus("/", "600");
 }
 
 // ----------------- DATABASE CONNECTION END -------------------

@@ -13,7 +13,7 @@ use JetBrains\PhpStorm\NoReturn;
     exit();
 }
 
-#[NoReturn] function redirectError($path = '/', string $msg = ''): void
+#[NoReturn] function redirectStatus($path = '/', string $msg = ''): void
 {
     if ($msg !== '') {
         $path .= '?status=' . $msg;
@@ -61,6 +61,7 @@ use JetBrains\PhpStorm\NoReturn;
 $errorDict = [
     // missing inputs errors
     "400" => "Error! Inputs were not submitted correctly.",
+    "401" => "Error! No data was submitted.",
     "404" => "Error! Missing required field: ",
 
     // login errors
@@ -77,6 +78,8 @@ $errorDict = [
 
     "502" => "Error! End date must be after start date.",
     "503" => "Error! One of the event names already exists in the database.",
+    "504" => "Error! No event details were changed.",
+    "505" => "Error! Event names do not match.",
 
     // database errors
     "600" => "Error! Database not set up correctly.",

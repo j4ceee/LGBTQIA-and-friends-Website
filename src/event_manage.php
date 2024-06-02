@@ -3,6 +3,7 @@ require_once(__DIR__ . '/util/gen_header.php');
 require_once(__DIR__ . '/util/gen_footer.php');
 require_once(__DIR__ . '/util/utils.php'); // include utility functions
 require_once(__DIR__ . '/util/conf.php'); // include configuration file
+require_once(__DIR__ . '/util/validate.php'); // include validation functions
 
 if (ENV === "dev") {
     ini_set('display_errors', '1');
@@ -33,7 +34,7 @@ $dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
+    redirectStatus("/", "600");
 }
 
 // ----------------- DATABASE CONNECTION END -------------------
@@ -80,7 +81,7 @@ if ($eventID !== null) {
         $editMode = true;
     }
     else {
-        redirectError("/calendar.php", "601/" . $eventID);
+        redirectStatus("/calendar.php", "601/" . $eventID);
     }
 }
 
@@ -102,7 +103,7 @@ template_header($dbConnection, $lang, $pageTitle);
 <?php
 
 if ($editMode) {
-    $formAction = "./util/validate_edit.php?id=" . $eventID;
+    $formAction = "./util/validate_update.php?id=" . $eventID;
     // TODO: create validate_edit.php
 }
 else {
@@ -119,7 +120,7 @@ else {
                     <input type="datetime-local" class="lgbt_input event_date_start" id="event_date_start" name="event_date_start"
                            <?php
                             if ($editMode) {
-                                 echo 'value="' . date('Y-m-d\TH:i', strtotime($event['date_start'])) . '"';
+                                 echo 'value="' . convert_datetime_to_ui($event['date_start']) . '"';
                             }
                             ?>
                            required>
@@ -132,7 +133,7 @@ else {
                     <input type="datetime-local" class="lgbt_input event_date_end" id="event_date_end" name="event_date_end"
                             <?php
                             if ($editMode) {
-                                echo 'value="' . date('Y-m-d\TH:i', strtotime($event['date_end'])) . '"';
+                                echo 'value="' . convert_datetime_to_ui($event['date_end']) . '"';
                             }
                             ?>
                            required>
@@ -192,11 +193,11 @@ else {
                 >
                 <datalist id="event_name_de_list">
                     <?php
-                    $stmt = $PDO->prepare('SELECT name_de FROM event_types ORDER BY id');
+                    $stmt = $PDO->prepare('SELECT name_de, id FROM event_types ORDER BY name_de');
                     $stmt->execute();
-                    $event_type_de = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    for ($i = 0; $i < count($event_type_de); $i++) {
-                        echo '<option data-value="'. $i .'" value="' . $event_type_de[$i]['name_de'] . '">';
+                    $event_type_en = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($event_type_en as $key => $event_type) {
+                        echo '<option data-value="'. (int)$event_type['id'] .'" value="' . htmlspecialchars($event_type['name_de']) . '">';
                     }
                     ?>
                 </datalist>
@@ -213,7 +214,7 @@ else {
                     // so: we need to check if there is an override description (not null or empty)
                     if ($event['desc_de_override'] !== null && $event['desc_de_override'] !== "") {
                         $descTextarea = htmlspecialchars($event['desc_de_override']);
-                    } else {
+                    } else if ($event['desc_de'] !== "" && $event['desc_de'] !== null) {
                         // if there is no override description, but the default description is not empty, enable the textarea & set the default description as placeholder
                         $descPlaceholder = "Standard Beschreibung: \n" . htmlspecialchars($event['desc_de']);
                     }
@@ -235,11 +236,11 @@ else {
                 >
                 <datalist id="event_name_en_list">
                     <?php
-                    $stmt = $PDO->prepare('SELECT name_en FROM event_types ORDER BY id');
+                    $stmt = $PDO->prepare('SELECT name_en, id FROM event_types ORDER BY name_en');
                     $stmt->execute();
                     $event_type_en = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    for ($i = 0; $i < count($event_type_en); $i++) {
-                        echo '<option data-value="'. $i .'" value="' . $event_type_en[$i]['name_en'] . '">';
+                    foreach ($event_type_en as $key => $event_type) {
+                        echo '<option data-value="'. (int)$event_type['id'] .'" value="' . htmlspecialchars($event_type['name_en']) . '">';
                     }
                     ?>
                 </datalist>
@@ -256,7 +257,7 @@ else {
                     // so: we need to check if there is an override description (not null or empty)
                     if ($event['desc_en_override'] !== null && $event['desc_en_override'] !== "") {
                         $descTextarea = htmlspecialchars($event['desc_en_override']);
-                    } else {
+                    } else if ($event['desc_en'] !== "" && $event['desc_en'] !== null) {
                         // if there is no override description, but the default description is not empty, enable the textarea & set the default description as placeholder
                         $descPlaceholder = "Default Description: \n" . htmlspecialchars($event['desc_en']);
                     }
