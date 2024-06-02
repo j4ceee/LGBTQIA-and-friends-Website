@@ -73,15 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id']) && is_numeric($_G
     $stmt->execute();
     $event = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    echo "<pre>";
-    var_dump($event);
-    echo "</pre>";
-
     if ($event !== false && count($event) > 0 && $event !== null) {
-
-        echo "<pre>";
-        var_dump($_POST);
-        echo "</pre>";
 
         // sanitize the submitted data
         $event_name_de = trim($_POST['event_name_de']);
@@ -118,37 +110,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id']) && is_numeric($_G
         foreach ($compArray as $key => $value) {
             if ($event[$key] !== $value) {
                 $updateArray[$key] = $value;
-
-                echo "## New value for " . $key . " ##<br>";
-                echo "Old value: " . $event[$key] . "<br>";
-                echo "New value: " . $value . "<br>";
-                echo "<br>";
             }
         }
-
-        echo "<pre>";
-        var_dump($updateArray);
-        echo "</pre>";
 
         // if there are no changes
         if (count($updateArray) === 0) {
             redirectToPreviousPage("504");
         }
-
-        // update the event details
-        /*
-         * can be updated without further checks:
-         *
-         * - date_start & date_end
-         * - desc_de_override & desc_en_override
-         *
-         * - sequence (increment by 1)
-         * - date_modified (current UTC time)
-         *
-         * check if already exist: -> if yes, update foreign key to existing entry -> if no, add new entry
-         * - name_de & name_en
-         * - location
-         */
 
         /**
          ** DB TRANSACTION START
@@ -219,10 +187,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id']) && is_numeric($_G
         $sql .= "date_modified = :date_modified ";
         $sql .= "WHERE id = :eventID";
 
-        echo "<pre>";
-        var_dump($sql);
-        echo "</pre>";
-
         $sequence = (int)$event['sequence'] + 1; // increment sequence number by 1
         try {
             $date_modified = new DateTime('now', new DateTimeZone('UTC'));
@@ -237,10 +201,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id']) && is_numeric($_G
         $stmt->bindParam(':sequence', $sequence, PDO::PARAM_INT);
         $stmt->bindParam(':date_modified', $date_modified);
 
-        echo "<pre>";
-        var_dump($columnUpdates);
-        echo "</pre>";
-
         foreach ($columnUpdates as $key => $value) {
             $stmt->bindValue(':' . $key, $value);
         }
@@ -253,6 +213,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['id']) && is_numeric($_G
         // generate ICS file
         $ICSGen = new ICSGenerator();
         $ICSGen->generateICS();
+
+        $url_params = [
+            'id' => $eventID
+        ];
+
+        redirectStatus("/calendar.php", "200/Edited event details for event: " . $event_name_en, $url_params);
     }
 }
-//redirectStatus("/", "401");
+redirectStatus("/", "401");

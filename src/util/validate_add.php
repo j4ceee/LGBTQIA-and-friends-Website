@@ -133,6 +133,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ICSGen = new ICSGenerator();
     $ICSGen->generateICS();
 
-    redirect("/calendar.php?id=" . $event_id);
+    $url_params = [
+        'id' => $event_id
+    ];
+    redirectStatus("/calendar.php", "200/Added event: " . $event_name_en, $url_params);
 }
 redirectStatus("/", "401");

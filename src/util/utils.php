@@ -6,17 +6,31 @@ use JetBrains\PhpStorm\NoReturn;
  * REDIRECT FUNCTIONS
  */
 
-#[NoReturn] function redirect($path = '/'): void
+#[NoReturn] function redirect($path = '/', array $queries = null): void
 {
+    // rebuild url to properly set queries
+    $url = parse_url(BASE_URL . $path);
+
+    if ($queries !== null) {
+        $url['query'] = http_build_query($queries);
+    }
+
+    if ($url['query'] !== null) {
+        $url = $url['path'] . '?' . $url['query'];
+    } else {
+        $url = $url['path'];
+    }
+
     //redirect to the given path, '' = home
-    header("Location: " . BASE_URL . $path);
+    header("Location: " . BASE_URL . $url);
     exit();
 }
 
-#[NoReturn] function redirectStatus($path = '/', string $msg = ''): void
+#[NoReturn] function redirectStatus($path = '/', string $msg = '', array $query = null): void
 {
     if ($msg !== '') {
-        $path .= '?status=' . $msg;
+        $query['status'] = $msg;
+        redirect($path, $query);
     }
 
     redirect($path);
@@ -48,7 +62,7 @@ use JetBrains\PhpStorm\NoReturn;
     }
 
     if (count($urlParams) !== 0) {
-        redirect($path . '?' . http_build_query($urlParams)); // redirect to the previous page with the error message
+        redirect($path, $urlParams); // redirect to the previous page with the error message
     } else {
         redirect($path); // redirect to the previous page
     }
@@ -96,33 +110,42 @@ function getErrorMsg(bool $alertError = true): string
     if (isset($_GET['status'])) {
         $status = (string)$_GET['status'];
 
-        // sanitize status (remove all characters except numbers, letters, :, _, -)
-        $status = preg_replace('/[^a-zA-Z0-9éÉ:_-]/', '', $status); // TODO: better sanitization
+        // queries are in the format: status=200%2FEdited+event+details
+        // clean up the status query
+        $status = urldecode($status);
 
-        // first 3 characters of status are the error code
-        $code = substr($status, 0, 3);
+        // get the error code
+        $code = (int)substr($status, 0, 3);
 
-        // everything after / is the error message
-        $info = substr($status, 3);
+        if (strlen($code) === 3 && $code >= 200 && $code <= 999) {
+            // get the error message
+            $info = substr($status, 4);
 
-        // separate camelCase words with spaces
-        $info = preg_replace('/(?<! )[A-Z]/', ' $0', $info);
+            // sanitize status (remove all characters except numbers, letters, :, _, -, space, and éÉ
+            $info = preg_replace('/[^a-zA-Z0-9éÉ: &_-]/', '', $info); // TODO: better sanitization
 
-        // make first letter after underscore uppercase
-        $info = str_replace('_', ' ', $info);
+            // & gets filtered out by htmlspecialchars, so replace it with the word 'and'
+            $info = str_replace('&', 'and', $info);
 
-        // capitalize first letter
-        $info = ucfirst($info);
+            // separate camelCase words with spaces
+            $info = preg_replace('/(?<! )[A-Z]/', ' $0', $info);
 
-        // if the error code is in the error dictionary, return the corresponding error message
-        if (array_key_exists($code, $GLOBALS['errorDict'])) {
-            $message = $GLOBALS['errorDict'][$code] . $info;
-        } else {
-            $message = "Error! Unknown error occurred.";
-        }
+            // make first letter after underscore uppercase
+            $info = str_replace('_', ' ', $info);
 
-        if ($alertError) {
-            echo "<script>alert('". htmlspecialchars($message) ."');</script>";
+            // capitalize first letter
+            $info = ucfirst($info);
+
+            // if the error code is in the error dictionary, return the corresponding error message
+            if (array_key_exists($code, $GLOBALS['errorDict'])) {
+                $message = $GLOBALS['errorDict'][$code] . $info;
+            } else {
+                $message = "Error! Unknown error occurred.";
+            }
+
+            if ($alertError) {
+                echo "<script>alert('". htmlspecialchars($message) ."');</script>";
+            }
         }
     }
 

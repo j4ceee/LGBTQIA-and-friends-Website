@@ -267,7 +267,13 @@ else {
             </fieldset>
         </div>
 
-        <input type="submit" class="lgbt_button" value="<?php echo lang_strings['event_add']?>">
+        <?php
+        $submitValue = lang_strings['event_add'];
+        if ($editMode) {
+            $submitValue = lang_strings['event_edit_p'];
+        }
+        ?>
+        <input type="submit" class="lgbt_button" value="<?php echo $submitValue?>">
     </form>
 
 

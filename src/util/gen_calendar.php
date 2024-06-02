@@ -137,7 +137,7 @@ function print_calendar($lang, $style, $events, bool $admin): void
             echo "<ul class='calendar_list'>";
         }
 
-        if ($admin) {
+        if ($admin && $style !== "compact") {
             $cal_item_cont_classes = 'calendar_item_admin';
         } else {
             $cal_item_cont_classes = '';
