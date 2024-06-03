@@ -1401,7 +1401,7 @@ p {
 .calendar_item:focus-within + .calendar_item_admin_ctrl .calendar_item_admin_link:focus-within,
 .calendar_item_admin_ctrl .calendar_item_admin_link:hover,
 .calendar_item_admin_ctrl .calendar_item_admin_link:focus-within {
-    background-color: var(--alt-blue);
+    background-color: var(--alt-blue) !important;
     transition: .2s;
 }
 .cal_admin_link_icon {

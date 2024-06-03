@@ -33,7 +33,7 @@ $dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
+    redirectStatus("/", "600");
 }
 
 // ----------------- DATABASE CONNECTION END -------------------
@@ -44,14 +44,28 @@ if (isset($_GET['id'])) {
     $eventID = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
     if ($eventID !== false) {
+        // check if event exists
+        $stmt = $PDO->prepare('SELECT id FROM events WHERE id = :eventID');
+        $stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
+        $stmt->execute();
+        $event = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($event === false || count($event) === 0) {
+            $msg = '601/Event id';
+            redirectStatus("/calendar.php", $msg);
+        }
+
         // prepare SQL to delete the event entry
         $stmt = $PDO->prepare('DELETE FROM events WHERE id = :eventID');
         $stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
         $stmt->execute();
 
         $msg = '200/You have deleted the Event with id: ' . $eventID;
+    } else {
+        $msg = '300/Event id';
     }
+} else {
+    $msg = '301/Event id';
 }
-$msg = '404/Event id';
 
-redirectError("/calendar.php", $msg);
+redirectStatus("/calendar.php", $msg);

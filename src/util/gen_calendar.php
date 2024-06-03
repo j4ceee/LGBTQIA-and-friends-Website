@@ -3,6 +3,8 @@
 
 function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false, int $event_id = null): void
 {
+    $admin = true; // TODO: remove this line
+
     echo "<section class='calendar'>";
         echo "<div class='section_header'>";
             echo "<h".$headerLevel." class='section_heading'>" . lang_strings['events'] . "</h".$headerLevel.">";
@@ -135,7 +137,7 @@ function print_calendar($lang, $style, $events, bool $admin): void
             echo "<ul class='calendar_list'>";
         }
 
-        if ($admin) {
+        if ($admin && $style !== "compact") {
             $cal_item_cont_classes = 'calendar_item_admin';
         } else {
             $cal_item_cont_classes = '';
@@ -166,7 +168,7 @@ function print_calendar($lang, $style, $events, bool $admin): void
             $event_desc = "";
             if ($event['desc_'.$lang.'_override'] === "-") {
                 // do nothing, no description
-            } else if ($event['desc_'.$lang.'_override'] === NULL || $event['desc_'.$lang.'_override'] === "") {
+            } else if (($event['desc_'.$lang.'_override'] === NULL || $event['desc_'.$lang.'_override'] === "") && ($event['desc_'.$lang.'_default'] !== "" && $event['desc_'.$lang.'_default'] !== null)) {
                 $event_desc = htmlspecialchars($event['desc_'.$lang.'_default']);
             } else {
                 $event_desc = htmlspecialchars($event['desc_'.$lang.'_override']);
@@ -260,7 +262,7 @@ function print_calendar($lang, $style, $events, bool $admin): void
                 if ($style !== "compact" && $admin) {
                     echo "<div class='calendar_item_admin_ctrl'>"; // ./edit_event.php?id=".$event_id."
                         echo "<div class='calendar_item_admin_cont'>";
-                            echo "<a class='calendar_item_admin_link cal_admin_left' href='' title='".lang_strings['event_edit']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_left' href='./event_manage.php?id=".$event_id."' title='".lang_strings['event_edit']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
                             echo "<a class='calendar_item_admin_link cal_admin_right' href='./event_delete.php?id=".$event_id."' title='".lang_strings['event_delete']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
                         echo "</div>";
                     echo "</div>";

@@ -29,7 +29,7 @@ $dbConnection = DBConnection::getInstance();
 $PDO = $dbConnection->useDB();
 
 if ($PDO === null || $dbConnection->checkDBSchema() !== true) {
-    redirectError("/", "600");
+    redirectStatus("/", "600");
 }
 
 // ----------------- DATABASE CONNECTION END -------------------
@@ -78,18 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_start = trim($_POST['event_date_start']);    // is a datetime in the format 2001-12-16T16:00
     $event_end = trim($_POST['event_date_end']);        // same as above
 
-    try {
-        $event_start = new DateTime($event_start, new DateTimeZone('Europe/Berlin'));
-        $event_end = new DateTime($event_end, new DateTimeZone('Europe/Berlin'));
-    } catch (Exception $e) {
+    $event_start = convert_datetime_to_db($event_start);
+    $event_end = convert_datetime_to_db($event_end);
+
+    if ($event_start === null || $event_end === null) {
         $PDO->rollBack();
         redirectToPreviousPage("400");
     }
-    $event_start->setTimezone(new DateTimeZone('UTC'));
-    $event_end->setTimezone(new DateTimeZone('UTC'));
-
-    $event_start = $event_start->format('Y-m-d H:i:s');
-    $event_end = $event_end->format('Y-m-d H:i:s');
 
     // handle uid----------------------------------------------
     $event_uid = generate_event_id();
@@ -106,25 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // handle description--------------------------------------
 
-    $enable_desc = false;
-    if (isset($_POST['enable_desc']) && $_POST['enable_desc'] == "on") {
-        $enable_desc = true;
-    }
+    $event_desc = prepare_event_desc_override($_POST);
 
-    $event_desc_de = "-"; // - = use no description at all
-    if (isset($_POST['event_desc_de']) && $enable_desc) {
-        $event_desc_de = trim($_POST['event_desc_de']); // if enable_desc is true & desc is set, use desc de override
-    } else if (!isset($_POST['event_desc_de']) && $enable_desc) {
-        $event_desc_de = NULL; // if enable_desc is true but desc is not set, use default desc
-    }
-
-    $event_desc_en = "-"; // - = use no description at all
-    if (isset($_POST['event_desc_en']) && $enable_desc) {
-        $event_desc_en = trim($_POST['event_desc_en']); // if enable_desc is true & desc is set, use desc en override
-    } else if (!isset($_POST['event_desc_en']) && $enable_desc) {
-        $event_desc_en = NULL; // if enable_desc is true but desc is not set, use default desc
-    }
-
+    $event_desc_de = $event_desc[0];
+    $event_desc_en = $event_desc[1];
 
     // insert into database----------------------------------------------------------------------------
 
@@ -153,5 +133,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ICSGen = new ICSGenerator();
     $ICSGen->generateICS();
 
-    redirect("/calendar.php?id=" . $event_id);
+    $url_params = [
+        'id' => $event_id
+    ];
+    redirectStatus("/calendar.php", "200/Added event: " . $event_name_en, $url_params);
 }
+redirectStatus("/", "401");
