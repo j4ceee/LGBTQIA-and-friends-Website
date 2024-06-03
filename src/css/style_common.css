@@ -944,6 +944,7 @@ p {
     text-wrap: nowrap;
     order: 2;
     margin: 1rem 0 0;
+    position: relative;
     color: var(--white-text);
 
     --outline-thickness: 0.06rem;
@@ -956,6 +957,31 @@ p {
             var(--outline-thickness-neg) var(--outline-thickness-neg) 0 var(--outline-color),
             var(--outline-thickness) var(--outline-thickness-neg) 0 var(--outline-color),
             0 0 .5rem rgb(0, 0, 0);
+}
+
+.welcome_slide_content::after,
+.heading_start::after {
+    --blur-move: -4rem;
+    --blur-padding: 8rem;
+    content: "";
+    background: transparent;
+    position: absolute;
+    top: var(--blur-move);
+    left: var(--blur-move);
+    width: calc(100% + var(--blur-padding));
+    height: calc(100% + var(--blur-padding));
+    backdrop-filter: blur(.5rem);
+    z-index: -1;
+
+    /* mask -> transparent edges */
+    mask: radial-gradient(circle, black 40%, transparent 60%);
+}
+
+.heading_start::after {
+    --blur-move: -1rem;
+    --blur-padding: 2rem;
+    filter: blur(1rem);
+    mask: none;
 }
 
 .heading_start .heading_top {

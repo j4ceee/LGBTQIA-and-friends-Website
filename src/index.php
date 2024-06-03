@@ -31,10 +31,11 @@ template_header($dbConnection, $lang, 'home');
 ?>
 
 <div class="welcome_slide">
+    <canvas id="canvas" style="width: 100%; height: 100%; padding: 0; margin: 0;"></canvas>
     <div class="welcome_slide_content">
         <h1 class="heading_start"><span class="heading_top"><?php echo lang_strings['title'] ?></span>
             <span class="heading_btm"><?php echo lang_strings['uni'] ?></span></h1>
-        <img class="heading_logo" src="./img/lgbt_bunny.svg" alt="<?php echo lang_strings['alt_signet'] ?>">
+        <img id="canvas_light" class="heading_logo" src="./img/lgbt_bunny.svg" alt="<?php echo lang_strings['alt_signet'] ?>">
     </div>
 </div>
 
@@ -74,6 +75,6 @@ template_header($dbConnection, $lang, 'home');
 </div>
 
 <?php
-template_footer($dbConnection, ["view_calendar.js"], $loggedIn);
+template_footer($dbConnection, ["view_calendar.js", "animated_bg.js"], $loggedIn);
 ?>
 
