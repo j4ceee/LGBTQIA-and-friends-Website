@@ -49,7 +49,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
         <link rel="stylesheet" href="./css/min/style_common.min.css">
         <link rel="icon" type="image/png" sizes="32x32" href="../img/lgbt_bunny.png">
     </head>
-    <body>
+    <body style="--lgbt-text: #eeeeee; --lgbt-bg: #333333; background-color: var(--lgbt-bg); color: var(--lgbt-text);">
     <div class="page_wrap">
         <header>
             <div class="cont_logo_nav">

@@ -26,6 +26,7 @@
     font-display: swap;
 }
 
+/*noinspection CssUnknownProperty*/
 @font-face {
     font-family: 'Baloo 2 Default Fallback';
     src: local(Verdana);
@@ -44,6 +45,7 @@
     font-display: swap;
 }
 
+/*noinspection CssUnknownProperty*/
 @font-face {
     font-family: 'Baloo 2 SemiBold Fallback';
     src: local(Verdana);
@@ -62,6 +64,7 @@
     font-display: swap;
 }
 
+/*noinspection CssUnknownProperty*/
 @font-face {
     font-family: 'Baloo 2 Medium Fallback';
     src: local(Verdana);
@@ -80,6 +83,7 @@
     font-display: swap;
 }
 
+/*noinspection CssUnknownProperty*/
 @font-face {
     font-family: 'Baloo 2 Boldest Fallback';
     src: local(Arial Black);
@@ -174,7 +178,7 @@ main {
     border-radius: .4rem;
     padding: .2rem .5rem;
     margin: 0;
-    font-family: "Baloo 2 Default", 'Baloo 2 Default Fallback';
+    font-family: "Baloo 2 Default", 'Baloo 2 Default Fallback', sans-serif;
     transition: .2s, height 0ms;
 }
 
@@ -252,7 +256,7 @@ main {
     color: var(--lgbt-blue);
     border-radius: .7rem;
     text-decoration: none;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
     font-size: 1.1rem;
     padding: .2rem .5rem;
     transition: 0.2s;
@@ -280,6 +284,7 @@ main {
 
 /*--------------------Header-------------------------*/
 
+/*noinspection CssInvalidPropertyValue*/
 header {
     width:-webkit-fill-available;
     width:-moz-available;
@@ -445,7 +450,7 @@ header:after {
 .lang_option * {
     color: var(--lgbt-text);
     text-decoration: none;
-    font-family: 'Baloo 2 Medium', 'Baloo 2 Medium Fallback';
+    font-family: 'Baloo 2 Medium', 'Baloo 2 Medium Fallback', sans-serif;
     font-size: 1.1rem;
     line-height: 1.1rem;;
     padding: .5rem .7rem;
@@ -820,7 +825,7 @@ section {
 }
 
 p {
-    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback', sans-serif;
     font-size: 1.1rem;
 }
 
@@ -935,9 +940,16 @@ p {
     position: fixed;
 }
 
+/*
+#canvas {
+    filter: blur(.3rem);
+    transform: scale(1.03) translateZ(1.1rem);
+}
+*/
+
 .heading_start {
     display: flex;
-    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback';
+    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback', sans-serif;
     line-height: 2.6rem;
     flex-direction: column;
     align-items: center;
@@ -959,6 +971,7 @@ p {
             0 0 .5rem rgb(0, 0, 0);
 }
 
+/*
 .welcome_slide_content::after,
 .heading_start::after {
     --blur-move: -4rem;
@@ -973,7 +986,7 @@ p {
     backdrop-filter: blur(.5rem);
     z-index: -1;
 
-    /* mask -> transparent edges */
+    /* mask -> transparent edges *//*
     mask: radial-gradient(circle, black 40%, transparent 60%);
 }
 
@@ -983,7 +996,7 @@ p {
     filter: blur(1rem);
     mask: none;
 }
-
+*/
 .heading_start .heading_top {
     font-size: 4rem;
     font-weight: bold;
@@ -1137,7 +1150,7 @@ p {
 
 .form_req_marking {
     color: var(--lgbt-red);
-    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback';
+    font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback', sans-serif;
     line-height: .1rem;
 }
 
@@ -1267,7 +1280,7 @@ p {
 .calendar_item_day {
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
     color: var(--alt-blue);
     transition: .2s;
 }
@@ -1283,7 +1296,7 @@ p {
 .calendar_item_month {
     font-size: 1.4rem;
     line-height: 1.4rem;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
     color: var(--alt-blue);
     transition: .2s;
 }
@@ -1297,7 +1310,7 @@ p {
     transition: .2s;
 }
 .calendar_item_year {
-    font-family: "Baloo 2 Medium", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 SemiBold Fallback', sans-serif;
     font-size: 1.1rem;
     line-height: 1.2rem;
 }
@@ -1310,7 +1323,7 @@ p {
 .calendar_item_name {
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
     color: var(--alt-blue);
     margin: 0;
     padding-bottom: .8rem;
@@ -1329,7 +1342,7 @@ p {
 .calendar_item_desc {
     font-size: 1.1rem;
     line-height: 1.3rem;
-    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback', sans-serif;
     padding-bottom: .3rem;
     margin: 0;
     text-align: justify;
@@ -1357,7 +1370,7 @@ p {
     text-align: right;
     font-size: 1.6rem;
     line-height: 1.6rem;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
     margin: 0;
     padding-bottom: .1rem;
 }
@@ -1365,7 +1378,7 @@ p {
     text-align: right;
     font-size: 1.2rem;
     line-height: 1.2rem;
-    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback', sans-serif;
     padding-bottom: .1rem;
     margin: 0;
 }
@@ -1456,7 +1469,7 @@ p {
     cursor: pointer;
     font-size: 1.2rem;
     line-height: 1.2rem;
-    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback', sans-serif;
     padding: .5rem;
     color: var(--alt-blue);
 }
@@ -1491,7 +1504,7 @@ p {
     align-items: center;
     margin: 0;
     padding: 0;
-    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback';
+    font-family: "Baloo 2 SemiBold", 'Baloo 2 SemiBold Fallback', sans-serif;
 }
 
 .default_calendar_link {
@@ -1528,7 +1541,7 @@ p {
 }
 .full_calendar_link a {
     color: var(--alt-blue);
-    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback';
+    font-family: "Baloo 2 Medium", 'Baloo 2 Medium Fallback', sans-serif;
     font-size: 1.1rem;
     text-decoration: none;
     transition: 0.2s;
