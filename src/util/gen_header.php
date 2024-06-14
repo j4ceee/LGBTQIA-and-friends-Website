@@ -32,6 +32,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="dark">
     EOT;
     if ($lang_title !== 'home') {
         echo "<title>$title — ".lang_strings['title']."</title>";
@@ -56,7 +57,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
                 <div class="logo-header">
                     <a href="./">
     EOT;
-                        echo '<img class="logo" src="./img/lgbt_bunny_white.svg" alt="'.lang_strings['alt_signet_link'].'">';
+                        echo '<img class="logo" src="./img/lgbt_bunny_white_opt.svg" alt="'.lang_strings['alt_signet_link'].'">';
     echo <<<EOT
                     </a>
                 </div>
