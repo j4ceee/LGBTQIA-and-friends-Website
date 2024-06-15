@@ -17,5 +17,5 @@ ExpiresByType font/woff "access plus 6 months"
 ExpiresByType font/woff2 "access plus 6 months"
 ExpiresByType image/svg+xml "access plus 3 months"
 
-ExpiresByType text/css "access plus 1 month"
-ExpiresByType application/javascript "access plus 1 month"
+ExpiresByType text/css "access plus 0 seconds"
+ExpiresByType application/javascript "access plus 0 seconds"

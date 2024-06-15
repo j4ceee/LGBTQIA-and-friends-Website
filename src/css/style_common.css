@@ -228,7 +228,7 @@ main {
     transition: .2s;
 }
 
-.win_dark_check:after {
+.win_dark_check::after {
     content: "";
     position: absolute;
     display: block;
@@ -290,26 +290,26 @@ main {
 header {
     width:-webkit-fill-available;
     width:-moz-available;
-    height: 10vh;
     max-height: 5rem;
     min-height: 2.8rem;
     display:flex;
     position:fixed;
     justify-content:space-between;
-    padding: 0.3rem 2rem;
+    padding: clamp(0.1rem, 2vh, 1rem) 2rem;
     z-index: 99999; /* above everything */
     background-color: transparent;
     align-items: center;
 }
 /* blur everything behind the header with a backdrop filter with gradient opacity */
-header:after {
+header::after {
     content: "";
     background: linear-gradient(180deg, #3333334a 40%, transparent 100%);
     position: fixed;
     top: -2rem;
     left: 0;
     width: 100%;
-    height: 9rem;
+    height: 25vh;
+    max-height: 9rem;
     mask: linear-gradient(180deg, black 70%, transparent 100%);
     backdrop-filter: blur(.5rem);
     z-index: -9;
@@ -323,13 +323,13 @@ header:after {
 }
 
 .cont_logo_nav:before,
-.cont_logo_nav:after {
+.cont_logo_nav::after {
     content: "";
     position: absolute;
     left: -15rem;
     width: 49rem;
-    min-height: 22.3rem;
-    height: 125vh;
+    min-height: 22.5rem;
+    height: 86vh;
     max-height: 24rem;
 }
 
@@ -342,7 +342,7 @@ header:after {
 }
 
 /* shadow effect around before element */
-.cont_logo_nav:after {
+.cont_logo_nav::after {
     top: -18.4rem;
     background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 14" preserveAspectRatio="none"%3E%3Cpath d="M0,12L0,0L70.438,0L70.438,9.394C64.062,9.74 61.996,10.822 55,12C40.77,14.396 21.5,13.771 0,12Z" style="fill-rule:nonzero;"/%3E%3C/svg%3E');
     z-index: -2;
@@ -433,7 +433,7 @@ header:after {
     padding: .4rem .5rem;
     position: relative;
 }
-.cont_lang:after {
+.cont_lang::after {
     content: "";
     display: block;
     width: 100%;
@@ -509,11 +509,11 @@ header:after {
     }
 
     .cont_logo_nav:before,
-    .cont_logo_nav:after {
+    .cont_logo_nav::after {
         width: 63rem;
     }
 
-    header:after {
+    header::after {
         content: "";
         background: linear-gradient(180deg, #3333334a 40%, transparent 100%);
         backdrop-filter: none;
@@ -532,7 +532,7 @@ header:after {
 
 @media screen and (max-width: 400px) {
     .cont_logo_nav:before,
-    .cont_logo_nav:after {
+    .cont_logo_nav::after {
         left: -21rem;
     }
 }
@@ -940,7 +940,7 @@ p {
     }
 }
 
-.welcome_slide:after {
+.welcome_slide::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -1022,7 +1022,8 @@ p {
 }
 */
 .heading_start .heading_top {
-    font-size: 4rem;
+    font-size: min(4rem, 15vh);
+    line-height: min(4.1rem, 15.5vh);
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -1031,7 +1032,8 @@ p {
 }
 
 .heading_start .heading_btm {
-    font-size: 2rem;
+    font-size: min(2rem, 10vh);
+    line-height: min(2.1rem, 10.5vh);
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -1040,8 +1042,9 @@ p {
 }
 
 .heading_logo {
-    height: 24rem;
-    width: 24rem;
+    max-height: 24rem;
+    width: auto;
+    height: 50vh;
 }
 
 @media screen and (max-width: 768px) {

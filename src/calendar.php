@@ -40,7 +40,7 @@ if (ENV === "dev") {
 }
 ?>
 
-<div>
+<div class="page_content">
     <?php
     $event_id = null;
 

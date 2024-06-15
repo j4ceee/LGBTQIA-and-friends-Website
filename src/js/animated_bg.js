@@ -64,6 +64,7 @@ function drawLight() {
     ctx.fillStyle = gradient;
     ctx.fill();
 
+    /*
     ctx.beginPath();
     ctx.arc(light.x, light.y, 20, 0, 2 * Math.PI);
     gradient = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, 5);
@@ -71,6 +72,7 @@ function drawLight() {
     gradient.addColorStop(1, "#3b4654");
     ctx.fillStyle = gradient;
     ctx.fill();
+     */
 }
 
 // Circle class
