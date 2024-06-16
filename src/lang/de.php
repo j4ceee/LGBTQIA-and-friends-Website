@@ -55,6 +55,7 @@ const lang_strings = [
     'event_edit_p' => 'Treffen bearbeiten', // page title
     'event_delete' => 'Lösche Treffen ',
     'event_edit' => 'Bearbeite Treffen ',
+    'event_info_general' => 'Allgemeine Informationen',
 
     /* alt text for images */
     'alt_signet' => 'Signet der LGBTQIA+ & friends Gruppe der Hochschule Ansbach',

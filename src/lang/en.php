@@ -55,6 +55,7 @@ const lang_strings = [
     'event_edit_p' => 'Edit Event', // page title
     'event_delete' => 'Delete Event ',
     'event_edit' => 'Edit Event ',
+    'event_info_general' => 'General Event Information',
 
     /* alt text for images */
     'alt_signet' => 'Signet of the LGBTQIA+ & friends group at Ansbach University',

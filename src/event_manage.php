@@ -110,9 +110,10 @@ else {
     $formAction = "./util/validate_add.php";
 }
 ?>
+<div class="page_content manage_event_content">
     <form class="manage_event_form" action="<?php echo $formAction ?>" method="post" autocomplete="off">
         <fieldset class="event_general">
-            <legend>Event Allgemein</legend>
+            <legend><?php echo lang_strings['event_info_general']?></legend>
 
             <div class="event_time">
                 <div class="event_detail">
@@ -161,8 +162,7 @@ else {
                 </datalist>
             </div>
 
-            <div>
-                <label for="enable_desc"><?php echo lang_strings['use_desc']?></label>
+            <label class="win_dark_check_label" for="enable_desc"><span><?php echo lang_strings['use_desc']?></span>
                 <?php
                 $descEnabled = "";
 
@@ -175,8 +175,9 @@ else {
                 }
                 ?>
 
-                <input type="checkbox" class="lgbt_input enable_desc" id="enable_desc" name="enable_desc" <?php echo $descEnabled ?>>
-            </div>
+                <input type="checkbox" class="enable_desc win_dark_check_org" id="enable_desc" name="enable_desc" <?php echo $descEnabled ?>>
+                <span class="win_dark_check"></span>
+            </label>
         </fieldset>
 
         <div class="event_locales">
@@ -273,8 +274,11 @@ else {
             $submitValue = lang_strings['event_edit_p'];
         }
         ?>
-        <input type="submit" class="lgbt_button" value="<?php echo $submitValue?>">
+        <div class="form_buttons">
+            <input type="submit" class="lgbt_button" value="<?php echo $submitValue?>">
+        </div>
     </form>
+</div>
 
 
 

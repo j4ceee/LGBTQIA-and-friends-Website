@@ -97,9 +97,9 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     EOT;
 
     if ($lang_title === 'home') {
-        echo "<main style='padding: 0 0 6rem 0;'>";
+        echo "<main style='padding: 0 0 3.9rem 0;'>";
     }
     else {
-        echo "<main style='padding: 5rem 0 6rem 0;'>";
+        echo "<main style='padding: 5rem 0 3.9rem 0;'>";
     }
 }

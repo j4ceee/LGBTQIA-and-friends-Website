@@ -13,7 +13,7 @@ let lightRadius;
 updateScreenVars();
 
 function updateScreenVars() {
-    if (window.innerWidth < 768) { // mobile
+    if (window.innerWidth < 768 || window.innerHeight < 550) { // mobile
         circleLimit = 8;
         popRadius = 5;
         circleSpeedDiv = 400;
@@ -56,6 +56,7 @@ function resize() {
 }
 
 function drawLight() {
+    // draw the lit area
     ctx.beginPath();
     ctx.arc(light.x, light.y, 10000, 0, 2 * Math.PI);
     let gradient = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, lightRadius);
@@ -64,6 +65,7 @@ function drawLight() {
     ctx.fillStyle = gradient;
     ctx.fill();
 
+    // draw the light source (white circle)
     /*
     ctx.beginPath();
     ctx.arc(light.x, light.y, 20, 0, 2 * Math.PI);

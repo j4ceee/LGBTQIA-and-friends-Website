@@ -2,6 +2,12 @@ window.onload = function() {
     let eventButton = document.getElementById('enable_desc');
 
     eventButton.addEventListener('click', toggleEventDesc);
+
+    let startTime = document.getElementById('event_date_start');
+
+    startTime.addEventListener('input', function() {
+        mirrorStartToEndDate(startTime);
+    });
 }
 
 function toggleEventDesc() {
@@ -58,4 +64,15 @@ function setOtherTitle(currentTitle) {
             }
         }
     }
+}
+
+function mirrorStartToEndDate(startInput) {
+    let startDate = new Date(startInput.value);
+    new Date(document.getElementById('event_date_end').value);
+    // add 2 hours to the start input value
+    startDate.setHours(startDate.getHours() + 2);
+
+    // adjust the time to local timezone
+    let localOffset = startDate.getTimezoneOffset() * 60000;
+    document.getElementById('event_date_end').value = (new Date(startDate - localOffset)).toISOString().slice(0, 16);
 }
