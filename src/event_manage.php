@@ -18,11 +18,9 @@ require_once(__DIR__ . '/util/auth_session_start.php'); // start session
 require_once(__DIR__ . '/util/auth_login_check.php'); // check if user is logged in
 /* @var $loggedIn */
 
-/* // TODO: enable login system
-if (!$loggedIn) {
-    redirectError("/", 334);
+if (!$loggedIn && ENV !== "dev") {
+    redirectStatus("/", 334);
 }
-*/
 
 // ----------------- LOGIN CHECK END -------------------
 

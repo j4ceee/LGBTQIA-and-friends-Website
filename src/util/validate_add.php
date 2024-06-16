@@ -15,11 +15,9 @@ session_regenerate_id(true); // regenerate session ID to prevent session fixatio
 require_once(__DIR__ . '/auth_login_check.php'); // check if user is logged in
 /* @var $loggedIn */
 
-/* // TODO: enable login system
-if (!$loggedIn) {
-    redirectError("/", 334);
+if (!$loggedIn && ENV !== "dev") {
+    redirectStatus("/", 334);
 }
-*/
 
 // ----------------- LOGIN CHECK END -------------------
 

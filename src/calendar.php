@@ -32,12 +32,6 @@ require_once(__DIR__ . '/util/lang_get.php'); // get language
 /* @var string $lang */
 
 template_header($dbConnection, $lang, 'cal');
-
-if (ENV === "dev") {
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-    error_reporting(E_ALL);
-}
 ?>
 
 <div class="page_content">
@@ -48,7 +42,13 @@ if (ENV === "dev") {
         $event_id = $_GET['id'];
     }
 
-    gen_calendar($lang, 1, "full", $loggedIn, $event_id);
+    if (ENV === "dev" || $loggedIn) {
+        $cal_admin = true;
+    } else {
+        $cal_admin = false;
+    }
+
+    gen_calendar($lang, 1, "full", $cal_admin, $event_id);
     ?>
 </div>
 
