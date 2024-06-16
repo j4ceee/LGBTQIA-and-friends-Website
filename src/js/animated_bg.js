@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let circleLimit; //  max number of circles
+let circleLimit; // max number of circles
 let popRadius; // radius of the circle to pop
 let circleRadiusMult; // circle radius multiplier (should not be bigger than 50)
 let circleSpeedDiv; // circle speed divisor, bigger is slower

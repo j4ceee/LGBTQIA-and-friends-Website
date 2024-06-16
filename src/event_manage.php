@@ -281,5 +281,5 @@ else {
 
 
 <?php
-template_footer($dbConnection, ["manage_event.js"], $loggedIn);
+template_footer($dbConnection, ["manage_event"], $loggedIn);
 ?>
