@@ -34,17 +34,28 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="color-scheme" content="dark">
     EOT;
+
     if ($lang_title !== 'home') {
         echo "<title>$title — ".lang_strings['title']."</title>";
+        echo '<meta name="og:title" content="'.$title.' | '.lang_strings['title'].'">';
         if (isset(lang_strings['meta_desc_'.$lang_title])) {
             echo '<meta name="description" content="'.lang_strings['meta_desc_'.$lang_title].'">';
+            echo '<meta name="og:description" content="'.lang_strings['meta_desc_'.$lang_title].'">';
         } else {
             echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
+            echo '<meta name="og:description" content="'.lang_strings['meta_desc_home'].'">';
         }
     } else {
         echo "<title>".lang_strings['title']." | ".lang_strings['uni']."</title>";
+        echo '<meta name="og:title" content="'.lang_strings['title']." | ".lang_strings['uni'].'">';
         echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
+        echo '<meta name="og:description" content="'.lang_strings['meta_desc_home'].'">';
     }
+
+    echo '<meta name="og:image" content="'.BASE_URL.'/img/logo_base.png">';
+    echo '<meta name="og:url" content="'.BASE_URL.'">';
+    echo '<meta name="og:type" content="website">';
+    echo '<meta name="twitter:card" content="summary">';
 
     echo <<<EOT
         <link rel="stylesheet" href="./css/min/style_common.min.css">
