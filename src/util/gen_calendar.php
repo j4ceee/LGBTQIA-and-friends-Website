@@ -3,8 +3,6 @@
 
 function gen_calendar($lang, int $headerLevel = 2, string $style = "compact", bool $admin = false, int $event_id = null): void
 {
-    $admin = true; // TODO: remove this line
-
     echo "<section class='calendar'>";
         echo "<div class='section_header'>";
             echo "<h".$headerLevel." class='section_heading'>" . lang_strings['events'] . "</h".$headerLevel.">";

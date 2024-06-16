@@ -3,6 +3,8 @@
 Create a `password.txt` file inside the `db` directory with the password for the database.
 It should only be one line with no spaces or newlines.
 
+Create a `cal` folder inside the `src` directory.
+
 
 ### Building and running your application
 

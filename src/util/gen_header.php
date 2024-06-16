@@ -32,18 +32,30 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="dark">
     EOT;
+
     if ($lang_title !== 'home') {
         echo "<title>$title — ".lang_strings['title']."</title>";
+        echo '<meta name="og:title" content="'.$title.' | '.lang_strings['title'].'">';
         if (isset(lang_strings['meta_desc_'.$lang_title])) {
             echo '<meta name="description" content="'.lang_strings['meta_desc_'.$lang_title].'">';
+            echo '<meta name="og:description" content="'.lang_strings['meta_desc_'.$lang_title].'">';
         } else {
             echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
+            echo '<meta name="og:description" content="'.lang_strings['meta_desc_home'].'">';
         }
     } else {
         echo "<title>".lang_strings['title']." | ".lang_strings['uni']."</title>";
+        echo '<meta name="og:title" content="'.lang_strings['title']." | ".lang_strings['uni'].'">';
         echo '<meta name="description" content="'.lang_strings['meta_desc_home'].'">';
+        echo '<meta name="og:description" content="'.lang_strings['meta_desc_home'].'">';
     }
+
+    echo '<meta name="og:image" content="'.BASE_URL.'/img/logo_base.png">';
+    echo '<meta name="og:url" content="'.BASE_URL.'">';
+    echo '<meta name="og:type" content="website">';
+    echo '<meta name="twitter:card" content="summary">';
 
     echo <<<EOT
         <link rel="stylesheet" href="./css/min/style_common.min.css">
@@ -56,7 +68,7 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
                 <div class="logo-header">
                     <a href="./">
     EOT;
-                        echo '<img class="logo" src="./img/lgbt_bunny_white.svg" alt="'.lang_strings['alt_signet_link'].'">';
+                        echo '<img class="logo" src="./img/lgbt_bunny_white_opt.svg" alt="'.lang_strings['alt_signet_link'].'">';
     echo <<<EOT
                     </a>
                 </div>
@@ -96,9 +108,9 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     EOT;
 
     if ($lang_title === 'home') {
-        echo "<main style='padding: 0 0 6rem 0;'>";
+        echo "<main style='padding: 0 0 3.9rem 0;'>";
     }
     else {
-        echo "<main style='padding: 5rem 0 6rem 0;'>";
+        echo "<main style='padding: 5rem 0 3.9rem 0;'>";
     }
 }

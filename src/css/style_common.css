@@ -122,6 +122,7 @@
     --lgbt-blue: #02aeda;
     --lgbt-purple: #5d5ccc;
 
+    --alt-green: #01df4f;
     --alt-blue: #34c2fc;
     --alt-pink: #ffb6ca;
     --alt-pink2: #ed80e2;
@@ -178,6 +179,7 @@ main {
     border-radius: .4rem;
     padding: .2rem .5rem;
     margin: 0;
+    cursor: pointer;
     font-family: "Baloo 2 Default", 'Baloo 2 Default Fallback', sans-serif;
     transition: .2s, height 0ms;
 }
@@ -195,6 +197,7 @@ main {
     color: var(--lgbt-text);
     border: .15rem solid var(--win-selected);
     transition: .2s, height 0ms;
+    cursor: not-allowed;
 }
 
 .win_dark_input {
@@ -203,11 +206,15 @@ main {
     font-family: sans-serif;
     color: var(--lgbt-text);
     background-color: var(--win-dark);
+    cursor: pointer;
     border: none;
     border-radius: .3rem;
     padding: .3rem;
     border-bottom: var(--win-border) 2px solid;
     transition: .2s;
+}
+.win_dark_input:disabled {
+    cursor: not-allowed;
 }
 
 .win_dark_input:focus-within {
@@ -217,18 +224,49 @@ main {
     transition: .2s;
 }
 
+.win_dark_check_label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: .1rem 0 .1rem 0;
+    cursor: pointer;
+    width: fit-content;
+    position: relative;
+}
+
+.win_dark_check_label > :first-child {
+    display: inline-block;
+    margin-left: 2rem;
+}
+
+.win_dark_check_org {
+    position: absolute;
+}
+
 .win_dark_check {
     height: 1.6rem;
     width: 1.6rem;
     display: inline-block;
-    background-color: var(--lgbt-blue); /* set to win-dark when hovered or checked */
+    background-color: var(--lgbt-cal-item); /* set to win-dark when hovered or checked */
     position: absolute;
     border-radius: 0.5rem;
-    border: var(--win-dark) 4px solid;
+    border: var(--win-border) 3px solid;
     transition: .2s;
 }
 
-.win_dark_check:after {
+.win_dark_check_org:checked ~ .win_dark_check {
+    background-color: var(--win-border);
+    transition: .2s;
+}
+
+.win_dark_check_label:hover .win_dark_check,
+.win_dark_check_label:focus-within .win_dark_check {
+    border: var(--lgbt-blue) 3px solid;
+    background-color: var(--lgbt-cal-item);
+    transition: .2s;
+}
+
+.win_dark_check::after {
     content: "";
     position: absolute;
     display: block;
@@ -236,14 +274,20 @@ main {
     opacity: 0; /* set to 1 when checked */
     transition: opacity .2s;
     left: 31%;
-    top: -47%;
+    top: -33%;
     width: 0.6rem;
     height: 1.3rem;
-    border: solid var(--lgbt-green);
-    border-width: 0 3px 3px 0;
+    border: solid var(--alt-green);
+    border-width: 0 4px 4px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+.win_dark_check_org:checked ~ .win_dark_check::after {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .2s;
 }
 
 .lgbt_button {
@@ -284,28 +328,32 @@ main {
 
 /*--------------------Header-------------------------*/
 
+/* TODO: adjust landscape header & start content */
+
 /*noinspection CssInvalidPropertyValue*/
 header {
     width:-webkit-fill-available;
     width:-moz-available;
-    height: 5rem;
+    max-height: 5rem;
+    min-height: 2.8rem;
     display:flex;
     position:fixed;
     justify-content:space-between;
-    padding: 1rem 2rem 1rem 2rem;
+    padding: clamp(0.1rem, 2vh, 1rem) 2rem;
     z-index: 99999; /* above everything */
     background-color: transparent;
     align-items: center;
 }
 /* blur everything behind the header with a backdrop filter with gradient opacity */
-header:after {
+header::after {
     content: "";
     background: linear-gradient(180deg, #3333334a 40%, transparent 100%);
     position: fixed;
     top: -2rem;
     left: 0;
     width: 100%;
-    height: 9rem;
+    height: 25vh;
+    max-height: 9rem;
     mask: linear-gradient(180deg, black 70%, transparent 100%);
     backdrop-filter: blur(.5rem);
     z-index: -9;
@@ -319,12 +367,14 @@ header:after {
 }
 
 .cont_logo_nav:before,
-.cont_logo_nav:after {
+.cont_logo_nav::after {
     content: "";
     position: absolute;
     left: -15rem;
     width: 49rem;
-    height: 24rem;
+    min-height: 22.5rem;
+    height: 86vh;
+    max-height: 24rem;
 }
 
 .cont_logo_nav:before {
@@ -336,7 +386,7 @@ header:after {
 }
 
 /* shadow effect around before element */
-.cont_logo_nav:after {
+.cont_logo_nav::after {
     top: -18.4rem;
     background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 14" preserveAspectRatio="none"%3E%3Cpath d="M0,12L0,0L70.438,0L70.438,9.394C64.062,9.74 61.996,10.822 55,12C40.77,14.396 21.5,13.771 0,12Z" style="fill-rule:nonzero;"/%3E%3C/svg%3E');
     z-index: -2;
@@ -357,8 +407,11 @@ header:after {
 }
 
 .logo {
-    height: 3rem;
-    width: 3rem;
+    height: 8vh;
+    min-height: 2.3rem;
+    max-height: 3rem;
+    width: auto;
+    max-width: 3rem;
     -webkit-transition: -webkit-transform 0.2s;
     transition: -webkit-transform 0.2s;
     transition: transform 0.4s;
@@ -396,7 +449,7 @@ header:after {
     letter-spacing: 0.02em;
     /* text-transform: uppercase; */
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: clamp(.9rem, 4vh, 1.1rem);
     transition: 0.2s;
 }
 .nav-top a:hover,
@@ -424,7 +477,7 @@ header:after {
     padding: .4rem .5rem;
     position: relative;
 }
-.cont_lang:after {
+.cont_lang::after {
     content: "";
     display: block;
     width: 100%;
@@ -451,7 +504,7 @@ header:after {
     color: var(--lgbt-text);
     text-decoration: none;
     font-family: 'Baloo 2 Medium', 'Baloo 2 Medium Fallback', sans-serif;
-    font-size: 1.1rem;
+    font-size: clamp(.9rem, 4vh, 1.1rem);
     line-height: 1.1rem;;
     padding: .5rem .7rem;
     border-radius: 2rem;
@@ -500,11 +553,11 @@ header:after {
     }
 
     .cont_logo_nav:before,
-    .cont_logo_nav:after {
+    .cont_logo_nav::after {
         width: 63rem;
     }
 
-    header:after {
+    header::after {
         content: "";
         background: linear-gradient(180deg, #3333334a 40%, transparent 100%);
         backdrop-filter: none;
@@ -523,8 +576,8 @@ header:after {
 
 @media screen and (max-width: 400px) {
     .cont_logo_nav:before,
-    .cont_logo_nav:after {
-        left: -25rem;
+    .cont_logo_nav::after {
+        left: -21rem;
     }
 }
 
@@ -655,6 +708,8 @@ header:after {
 
 .auth_signout_btn:hover,
 .auth_signout_btn:focus-within {
+    border: 2px solid var(--lgbt-red);
+    transition: 0.2s;
 }
 
 .auth_submit_btn > p {
@@ -721,7 +776,7 @@ header:after {
 /*--------------------Footer-------------------------*/
 
 footer {
-    height: 6rem;
+    height: 3.9rem;
     padding: 1rem 0;
     position: absolute;
     bottom: 0;
@@ -743,7 +798,7 @@ footer {
 
 .nav-bottom a {
     font-weight: normal;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: 0.2s;
 }
 
@@ -783,8 +838,8 @@ footer {
 }
 
 .auth_icon {
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
 }
 
 /*------------------Default Styles-------------------------*/
@@ -817,7 +872,7 @@ footer {
 }
 
 section {
-    margin: 1rem 2rem 3rem;
+    margin: 0;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -931,6 +986,21 @@ p {
     }
 }
 
+.welcome_slide::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-width: 35rem;
+    height: 15vh;
+    max-height: 10rem;
+    background-color: var(--lgbt-bg);
+    mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 22" preserveAspectRatio="none"%3E%3Cg transform="matrix(1,0,0,1,0,-8)"%3E%3Cpath d="M0,30L0,12C20,15.333 38.333,15.333 55,12C71.667,8.667 86.667,8.333 100,11L100,30L0,30Z" style="fill-rule:nonzero;"/%3E%3C/g%3E%3C/svg%3E');
+    mask-size: 100% 100%;
+    z-index: 2;
+}
+
 .welcome_slide_content {
     display: flex;
     flex-direction: column;
@@ -955,7 +1025,7 @@ p {
     align-items: center;
     text-wrap: nowrap;
     order: 2;
-    margin: 1rem 0 0;
+    margin: min(1rem, .5vh) 0 0;
     position: relative;
     color: var(--white-text);
 
@@ -998,7 +1068,8 @@ p {
 }
 */
 .heading_start .heading_top {
-    font-size: 4rem;
+    font-size: min(4rem, 15vh);
+    line-height: min(4.1rem, 15.5vh);
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -1007,7 +1078,8 @@ p {
 }
 
 .heading_start .heading_btm {
-    font-size: 2rem;
+    font-size: min(2rem, 10vh);
+    line-height: min(2.1rem, 10.5vh);
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -1016,48 +1088,41 @@ p {
 }
 
 .heading_logo {
-    height: 24rem;
-    width: 24rem;
+    max-height: 24rem;
+    width: auto;
+    height: 50vh;
 }
 
 @media screen and (max-width: 768px) {
     .heading_start .heading_top {
-        font-size: 2.2rem;
+        font-size: min(2.2rem, 10vh);
+        line-height: min(2.4rem, 11vh);
         text-wrap: wrap;
         letter-spacing: .1rem;
     }
 
     .heading_start .heading_btm {
-        font-size: 1.5rem;
-        line-height: 1.4rem;
+        font-size: min(1.5rem, 5vh);
+        line-height: min(1.4rem, 4.5vh);
         letter-spacing: 0;
     }
 
     .heading_logo {
-        height: 15rem;
-        width: 15rem;
+        max-height: 15rem;
+        width: auto;
+        height: 50vh;
     }
 }
 
 .page_content {
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 1rem 2rem 3rem;
     background-color: var(--lgbt-bg);
     overflow-x: clip;
-}
-
-.page_content:before {
-    content: "";
-    position: absolute;
-    top: -9rem;
-    left: 0;
-    width: 100%;
-    min-width: 35rem;
-    height: 20rem;
-    background-color: var(--lgbt-bg);
-    mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 22" preserveAspectRatio="none"%3E%3Cg transform="matrix(1,0,0,1,0,-8)"%3E%3Cpath d="M0,30L0,12C20,15.333 38.333,15.333 55,12C71.667,8.667 86.667,8.333 100,11L100,30L0,30Z" style="fill-rule:nonzero;"/%3E%3C/g%3E%3C/svg%3E');
-    mask-size: 100% 100%;
-    z-index: -1;
 }
 
 .about_txt_container {
@@ -1071,20 +1136,29 @@ p {
 .about_text {
     text-align: justify;
     max-width: 60rem;
+    margin: 0;
 }
 
 /*--------------------Manage Event Page-------------------------*/
 
-.manage_event_form {
-    padding-top: 5rem;
+.manage_event_content {
     width: 100vw;
+    align-items: center;
+}
+
+.manage_event_form {
+    padding-top: 1.5rem;
+    width: 100%;
     max-width: 45rem;
     height: max-content;
 }
 
 .manage_event_form fieldset {
-    padding: 1rem;
+    padding: 1.5rem;
     margin: 0;
+    border: none;
+    background: var(--lgbt-cal-item);
+    border-radius: 2rem;
 }
 
 .event_general {
@@ -1126,9 +1200,14 @@ p {
     width: 100%;
 }
 
+.event_general .win_dark_check_label {
+    margin-top: 1rem;
+}
+
 .event_locales {
     display: flex;
     flex-direction: row;
+    margin-top: 2rem;
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
@@ -1152,6 +1231,13 @@ p {
     color: var(--lgbt-red);
     font-family: "Baloo 2 Boldest", 'Baloo 2 Boldest Fallback', sans-serif;
     line-height: .1rem;
+}
+
+.form_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
 /*--------------------Calendar Page-------------------------*/
@@ -1196,6 +1282,7 @@ p {
 
 .calendar_small {
     height: 40vh;
+    min-height: 20rem;
     overflow-y: auto;
 }
 .calendar_large {
@@ -1634,8 +1721,8 @@ p {
     }
 
     .full_calendar_link {
-        right: 0.5rem;
-        top: -1.9rem;
+        right: 0.8rem;
+        top: -2.05rem;
     }
 
     .full_calendar_link a {

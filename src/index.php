@@ -35,26 +35,33 @@ template_header($dbConnection, $lang, 'home');
     <div class="welcome_slide_content">
         <h1 class="heading_start"><span class="heading_top"><?php echo lang_strings['title'] ?></span>
             <span class="heading_btm"><?php echo lang_strings['uni'] ?></span></h1>
-        <img id="canvas_light" class="heading_logo" src="./img/lgbt_bunny.svg" alt="<?php echo lang_strings['alt_signet'] ?>">
+        <img id="canvas_light" class="heading_logo" src="./img/lgbt_bunny_opt.svg" alt="<?php echo lang_strings['alt_signet'] ?>">
     </div>
 </div>
 
 <div class="page_content">
+    <?php if (($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) || ENV === "dev" || $loggedIn) :
+        // only show admin section if the database is not set up or the user is logged in or the environment is set to "dev"
+        ?>
     <section class="admin">
         <div class="section_header">
             <h2 class="section_heading"><?php echo lang_strings['admin'] ?></h2>
             <div class="section_header_underline"></div>
         </div>
         <div class="admin_controls">
-            <?php
-            if ($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) {
-                echo '<a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>';
-            }
-            ?>
+
+            <?php if ($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) : // always show setup db button if the database is not set up ?>
+            <a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>
+            <?php endif; ?>
+
+            <?php if (ENV === "dev" || $loggedIn) : // only show main admin tools if env is set to "dev" or the user is logged in ?>
             <a href="./event_manage.php" class="lgbt_button">Add Event</a>
             <a href="./util/refresh_ics.php" class="lgbt_button">Refresh ICS files</a>
+            <?php endif; ?>
+
         </div>
     </section>
+    <?php endif; ?>
 
     <section class="about">
         <div class="section_header">

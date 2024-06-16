@@ -1,4 +1,6 @@
 <?php
+/** include this file to fetch the user selected language */
+
 if (!isset($_SESSION['lang'])) {
     $user_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     $accept_lang = ['de', 'en'];
