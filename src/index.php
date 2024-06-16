@@ -82,6 +82,6 @@ template_header($dbConnection, $lang, 'home');
 </div>
 
 <?php
-template_footer($dbConnection, ["view_calendar.js", "animated_bg.js"], $loggedIn);
+template_footer($dbConnection, ["view_calendar", "animated_bg"], $loggedIn);
 ?>
 

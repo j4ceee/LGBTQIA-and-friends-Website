@@ -3,6 +3,7 @@ window.onload = function() {
 
     eventButton.addEventListener('click', toggleEventDesc);
 
+    // add event listeners to time inputs
     let startTime = document.getElementById('event_date_start');
 
     startTime.addEventListener('input', function() {

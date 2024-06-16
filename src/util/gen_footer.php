@@ -6,7 +6,7 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
     $PDO = $dbConnection->getConnection();
 
     // add authorization window script to scripts array
-    $scripts[] = 'auth_window.js';
+    $scripts[] = 'auth_window';
 
     gen_login_dialog($loggedIn);
 
@@ -36,7 +36,7 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
 EOT;
     if ($scripts !== null) {
         foreach ($scripts as $script) {
-            echo '<script src="./js/' . $script . '"></script>';
+            echo '<script src="./js/min/' . $script . '.min.js"></script>';
         }
     }
     echo <<<EOT

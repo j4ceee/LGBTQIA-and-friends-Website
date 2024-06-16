@@ -74,7 +74,7 @@ window.addEventListener('load', function() { // when page is loaded
 });
 
 function toggleCalDetails(event, eventId) {
-  // this function toggles the visibility of the corresponding calendar details
+    // this function toggles the visibility of the corresponding calendar details
     const event_button = event.currentTarget;
     const details = document.getElementById('event_det_' + eventId);
 

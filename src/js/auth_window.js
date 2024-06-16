@@ -50,7 +50,7 @@ function closeAuthWindow() {
         authDialog.close(); // close auth window
     }, 200);
 
-    // remove in-line background colour style from auth_icon
+    // remove in-line background colour style from auth icon
     authIcon.style.backgroundColor = '';
 }
 

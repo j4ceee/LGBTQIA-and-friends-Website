@@ -21,15 +21,20 @@ RUN npm install -g npm@10.8.1 \
 # install clean-css-cli
 RUN npm install -g clean-css-cli@5.6.3
 
+# install terser
+RUN npm install -g terser@5.31.1
+
 WORKDIR /app
 
 COPY ./node_sh /app/node_sh
 
 RUN dos2unix /app/node_sh/node_css_min.sh
 RUN dos2unix /app/node_sh/node_start.sh
+RUN dos2unix /app/node_sh/node_js_min.sh
 
 RUN chmod +x /app/node_sh/node_css_min.sh
 RUN chmod +x /app/node_sh/node_start.sh
+RUN chmod +x /app/node_sh/node_js_min.sh
 
 FROM php:8.2-apache as final
 
