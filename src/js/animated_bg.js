@@ -284,7 +284,11 @@ function collisionDetection(b) {
                 circles[b].radius = circles[b].radius > 1 ? circles[b].radius -= 1 : 1;
                 circles[i].radius = circles[i].radius > 1 ? circles[i].radius -= 1 : 1;
 
-                // pop the circle if it's radius is less than the popRadius
+                // calculate the velocity of the circles for the bounce
+                let velocityX = dx / distance;
+                let velocityY = dy / distance;
+
+                // pop the circle i if it's radius is less than the popRadius
                 if (circles[i] && circles[i].radius < popRadius) {
                     circles[i].pop();
                     // remove the circle from the array
@@ -292,31 +296,28 @@ function collisionDetection(b) {
                     // add a new circle to the array
                     circles.push(new Circle(currentSpawnMode));
                 }
-                if (circles[b] && circles[b].radius < popRadius) {
-                    circles[b].pop();
-                    circles.splice(b, 1);
-                    circles.push(new Circle(currentSpawnMode));
-                }
-
-                // bounce the circles off each other
-                // calculate the velocity of the circles
-                let velocityX = dx / distance;
-                let velocityY = dy / distance;
-
-                // adjust velocities for each circle
-                if (circles[b]) {
-                    circles[b].vx = velocityX;
-                    circles[b].vy = velocityY;
-
-                    circles[b].directionOverride = { vx: velocityX, vy: velocityY };
-                    circles[b].directionOverrideFrames = 100; // Adjust this value to control how long the direction override lasts
-                }
-                if (circles[i]) {
+                // if the circle is not popped, bounce it
+                else if (circles[i]) {
                     circles[i].vx = -velocityX;
                     circles[i].vy = -velocityY;
 
                     circles[i].directionOverride = { vx: -velocityX, vy: -velocityY };
                     circles[i].directionOverrideFrames = 100; // Adjust this value to control how long the direction override lasts
+                }
+
+                // pop circle b if it's radius is less than the popRadius
+                if (circles[b] && circles[b].radius < popRadius) {
+                    circles[b].pop();
+                    circles.splice(b, 1);
+                    circles.push(new Circle(currentSpawnMode));
+                }
+                // if the circle is not popped, bounce it
+                else if (circles[b]) {
+                    circles[b].vx = velocityX;
+                    circles[b].vy = velocityY;
+
+                    circles[b].directionOverride = { vx: velocityX, vy: velocityY };
+                    circles[b].directionOverrideFrames = 100; // Adjust this value to control how long the direction override lasts
                 }
             }
         }
