@@ -6,6 +6,7 @@ const lang_strings = [
     'home' => 'Home',
     'cal' => 'Kalender',
     'about' => 'Über uns',
+    'team' => 'Unser Team',
     'title' => 'LGBTQIA+ & friends',
     'uni' => 'Hochschule Ansbach',
     'admin' => 'Admin Tools',
@@ -64,4 +65,20 @@ const lang_strings = [
     'user_icon' => 'Benutzer-Icon',
     'email_icon' => 'E-Mail-Icon',
     'pass_icon' => 'Passwort-Icon',
+
+    /* staff descriptions */
+    'staff_img_alt' => 'Profilbild von',
+    'staff_img_by' => 'Bild von',
+
+    'staff_cedric_desc' => 'Gruppenorganisator<br>Webentwickler',
+    'staff_cedric_img_alt' => 'zeigt einen futuristischen Astronauten, der zu einem regenbogenfarbenen Himmel aufblickt',
+    'staff_cedric_pronouns' => 'er/ihn',
+
+    'staff_linda_desc' => 'Gruppenorganisator',
+    'staff_linda_img_alt' => null,
+    'staff_linda_pronouns' => 'sie/ihr/they/them',
+
+    'staff_juno_desc' => 'Social Media Admin',
+    'staff_juno_img_alt' => null,
+    'staff_juno_pronouns' => 'alle Pronomen',
 ];
