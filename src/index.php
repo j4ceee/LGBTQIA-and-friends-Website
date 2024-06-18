@@ -79,6 +79,7 @@ template_header($dbConnection, $lang, 'home');
 
     <?php
     gen_calendar($lang, 2, "compact");
+    // TODO: notice that registration is required via socials / email to attend events
     ?>
 </div>
 <div class="balls_slide_2">

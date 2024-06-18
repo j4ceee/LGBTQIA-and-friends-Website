@@ -18,6 +18,7 @@ const lang_strings = [
     'about_text' => "🌈 Welcome to the LGBTQIA+ & friends group at Ansbach University! 🎉 <br>Whether you're part of the community or a supportive friend, we warmly invite you to join us. Since 2018, we've provided a safe space to openly discuss sexual orientation and gender identity, support each other, and have lots of fun together! 🤝 Feel free to come to our next meeting and become part of our group. Let's work together to create a diverse and inclusive campus culture! 💬✨",
     'events' => 'Events',
     'socials' => 'Socials & Contact',
+    'privacy' => 'Privacy Policy',
     'no_events' => 'No upcoming events.',
     'regist_req' => 'All our events require registration via our social media channels / contact options.',
     'user_greet' => 'Welcome back,',

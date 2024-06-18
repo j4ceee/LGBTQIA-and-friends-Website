@@ -22,6 +22,8 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
         echo '<li><a href="./calendar.php">'.lang_strings['cal'].'</a></li>';
     }
 
+    echo '<li><a href="./privacy.php">'.lang_strings['privacy'].'</a></li>';
+
     $auth_btn_alt = "aria-label='". lang_strings['account_icon']."'";
     $auth_btn_title = "title='". lang_strings['account_button']."'";
 

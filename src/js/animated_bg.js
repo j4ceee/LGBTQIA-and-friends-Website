@@ -1,3 +1,8 @@
+/**
+ ** Based on "Long Shadow" by Mladen Stanojevic
+ ** https://codepen.io/mladen___/details/gbvqBo
+ **/
+
 
 let popRadius; // radius of the circle to pop
 let circleRadiusMult; // circle radius multiplier (should not be bigger than 50)
