@@ -44,7 +44,7 @@ class ICSGenerator
     private function genICSheader(string $lang, string $year = ""): string
     {
         if ($lang === "de") {
-            $calname = "LGBT+ & friends Terminplan";
+            $calname = "LGBTQIA+ & friends Terminplan";
             if ($year !== "") {
                 $calname .= " $year";
             }
@@ -55,7 +55,7 @@ class ICSGenerator
             $caldesc .= ' der queeren Jugendgruppe "LGBTQIA+ & friends" der HS Ansbach';
         }
         else if ($lang === "en") {
-            $calname = "LGBT+ & friends Events";
+            $calname = "LGBTQIA+ & friends Events";
             if ($year !== "") {
                 $calname .= " $year";
             }
