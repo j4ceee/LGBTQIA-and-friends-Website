@@ -26,6 +26,12 @@
                 <div aria-hidden="true" class="icon_bg"></div>
             </div>
         </a>
+        <a href="https://github.com/j4ceee/LGBTQIA-and-friends-Website" class="social_link">
+            <div class="social_icon_container" id="github_cont">
+                <img class="social_icon_white" src="./img/github-mark-white.svg" alt="GitHub Icon">
+                <div aria-hidden="true" class="icon_bg"></div>
+            </div>
+        </a>
         <a href="mailto:contact@lgbt-hs-ansbach.de" class="social_link">
             <div class="social_icon_container" id="email_cont">
                 <div role="img" aria-label="<?php echo lang_strings['email'] ?> Icon" class="auth_input_icon social_icon_white" style="mask: url(./img/noun-6922977.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-6922977.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain"></div>

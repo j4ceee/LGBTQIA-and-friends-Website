@@ -843,6 +843,25 @@ footer {
     height: 1.4rem;
 }
 
+@media screen and (max-width: 768px) {
+    footer {
+        grid-template-columns: 8fr 1fr;
+    }
+
+    .nav-bottom {
+        grid-column: 1;
+    }
+
+    .auth_button {
+        grid-column: 2;
+    }
+
+    .nav-bottom a {
+        font-size: min(5vw, 1rem);
+        padding: 0.5rem 0.7rem;
+    }
+}
+
 /*------------------Default Styles-------------------------*/
 
 .section_header {
@@ -1392,6 +1411,15 @@ p {
     transition: .2s .2s;
 }
 
+#github_cont::after {
+    background-color: #211F1F;
+}
+.social_link:hover #github_cont::after,
+.social_link:focus-within #github_cont::after {
+    box-shadow: 0 0 .2rem #211F1F;
+    transition: .2s .2s;
+}
+
 /*--------------------Manage Event Page-------------------------*/
 
 .manage_event_content {
@@ -1691,7 +1719,7 @@ p {
     padding: .4rem 0 .4rem 0;
     cursor: pointer;
 }
-/* credit: https://stackoverflow.com/a/73447722 */
+/* credit: https://stackoverflow.com/a/73447722 - Tárcio Zemel - CC BY-SA 4.0 */
 .calendar_item_desc .calendar_item_desc_ctrl {
     transition: margin 150ms ease-out;
 }
@@ -1796,7 +1824,7 @@ p {
     transition: .2s;
 }
 
-/* credit: https://stackoverflow.com/a/73447722 */
+/* credit: https://stackoverflow.com/a/73447722 - Tárcio Zemel - CC BY-SA 4.0 */
 .ical_options_details .ical_options_toggle {
     transition: margin 150ms ease-out;
 }
@@ -1994,4 +2022,16 @@ p {
         width: 1.2rem;
         height: 1.2rem;
     }
+}
+
+.privacy_text p {
+    text-align: justify;
+}
+.privacy_text li {
+    font-family: "Baloo 2 Medium",'Baloo 2 Medium Fallback',sans-serif;
+    font-size: 1.1rem;
+}
+.privacy_text {
+    align-items: flex-start;
+    max-width: 60rem;
 }
