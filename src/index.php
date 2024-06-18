@@ -100,6 +100,14 @@ template_header($dbConnection, $lang, 'home');
                     "img_note" => null,
                     "url" => null,
                 ],
+                "juno" => [
+                    "name" => "Juno",
+                    "pronouns" => lang_strings['staff_juno_pronouns'],
+                    "desc" => lang_strings['staff_juno_desc'],
+                    "img" => null,
+                    "img_note" => null,
+                    "url" => null,
+                ],
                 "cedric" => [
                     "name" => "Cedric",
                     "pronouns" => lang_strings['staff_cedric_pronouns'],
@@ -108,14 +116,6 @@ template_header($dbConnection, $lang, 'home');
                     "img_note" => lang_strings['staff_img_by'] . " <a href='https://www.artstation.com/artwork/9Y3gR'>Misha Niklash</a>",
                     "url" => "https://github.com/j4ceee",
                 ],
-                "juno" => [
-                    "name" => "Juno",
-                    "pronouns" => lang_strings['staff_juno_pronouns'],
-                    "desc" => lang_strings['staff_juno_desc'],
-                    "img" => null,
-                    "img_note" => null,
-                    "url" => null,
-                ]
             ];
 
             foreach ($staffList as $staff) {
@@ -160,7 +160,7 @@ template_header($dbConnection, $lang, 'home');
     </section>
 </div>
 <div class="page_content">
-
+    <?php require_once(__DIR__ . '/util/get_socials.php') ?>
 </div>
 
 <?php

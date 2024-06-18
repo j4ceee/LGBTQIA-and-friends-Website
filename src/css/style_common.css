@@ -846,7 +846,6 @@ footer {
 /*------------------Default Styles-------------------------*/
 
 .section_header {
-    width: min-content;
     height: min-content;
     position: relative;
     margin: 1rem 0 1.5rem;
@@ -855,7 +854,7 @@ footer {
 .section_heading {
     font-size: 2rem;
     margin: 0;
-    text-wrap: nowrap;
+    text-align: center;
     padding: 0 1rem 0 1rem; /* top right bottom left */
 }
 
@@ -1281,6 +1280,116 @@ p {
     margin-top: .7rem;
     padding: .5rem 1rem;
     border-radius: .8rem;
+}
+
+.socials_container {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    padding: 2rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.socials_container a,
+.socials_container a {
+    opacity: 1;
+    transition: opacity .6s, transform .4s;
+}
+
+.socials_container:hover a,
+.socials_container:focus-within a {
+    opacity: .4;
+    transition: opacity .6s, transform .4s;
+}
+
+.socials_container:hover a:hover,
+.socials_container:focus-within a:focus {
+    opacity: 1;
+    transform: scale(1.05);
+    transition: opacity .4s, transform .4s;
+}
+
+.social_icon_container {
+    padding: 1rem;
+    border-radius: 1.5rem;
+    position: relative;
+    transition: .2s;
+}
+
+.icon_bg {
+    opacity: 1;
+    background-color: var(--lgbt-cal-item);
+    position: absolute;
+    border-radius: 1.5rem;
+    width: 102%;
+    height: 102%;
+    top: -1%;
+    left: -1%;
+    transition: .2s;
+    z-index: -1;
+}
+
+.social_link:hover .icon_bg,
+.social_link:focus-within .icon_bg {
+    opacity: 0;
+    transition: .2s;
+}
+
+.social_icon_container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 1.5rem;
+    box-shadow: none;
+    transition: .4s;
+    z-index: -2;
+}
+
+.social_icon_white {
+    width: 4rem;
+    height: 4rem;
+    margin: 0;
+    padding: 0;
+}
+
+#insta_cont::after {
+    background-image: linear-gradient(220deg, rgba(184,0,174,1) 0%, rgba(242,0,0,1) 100%);
+}
+.social_link:hover #insta_cont::after,
+.social_link:focus-within #insta_cont::after {
+    box-shadow: 0 0 .2rem rgba(184,0,174,1);
+    transition: .2s .2s;
+}
+
+#whatsapp_cont::after {
+    background-color: #25D366;
+}
+.social_link:hover #whatsapp_cont::after,
+.social_link:focus-within #whatsapp_cont::after {
+    box-shadow: 0 0 .2rem #25D366;
+    transition: .2s .2s;
+}
+
+#discord_cont::after {
+    background-color: #5865F2;
+}
+.social_link:hover #discord_cont::after,
+.social_link:focus-within #discord_cont::after {
+    box-shadow: 0 0 .2rem #5865F2;
+    transition: .2s .2s;
+}
+
+#email_cont::after {
+    background-color: var(--win-border);
+}
+.social_link:hover #email_cont::after,
+.social_link:focus-within #email_cont::after {
+    box-shadow: 0 0 .2rem var(--win-border);
+    transition: .2s .2s;
 }
 
 /*--------------------Manage Event Page-------------------------*/

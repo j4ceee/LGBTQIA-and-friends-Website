@@ -17,7 +17,9 @@ const lang_strings = [
     'logout' => 'Abmelden',
     'about_text' => "🌈 Willkommen bei der LGBTQIA+ & friends Gruppe der Hochschule Ansbach! 🎉 <br>Egal, ob du Teil der Community bist oder ein unterstützender Freund, wir laden dich herzlich ein, dich uns anzuschließen. Seit 2018 bieten wir einen sicheren Raum, um über sexuelle Orientierung und geschlechtliche Identität offen zu sprechen, uns gegenseitig zu unterstützen und gemeinsam viel Spaß zu haben! 🤝 Komme gerne zu unserem nächsten Treffen und werde Teil unserer Gruppe. Lass uns gemeinsam für eine vielfältige und inklusive Campus-Kultur sorgen! 💬✨",
     'events' => 'Treffen',
+    'socials' => 'Socials & Contact',
     'no_events' => 'Keine bevorstehenden Treffen.',
+    'regist_req' => 'Alle unsere Treffen setzen eine Anmeldung über unsere Social-Media-Kanäle / Kontaktmöglickeiten voraus.',
     'user_greet' => 'Willkommen zurück,',
     'months' => [
         'Januar',
