@@ -49,6 +49,8 @@ template_header($dbConnection, $lang, 'cal');
     }
 
     gen_calendar($lang, 1, "full", $cal_admin, $event_id);
+
+    require_once(__DIR__ . '/util/get_socials.php')
     ?>
 </div>
 
