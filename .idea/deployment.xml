@@ -5,7 +5,7 @@
       <paths name="LGBTQIA+ &amp; Friends">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/src" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -13,7 +13,6 @@
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/src" web="/" />
-            <mapping deploy="/" local="$PROJECT_DIR$/unminified" web="/" />
           </mappings>
         </serverdata>
       </paths>

@@ -17,5 +17,16 @@ ExpiresByType font/woff "access plus 6 months"
 ExpiresByType font/woff2 "access plus 6 months"
 ExpiresByType image/svg+xml "access plus 3 months"
 
-ExpiresByType text/css "access plus 0 seconds"
-ExpiresByType application/javascript "access plus 0 seconds"
+ExpiresByType image/jpg "access plus 4 months"
+ExpiresByType image/jpeg "access plus 4 months"
+ExpiresByType image/png "access plus 4 months"
+
+ExpiresByType text/css "access plus 2 months"
+ExpiresByType application/javascript "access plus 2 months"
+ExpiresByType application/x-javascript "access plus 2 months"
+ExpiresByType text/javascript "access plus 2 months"
+ExpiresByType text/x-js "access plus 2 months"
+ExpiresByType text/html "access plus 2 months"
+
+# don't cache ics files
+ExpiresByType text/calendar "access plus 0 seconds"
