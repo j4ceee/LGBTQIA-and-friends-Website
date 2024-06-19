@@ -19,10 +19,10 @@ function template_footer($dbConnection, array $scripts = null, bool $loggedIn = 
     echo '<li><a href="./">'.lang_strings['home'].'</a></li>';
 
     if ($PDO !== null || $dbConnection->checkDBSchema() === true) {
-        echo '<li><a href="./calendar.php">'.lang_strings['cal'].'</a></li>';
+        echo '<li><a href="./calendar">'.lang_strings['cal'].'</a></li>';
     }
 
-    echo '<li><a href="./privacy.php">'.lang_strings['privacy'].'</a></li>';
+    echo '<li><a href="./privacy">'.lang_strings['privacy'].'</a></li>';
 
     $auth_btn_alt = "aria-label='". lang_strings['account_icon']."'";
     $auth_btn_title = "title='". lang_strings['account_button']."'";
@@ -65,7 +65,7 @@ function gen_login_dialog(bool $loggedIn = false): void{
         $pass_icon_alt = "aria-label='". lang_strings['pass_icon']."'";
 
         echo <<<EOT
-        <form class="auth_form" id="auth_form" action="./util/auth_login.php" method="post">
+        <form class="auth_form" id="auth_form" action="./util/auth_login" method="post">
         <fieldset class="auth_fieldset">
             <legend>$l_login</legend>
             <div class="auth_input_cont">
@@ -114,7 +114,7 @@ function gen_login_dialog(bool $loggedIn = false): void{
         $l_user_greet = lang_strings['user_greet'];
 
         echo <<<EOT
-        <form class="auth_form" id="auth_form" action="./util/auth_logout.php" method="post" autocomplete="off">
+        <form class="auth_form" id="auth_form" action="./util/auth_logout" method="post" autocomplete="off">
             <div class="auth_greeting">
                 <p class="auth_welcome">$l_user_greet</p>
                 <div class="auth_user">

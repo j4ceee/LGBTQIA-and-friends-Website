@@ -53,12 +53,12 @@ template_header($dbConnection, $lang, 'home');
         <div class="admin_controls">
 
             <?php if ($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) : // always show setup db button if the database is not set up ?>
-            <a href="./util/setup_db.php" class="lgbt_button">Setup DB</a>
+            <a href="./util/setup_db" class="lgbt_button">Setup DB</a>
             <?php endif; ?>
 
             <?php if (ENV === "dev" || $loggedIn) : // only show main admin tools if env is set to "dev" or the user is logged in ?>
-            <a href="./event_manage.php" class="lgbt_button">Add Event</a>
-            <a href="./util/refresh_ics.php" class="lgbt_button">Refresh ICS files</a>
+            <a href="./event_manage" class="lgbt_button">Add Event</a>
+            <a href="./util/refresh_ics" class="lgbt_button">Refresh ICS files</a>
             <?php endif; ?>
 
         </div>
@@ -128,7 +128,7 @@ template_header($dbConnection, $lang, 'home');
 
                 if ($staff["img"] !== null) {
                     if ($staff["url"] !== null) {
-                        echo "<a class='staff_url' href='$staff[url]'>";
+                            echo "<a class='staff_url' href='$staff[url]'>";
                     }
 
                     $staff_alt = 'staff_'.strtolower($staff['name']).'_img_alt';

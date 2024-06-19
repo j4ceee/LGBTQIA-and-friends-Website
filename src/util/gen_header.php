@@ -57,9 +57,12 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     echo '<meta name="og:type" content="website">';
     echo '<meta name="twitter:card" content="summary">';
 
+    $canonical = BASE_URL;
+
     echo <<<EOT
         <link rel="stylesheet" href="./css/min/style_common.min.css">
         <link rel="icon" type="image/png" sizes="32x32" href="../img/lgbt_bunny.png">
+        <link rel="canonical" href="$canonical">
     </head>
     <body style="--lgbt-text: #eeeeee; --lgbt-bg: #333333; background-color: var(--lgbt-bg); color: var(--lgbt-text);">
     <div class="page_wrap">
@@ -80,11 +83,11 @@ function template_header($dbConnection, string $lang, $lang_title = "home"): voi
     echo '<li><a href="./" '.$index.'>'.lang_strings['home'].'</a></li>';
 
     if ($PDO !== null && $dbConnection->checkDBSchema() === true) {
-        echo '<li><a href="./calendar.php" '.$calendar.'>'.lang_strings['cal'].'</a></li>';
+        echo '<li><a href="./calendar" '.$calendar.'>'.lang_strings['cal'].'</a></li>';
     }
 
-    $l_de = '<a href="./util/lang_change.php?lang=de" aria-label="Sprache wechseln: Deutsch">🇩🇪 DE</a>';
-    $l_en = '<a href="./util/lang_change.php?lang=en" aria-label="Change language: English">🇬🇧 EN</a>';
+    $l_de = '<a href="./util/lang_change?lang=de" rel="nofollow" aria-label="Sprache wechseln: Deutsch">🇩🇪 DE</a>';
+    $l_en = '<a href="./util/lang_change?lang=en" rel="nofollow" aria-label="Change language: English">🇬🇧 EN</a>';
 
     if ($lang === 'de') {
         $l_de = "<div aria-label='Sprache: Deutsch (aktiv)' class='active'>🇩🇪 DE</div>";

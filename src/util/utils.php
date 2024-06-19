@@ -22,7 +22,12 @@ use JetBrains\PhpStorm\NoReturn;
     }
 
     //redirect to the given path, '' = home
-    header("Location: " . BASE_URL . $url);
+    if ($url === '/' || $url === '') {
+        header("Location: " . BASE_URL);
+    }
+    else {
+        header("Location: " . BASE_URL . $url);
+    }
     exit();
 }
 

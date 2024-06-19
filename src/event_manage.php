@@ -101,11 +101,10 @@ template_header($dbConnection, $lang, $pageTitle);
 <?php
 
 if ($editMode) {
-    $formAction = "./util/validate_update.php?id=" . $eventID;
-    // TODO: create validate_edit.php
+    $formAction = "./util/validate_update?id=" . $eventID;
 }
 else {
-    $formAction = "./util/validate_add.php";
+    $formAction = "./util/validate_add";
 }
 ?>
 <div class="page_content manage_event_content">
