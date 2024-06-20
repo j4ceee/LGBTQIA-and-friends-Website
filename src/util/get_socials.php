@@ -10,25 +10,25 @@
     <div class="socials_container">
         <a href="https://www.instagram.com/lgbt_hs_ansbach/" class="social_link">
             <div class="social_icon_container" id="insta_cont">
-                <img class="social_icon_white" src="./img/Instagram_Glyph_White.svg" alt="Instagram Icon">
+                <img class="social_icon_white" src="./img/Instagram_Glyph_White.svg" alt="Instagram Logo">
                 <div aria-hidden="true" class="icon_bg"></div>
             </div>
         </a>
         <a href="https://chat.whatsapp.com/GhgPYEHw0tnGevVa4xcQiM" class="social_link">
             <div class="social_icon_container" id="whatsapp_cont">
-                <img class="social_icon_white" src="./img/WhatsApp_Glyph_White.svg" alt="WhatsApp Icon">
+                <img class="social_icon_white" src="./img/WhatsApp_Glyph_White.svg" alt="WhatsApp Logo">
                 <div aria-hidden="true" class="icon_bg"></div>
             </div>
         </a>
         <a href="https://discord.gg/d9qd2QVJJS" class="social_link">
             <div class="social_icon_container" id="discord_cont">
-                <img class="social_icon_white" src="./img/Discord_Glyph_White.svg" alt="Discord Icon">
+                <img class="social_icon_white" src="./img/Discord_Glyph_White.svg" alt="Discord Logo">
                 <div aria-hidden="true" class="icon_bg"></div>
             </div>
         </a>
         <a href="https://github.com/j4ceee/LGBTQIA-and-friends-Website" class="social_link">
             <div class="social_icon_container" id="github_cont">
-                <img class="social_icon_white" src="./img/github-mark-white.svg" alt="GitHub Icon">
+                <img class="social_icon_white" src="./img/github-mark-white.svg" alt="GitHub Logo">
                 <div aria-hidden="true" class="icon_bg"></div>
             </div>
         </a>

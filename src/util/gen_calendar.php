@@ -124,7 +124,7 @@ function print_calendar($lang, $style, $events, bool $admin): void
         if ($style === "compact") {
             $cal_cont_classes = ' calendar_container_compact calendar_container_link';
             echo $cal_cont_start . $cal_cont_classes . $cal_cont_end;
-            echo "<p class='full_calendar_link'><a href='./calendar.php'>" . lang_strings['full_calendar'] . "<span class='full_calendar_icon' style='mask: url(./img/noun-share-3066989.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-share-3066989.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a></p>";
+            echo "<p class='full_calendar_link'><a href='./calendar'>" . lang_strings['full_calendar'] . "<span class='full_calendar_icon' style='mask: url(./img/noun-share-3066989.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-share-3066989.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a></p>";
             if (count($events) > 2) {
                 echo "<ul class='calendar_list calendar_large'>";
             } else {
@@ -258,10 +258,10 @@ function print_calendar($lang, $style, $events, bool $admin): void
                 echo "</div>";
 
                 if ($style !== "compact" && $admin) {
-                    echo "<div class='calendar_item_admin_ctrl'>"; // ./edit_event.php?id=".$event_id."
+                    echo "<div class='calendar_item_admin_ctrl'>";
                         echo "<div class='calendar_item_admin_cont'>";
-                            echo "<a class='calendar_item_admin_link cal_admin_left' href='./event_manage.php?id=".$event_id."' title='".lang_strings['event_edit']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
-                            echo "<a class='calendar_item_admin_link cal_admin_right' href='./event_delete.php?id=".$event_id."' title='".lang_strings['event_delete']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_left' href='./event_manage?id=".$event_id."' title='".lang_strings['event_edit']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-edit-1047822.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-edit-1047822.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
+                            echo "<a class='calendar_item_admin_link cal_admin_right' href='./event_delete?id=".$event_id."' title='".lang_strings['event_delete']. $event_name ."'><span class='cal_admin_link_icon' style='mask: url(./img/noun-trash-2025467.svg) no-repeat center / contain; -webkit-mask-image: url(./img/noun-trash-2025467.svg); -webkit-mask-repeat:  no-repeat; -webkit-mask-position:  center; -webkit-mask-size: contain' aria-hidden='true'></span></a>";
                         echo "</div>";
                     echo "</div>";
                 }
@@ -295,7 +295,7 @@ function print_ics_controls($lang): void
                     //echo "<img class='default_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
                     echo lang_strings['copy_link'];
                     echo "</button>";
-                    echo "<a id='default_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button default_calendar_link' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
+                    echo "<a id='default_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button default_calendar_link' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' rel='nofollow' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
                     echo "</div>";
                     echo "<p class='ical_options_desc'>". lang_strings['ical_desc_default'] ."</p>";
                 echo "</div>";
@@ -320,7 +320,7 @@ function print_ics_controls($lang): void
                     //echo "<img class='year_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
                     echo lang_strings['copy_link'];
                     echo "</button>";
-                    echo "<a id='year_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$latest_year."-".$lang.".ics' download=''>".lang_strings['download']."</a>";
+                    echo "<a id='year_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$latest_year."-".$lang.".ics' rel='nofollow' download=''>".lang_strings['download']."</a>";
                     echo "</div>";
                     echo "<p class='ical_options_desc'>". lang_strings['ical_desc_year'] ."</p>";
                 echo "</div>";

@@ -15,7 +15,7 @@ const lang_strings = [
     'email' => 'E-Mail',
     'pass' => 'Passwort',
     'logout' => 'Abmelden',
-    'about_text' => "🌈 Willkommen bei der LGBTQIA+ & friends Gruppe der Hochschule Ansbach! 🎉 <br>Egal, ob du Teil der Community bist oder ein unterstützender Freund, wir laden dich herzlich ein, dich uns anzuschließen. Seit 2018 bieten wir einen sicheren Raum, um über sexuelle Orientierung und geschlechtliche Identität offen zu sprechen, uns gegenseitig zu unterstützen und gemeinsam viel Spaß zu haben! 🤝 Komme gerne zu unserem nächsten Treffen und werde Teil unserer Gruppe. Lass uns gemeinsam für eine vielfältige und inklusive Campus-Kultur sorgen! 💬✨",
+    'about_text' => "🌈 Willkommen bei der LGBTQIA+ & friends Gruppe der Hochschule Ansbach! 🎉 <br>Egal, ob du Teil der Community bist oder eine unterstützende / befreundete Person, wir laden dich herzlich ein, dich uns anzuschließen. Seit 2018 bieten wir einen sicheren Raum, um über sexuelle Orientierung und geschlechtliche Identität offen zu sprechen, uns gegenseitig zu unterstützen und gemeinsam viel Spaß zu haben! 🤝 Komme gerne zu unserem nächsten Treffen und werde Teil unserer Gruppe. Lass uns gemeinsam für eine vielfältige und inklusive Campus-Kultur sorgen! 💬✨",
     'events' => 'Treffen',
     'socials' => 'Socials & Contact',
     'privacy' => 'Datenschutz',
@@ -75,13 +75,16 @@ const lang_strings = [
 
     'staff_cedric_desc' => 'Gruppenorganisator<br>Webentwickler',
     'staff_cedric_img_alt' => 'zeigt einen futuristischen Astronauten, der zu einem regenbogenfarbenen Himmel aufblickt',
+    'staff_cedric_url_alt' => 'GitHub-Profil von Cedric',
     'staff_cedric_pronouns' => 'er/ihn',
 
-    'staff_linda_desc' => 'Gruppenorganisator',
-    'staff_linda_img_alt' => null,
+    'staff_linda_desc' => 'Gruppenorganisator<br>Studiert MUK<br>Alter: 20',
+    'staff_linda_img_alt' => 'zeigt Linda selbst lächelnd',
+    'staff_linda_url_alt' => null,
     'staff_linda_pronouns' => 'sie/ihr/they/them',
 
     'staff_juno_desc' => 'Social Media Admin',
     'staff_juno_img_alt' => null,
+    'staff_juno_url_alt' => null,
     'staff_juno_pronouns' => 'alle Pronomen',
 ];

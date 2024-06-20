@@ -1166,7 +1166,7 @@ p {
 
 #canvas2 {
     filter: blur(.5rem);
-    transform: scale(1.03) translateZ(1.1rem);
+    transform: scale(1.1) translateZ(1.1rem);
 
     position: absolute;
     z-index: 2;
