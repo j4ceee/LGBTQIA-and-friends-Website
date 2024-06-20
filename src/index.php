@@ -45,24 +45,24 @@ template_header($dbConnection, $lang, 'home');
     <?php if (($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) || ENV === "dev" || $loggedIn) :
         // only show admin section if the database is not set up or the user is logged in or the environment is set to "dev"
         ?>
-    <section class="admin">
-        <div class="section_header">
-            <h2 class="section_heading"><?php echo lang_strings['admin'] ?></h2>
-            <div class="section_header_underline"></div>
-        </div>
-        <div class="admin_controls">
+        <section class="admin">
+            <div class="section_header">
+                <h2 class="section_heading"><?php echo lang_strings['admin'] ?></h2>
+                <div class="section_header_underline"></div>
+            </div>
+            <div class="admin_controls">
 
-            <?php if ($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) : // always show setup db button if the database is not set up ?>
-            <a href="./util/setup_db" class="lgbt_button">Setup DB</a>
-            <?php endif; ?>
+                <?php if ($PDO !== null && (!$dbConnection->checkDBExists() || $dbConnection->checkDBSchema() !== true)) : // always show setup db button if the database is not set up ?>
+                    <a href="./util/setup_db" class="lgbt_button">Setup DB</a>
+                <?php endif; ?>
 
-            <?php if (ENV === "dev" || $loggedIn) : // only show main admin tools if env is set to "dev" or the user is logged in ?>
-            <a href="./event_manage" class="lgbt_button">Add Event</a>
-            <a href="./util/refresh_ics" class="lgbt_button">Refresh ICS files</a>
-            <?php endif; ?>
+                <?php if (ENV === "dev" || $loggedIn) : // only show main admin tools if env is set to "dev" or the user is logged in ?>
+                    <a href="./event_manage" class="lgbt_button">Add Event</a>
+                    <a href="./util/refresh_ics" class="lgbt_button">Refresh ICS files</a>
+                <?php endif; ?>
 
-        </div>
-    </section>
+            </div>
+        </section>
     <?php endif; ?>
 
     <section class="about">
@@ -97,7 +97,7 @@ template_header($dbConnection, $lang, 'home');
                     "name" => "Linda",
                     "pronouns" => lang_strings['staff_linda_pronouns'],
                     "desc" => lang_strings['staff_linda_desc'],
-                    "img" => null,
+                    "img" => "linda.webp",
                     "img_note" => null,
                     "url" => null,
                 ],
@@ -113,7 +113,7 @@ template_header($dbConnection, $lang, 'home');
                     "name" => "Cedric",
                     "pronouns" => lang_strings['staff_cedric_pronouns'],
                     "desc" => lang_strings['staff_cedric_desc'],
-                    "img" => "cedric.jpg",
+                    "img" => "cedric.webp",
                     "img_note" => lang_strings['staff_img_by'] . " <a href='https://www.artstation.com/artwork/9Y3gR'>Misha Niklash</a>",
                     "url" => "https://github.com/j4ceee",
                 ],
@@ -128,17 +128,22 @@ template_header($dbConnection, $lang, 'home');
 
                 if ($staff["img"] !== null) {
                     if ($staff["url"] !== null) {
+                        $staff_url_alt = 'staff_'.strtolower($staff['name']).'_url_alt';
+                        if (lang_strings[$staff_url_alt] !== null) {
+                            echo "<a class='staff_url' href='$staff[url]' aria-label='".lang_strings[$staff_url_alt]."'>";
+                        } else {
                             echo "<a class='staff_url' href='$staff[url]'>";
+                        }
                     }
 
-                    $staff_alt = 'staff_'.strtolower($staff['name']).'_img_alt';
-                    if (lang_strings[$staff_alt] !== null) {
-                        $staff_alt = lang_strings['staff_img_alt'] . " $staff[name], " . lang_strings[$staff_alt];
+                    $staff_img_alt = 'staff_'.strtolower($staff['name']).'_img_alt';
+                    if (lang_strings[$staff_img_alt] !== null) {
+                        $staff_img_alt = lang_strings['staff_img_alt'] . " $staff[name], " . lang_strings[$staff_img_alt];
                     } else {
-                        $staff_alt = lang_strings['staff_img_alt'] . " $staff[name]";
+                        $staff_img_alt = lang_strings['staff_img_alt'] . " $staff[name]";
                     }
 
-                    echo "<img class='staff_img' src='./img/" . $staff["img"] . "' alt='$staff_alt'>";
+                    echo "<img class='staff_img' src='./img/" . $staff["img"] . "' alt='$staff_img_alt'>";
                     if ($staff["url"] !== null) {
                         echo "</a>";
                     }
@@ -167,4 +172,3 @@ template_header($dbConnection, $lang, 'home');
 <?php
 template_footer($dbConnection, ["view_calendar", "animated_bg"], $loggedIn);
 ?>
-

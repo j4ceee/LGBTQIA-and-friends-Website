@@ -74,15 +74,18 @@ const lang_strings = [
     'staff_img_by' => 'Image by',
 
     'staff_cedric_desc' => 'Group Organiser<br>Web Developer',
-    'staff_cedric_img_alt' => 'showing a futuristic astronout looking up at a rainbow colored sky',
+    'staff_cedric_img_alt' => 'showing a futuristic astronaut looking up at a rainbow colored sky',
+    'staff_cedric_url_alt' => 'GitHub profile of Cedric',
     'staff_cedric_pronouns' => 'he/him',
 
-    'staff_linda_desc' => 'Group Organiser',
-    'staff_linda_img_alt' => null,
+    'staff_linda_desc' => 'Group Organiser<br>Studying MUK<br>Age: 20',
+    'staff_linda_img_alt' => 'showing herself smiling',
+    'staff_linda_url_alt' => null,
     'staff_linda_pronouns' => 'she/her/they/them',
 
     'staff_juno_desc' => 'Social Media Admin',
     'staff_juno_img_alt' => null,
+    'staff_juno_url_alt' => null,
     'staff_juno_pronouns' => 'all pronouns',
 ];
 

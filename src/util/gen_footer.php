@@ -60,9 +60,9 @@ function gen_login_dialog(bool $loggedIn = false): void{
         $l_email = lang_strings['email'];
         $l_pass = lang_strings['pass'];
 
-        $user_icon_alt = "aria-label='". lang_strings['user_icon']."'";
-        $email_icon_alt = "aria-label='". lang_strings['email_icon']."'";
-        $pass_icon_alt = "aria-label='". lang_strings['pass_icon']."'";
+        $user_icon_alt = "aria-label='". lang_strings['user']."'";
+        $email_icon_alt = "aria-label='". lang_strings['email']."'";
+        $pass_icon_alt = "aria-label='". lang_strings['pass']."'";
 
         echo <<<EOT
         <form class="auth_form" id="auth_form" action="./util/auth_login" method="post">
