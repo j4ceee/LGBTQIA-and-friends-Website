@@ -119,6 +119,8 @@ else {
                            <?php
                             if ($editMode) {
                                  echo 'value="' . convert_datetime_to_ui($event['date_start']) . '"';
+                            } else {
+                                echo 'value="' . date('Y-m-d\T19:00') . '"';
                             }
                             ?>
                            required>
@@ -132,6 +134,9 @@ else {
                             <?php
                             if ($editMode) {
                                 echo 'value="' . convert_datetime_to_ui($event['date_end']) . '"';
+                            }
+                            else {
+                                echo 'value="' . date('Y-m-d\T23:00') . '"';
                             }
                             ?>
                            required>

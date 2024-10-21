@@ -291,38 +291,18 @@ function print_ics_controls($lang): void
                     echo "<p class='calendar_item_name ical_options_header'>" . lang_strings['default_cal_header'] . "</p>";
 
                     echo "<div class='calendar_option_controls'>";
+
                     echo "<button class='lgbt_button_grey lgbt_button lgbt_button_highlight' id='default_calendar_copy_button'>";
                     //echo "<img class='default_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
                     echo lang_strings['copy_link'];
                     echo "</button>";
                     echo "<a id='default_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button default_calendar_link' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics' rel='nofollow' download='lgbt-hs-ansbach-events-".$lang.".ics'>".lang_strings['download']."</a>";
+
+                    // TODO: add google calendar link
+                    //echo "<a class='lgbt_button_grey lgbt_button lgbt_button_highlight' href='https://www.google.com/calendar/render?cid=".BASE_URL."/cal/lgbt-hs-ansbach-events-".$lang.".ics'>Add to Calendar</a>";
+
                     echo "</div>";
                     echo "<p class='ical_options_desc'>". lang_strings['ical_desc_default'] ."</p>";
-                echo "</div>";
-
-                echo "<div class='year_calendar_copy'>";
-                    echo "<p class='calendar_item_name ical_options_header'>" . lang_strings['year_cal_header'] . "</p>";
-
-                    echo "<div class='calendar_option_controls calendar_year_select'>";
-                    echo "<label for='year_calendar_select' class='year_calendar_select_label'>". lang_strings['year_cal_select_label'] ."</label>";
-                    // generate dropdown for year files
-                    $latest_year = substr($ics_year_files[0], -11, 4);
-                    echo "<select id='year_calendar_select' class='ical_year_select lgbt_button_grey lgbt_button'>";
-                    foreach ($ics_year_files as $file) {
-                        $year = substr($file, -11, 4);
-                        echo "<option value='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$year."-".$lang.".ics'>". $year ."</option>";
-                    }
-                    echo "</select>";
-                    echo "</div>";
-
-                    echo "<div class='calendar_option_controls'>";
-                    echo "<button class='lgbt_button_grey lgbt_button lgbt_button_highlight' id='year_calendar_copy_button'>";
-                    //echo "<img class='year_calendar_copy_icon' src='./img/copy_icon.svg' alt='Copy Icon'>";
-                    echo lang_strings['copy_link'];
-                    echo "</button>";
-                    echo "<a id='year_calendar_link' class='lgbt_button_grey lgbt_button_smaller lgbt_button' href='".BASE_URL."/cal/lgbt-hs-ansbach-events-".$latest_year."-".$lang.".ics' rel='nofollow' download=''>".lang_strings['download']."</a>";
-                    echo "</div>";
-                    echo "<p class='ical_options_desc'>". lang_strings['ical_desc_year'] ."</p>";
                 echo "</div>";
             echo "</div>";
         echo "</details>";

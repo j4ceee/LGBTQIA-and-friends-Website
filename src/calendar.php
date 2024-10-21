@@ -50,7 +50,14 @@ template_header($dbConnection, $lang, 'cal');
 
     gen_calendar($lang, 1, "full", $cal_admin, $event_id);
 
-    require_once(__DIR__ . '/util/get_socials.php')
+    if (ENV === "dev" || $loggedIn) : // only show admin tools if env is set to "dev" or the user is logged in ?>
+    <div class="admin_controls">
+            <a href="./event_manage" class="lgbt_button">Add Event</a>
+            <a href="./util/refresh_ics" class="lgbt_button">Refresh ICS files</a>
+    </div>
+    <?php
+    else: require_once(__DIR__ . '/util/get_socials.php');
+    endif;
     ?>
 </div>
 

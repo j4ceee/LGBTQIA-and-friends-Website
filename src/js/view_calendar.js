@@ -48,29 +48,6 @@ window.addEventListener('load', function() { // when page is loaded
             alert('Link copied to clipboard:\n' + copyText);
         });
     });
-
-    // add an event listener to the year selection dropdown
-    document.getElementById('year_calendar_select').addEventListener('change', (event) => {
-        let dropdownElement = event.currentTarget;
-
-        let anchorElement = document.getElementById('year_calendar_link');
-
-        // update the links to the selected year link
-        let yearLink = dropdownElement.value;
-
-        anchorElement.setAttribute('href', yearLink);
-    });
-
-    // add an event listener to the copy button for the year calendar
-    document.getElementById('year_calendar_copy_button').addEventListener('click', () => {
-        let anchorElement = document.getElementById('year_calendar_link');
-        // year_calendar_link is the anchor tag that contains the link, copy a href attribute
-        let copyText = anchorElement.getAttribute('href');
-        navigator.clipboard.writeText(copyText).then(function() {
-            // show a success message
-            alert('Link copied to clipboard:\n' + copyText);
-        });
-    });
 });
 
 function toggleCalDetails(event, eventId) {

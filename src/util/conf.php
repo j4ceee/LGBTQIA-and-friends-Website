@@ -1,8 +1,12 @@
 <?php
 
 // base url for the website, used for redirects
-const DEV_URL = 'http://localhost:9000';
-const BASE_URL = DEV_URL; // TODO: change to production URL
+const PROTOCOL = 'http';
+
+const DEV_URL = 'localhost:9000';
+const PROD_URL = 'lgbt-hs-ansbach.de';
+const URL = DEV_URL; // TODO: change to production domain
+const BASE_URL = PROTOCOL . '://' . URL;
 
 
 // server name for the website, used for cookies

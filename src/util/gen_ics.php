@@ -190,10 +190,10 @@ class ICSGenerator
     private function formatLineLength(string $textblock): string
     {
         // split the textblock into lines with a maximum length of 75 characters, excluding linebreak CRLF
-        // the newly created line should start with a space
-        $textblock = wordwrap($textblock, 74, "\r\n ", true);
+        // the newly created line should start with 2 spaces
+        $textblock = wordwrap($textblock, 74, "\r\n  ", true);
 
-        //add linrbreak at the end
+        //add linebreak at the end
         $textblock .= "\r\n";
 
         return $textblock;
